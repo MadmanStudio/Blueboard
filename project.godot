@@ -13,12 +13,21 @@ config_version=5
 config/name="LIGHT"
 run/main_scene="res://entry/main.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
-config/icon="res://assets/icon.svg"
+config/icon="res://base/icon.svg"
+
+[autoload]
+
+PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
+SoundManager="*res://addons/sound_manager/sound_manager.gd"
 
 [display]
 
 window/size/viewport_height=640
 window/size/resizable=false
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/YATI/plugin.cfg", "res://addons/nklbdev.importality/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/sound_manager/plugin.cfg")
 
 [rendering]
 
