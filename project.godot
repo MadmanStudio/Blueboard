@@ -11,9 +11,9 @@ config_version=5
 [application]
 
 config/name="LIGHT"
-run/main_scene="res://Entry/main.tscn"
+run/main_scene="res://entry/main.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://assets/icon.svg"
 
 [display]
 
