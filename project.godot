@@ -20,6 +20,10 @@ config/icon="res://base/icon.svg"
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 SoundManager="*res://addons/sound_manager/sound_manager.gd"
 
+[debug]
+
+gdscript/warnings/untyped_declaration=1
+
 [display]
 
 window/size/viewport_height=640
@@ -29,7 +33,12 @@ window/size/resizable=false
 
 enabled=PackedStringArray("res://addons/YATI/plugin.cfg", "res://addons/nklbdev.importality/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/sound_manager/plugin.cfg")
 
+[gui]
+
+theme/custom_font="res://base/fusion-pixel-12px-monospaced-zh_hans.ttf"
+
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

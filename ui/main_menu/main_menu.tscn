@@ -1,0 +1,163 @@
+[gd_scene load_steps=11 format=3 uid="uid://ckjpigq7m00pl"]
+
+[ext_resource type="Script" path="res://ui/main_menu/main_menu.gd" id="1_exuqm"]
+[ext_resource type="Texture2D" uid="uid://blhjxy8obkbpx" path="res://ui/main_menu/texture/main_menu.aseprite" id="2_q8n4l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xjn1s"]
+atlas = ExtResource("2_q8n4l")
+region = Rect2(80, 88, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ptie4"]
+atlas = ExtResource("2_q8n4l")
+region = Rect2(304, 96, 136, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v08gl"]
+atlas = ExtResource("2_q8n4l")
+region = Rect2(480, 112, 176, 184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7jcsa"]
+atlas = ExtResource("2_q8n4l")
+region = Rect2(704, 128, 168, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iql7l"]
+atlas = ExtResource("2_q8n4l")
+region = Rect2(904, 152, 160, 216)
+
+[sub_resource type="Animation" id="Animation_b82qc"]
+resource_name = "AnyKeyHint"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnyKey:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_nu8wf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnyKey:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t6ua0"]
+_data = {
+"AnyKeyHint": SubResource("Animation_b82qc"),
+"RESET": SubResource("Animation_nu8wf")
+}
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_exuqm")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.980392, 0.968627, 0.941176, 1)
+
+[node name="L" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 108.0
+offset_top = 172.0
+offset_right = 308.0
+offset_bottom = 372.0
+pivot_offset = Vector2(100, 100)
+mouse_filter = 2
+texture = SubResource("AtlasTexture_xjn1s")
+
+[node name="Timer" type="Timer" parent="L"]
+
+[node name="I" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 237.0
+offset_top = 73.0
+offset_right = 437.0
+offset_bottom = 273.0
+pivot_offset = Vector2(100, 100)
+mouse_filter = 2
+texture = SubResource("AtlasTexture_ptie4")
+
+[node name="Timer" type="Timer" parent="I"]
+
+[node name="G" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 464.0
+offset_top = 128.0
+offset_right = 664.0
+offset_bottom = 328.0
+pivot_offset = Vector2(100, 100)
+mouse_filter = 2
+texture = SubResource("AtlasTexture_v08gl")
+
+[node name="Timer" type="Timer" parent="G"]
+
+[node name="H" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 678.0
+offset_top = 152.0
+offset_right = 878.0
+offset_bottom = 408.0
+pivot_offset = Vector2(100, 128)
+mouse_filter = 2
+texture = SubResource("AtlasTexture_7jcsa")
+
+[node name="Timer" type="Timer" parent="H"]
+
+[node name="T" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 909.0
+offset_top = 106.0
+offset_right = 1109.0
+offset_bottom = 362.0
+pivot_offset = Vector2(100, 128)
+mouse_filter = 2
+texture = SubResource("AtlasTexture_iql7l")
+
+[node name="Timer" type="Timer" parent="T"]
+
+[node name="AnyKey" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = 170.0
+offset_right = 150.0
+offset_bottom = 230.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 60
+text = "任意键开始"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_t6ua0")
+}
+autoplay = "AnyKeyHint"
