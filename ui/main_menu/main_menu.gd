@@ -1,12 +1,12 @@
 extends Control
 
 
-@onready var L_image: TextureRect = $L
-@onready var I_image: TextureRect = $I
-@onready var G_image: TextureRect = $G
-@onready var H_image: TextureRect = $H
-@onready var T_image: TextureRect = $T
-@onready var any_key_label: Label = $AnyKey
+@onready var L_image: TextureRect = $Control/L
+@onready var I_image: TextureRect = $Control/I
+@onready var G_image: TextureRect = $Control/G
+@onready var H_image: TextureRect = $Control/H
+@onready var T_image: TextureRect = $Control/T
+@onready var any_key_label: Label = $AnyKeyToStart
 
 # 字体抖动的角度
 @export var shake_rotation: float = 8.0
@@ -26,7 +26,7 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey or event is InputEventMouseButton:
 		$AnimationPlayer.stop()
-		get_tree().quit()
+		start()
 		
 		
 func bind_shake_event(image: TextureRect) -> void:
@@ -38,3 +38,15 @@ func bind_shake_event(image: TextureRect) -> void:
 func shake_image(image: TextureRect) -> void:
 	var dir: float = [-1.0, 1.0].pick_random()
 	image.rotation = shake_rotation * deg_to_rad(dir)
+	
+	
+func start() -> void:
+	any_key_label.hide()
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property($Control, "modulate", Color(1.0, 1.0, 1.0, 0.0), 1)
+	tween.tween_callback(load_level)
+	
+	
+func load_level() -> void:
+	var main: Main = get_tree().get_first_node_in_group("main")
+	main.load_scene("test load scene")

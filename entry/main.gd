@@ -1,11 +1,20 @@
 extends Node
+class_name Main
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+	pass
+	
+	
 func _process(delta: float) -> void:
 	pass
+	
+	
+func load_scene(load_scene: String) -> void:
+	$Loading.show()
+	clear_canvas_layer($Level)
+	
+	
+func clear_canvas_layer(canvas_layer: CanvasLayer) -> void:
+	for node in canvas_layer.get_children():
+		node.queue_free()

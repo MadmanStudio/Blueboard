@@ -1,6 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://c3u0yhsxkp83c"]
+[gd_scene load_steps=4 format=3 uid="uid://c3u0yhsxkp83c"]
 
 [ext_resource type="Script" path="res://entry/main.gd" id="1_73xx2"]
+[ext_resource type="PackedScene" uid="uid://ckjpigq7m00pl" path="res://ui/main_menu/main_menu.tscn" id="2_f0blk"]
+[ext_resource type="PackedScene" uid="uid://crj283gtq266f" path="res://ui/main_menu/loading.tscn" id="3_ogg2a"]
 
-[node name="Main" type="Node"]
+[node name="Main" type="Node" groups=["main"]]
 script = ExtResource("1_73xx2")
+
+[node name="Level" type="CanvasLayer" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="MainMenu" parent="UI" instance=ExtResource("2_f0blk")]
+
+[node name="Loading" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Loading" parent="Loading" instance=ExtResource("3_ogg2a")]
