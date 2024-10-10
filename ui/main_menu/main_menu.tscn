@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://ckjpigq7m00pl"]
+[gd_scene load_steps=12 format=3 uid="uid://ckjpigq7m00pl"]
 
 [ext_resource type="Script" path="res://ui/main_menu/main_menu.gd" id="1_exuqm"]
 [ext_resource type="Texture2D" uid="uid://blhjxy8obkbpx" path="res://ui/main_menu/texture/main_menu.aseprite" id="2_q8n4l"]
+[ext_resource type="Script" path="res://ui/main_menu/buttons.gd" id="3_o31m0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xjn1s"]
 atlas = ExtResource("2_q8n4l")
@@ -30,7 +31,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnyKeyToStart:modulate")
+tracks/0/path = NodePath("AnyKeyDown:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -45,7 +46,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnyKeyToStart:modulate")
+tracks/0/path = NodePath("AnyKeyDown:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -161,7 +162,66 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 30
 text = "by zhtsu"
 
-[node name="AnyKeyToStart" type="Label" parent="."]
+[node name="Buttons" type="VBoxContainer" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 405.0
+offset_right = 152.0
+offset_bottom = 568.0
+grow_vertical = 0
+theme_override_constants/separation = 20
+script = ExtResource("3_o31m0")
+
+[node name="Start" type="Label" parent="Control/Buttons"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
+theme_override_font_sizes/font_size = 40
+text = "新游戏"
+
+[node name="Button" type="Button" parent="Control/Buttons/Start"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Continue" type="Label" parent="Control/Buttons"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
+theme_override_font_sizes/font_size = 40
+text = "继续"
+
+[node name="Button" type="Button" parent="Control/Buttons/Continue"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Exit" type="Label" parent="Control/Buttons"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
+theme_override_font_sizes/font_size = 40
+text = "退出"
+
+[node name="Button" type="Button" parent="Control/Buttons/Exit"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnyKeyDown" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -176,10 +236,17 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
 theme_override_font_sizes/font_size = 60
-text = "任意键开始"
+text = "按下任意按钮"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_t6ua0")
 }
 autoplay = "AnyKeyHint"
+
+[connection signal="mouse_entered" from="Control/Buttons/Start/Button" to="Control/Buttons" method="_on_start_button_mouse_entered"]
+[connection signal="mouse_exited" from="Control/Buttons/Start/Button" to="Control/Buttons" method="_on_start_button_mouse_exited"]
+[connection signal="mouse_entered" from="Control/Buttons/Continue/Button" to="Control/Buttons" method="_on_continue_button_mouse_entered"]
+[connection signal="mouse_exited" from="Control/Buttons/Continue/Button" to="Control/Buttons" method="_on_continue_button_mouse_exited"]
+[connection signal="mouse_entered" from="Control/Buttons/Exit/Button" to="Control/Buttons" method="_on_exit_button_mouse_entered"]
+[connection signal="mouse_exited" from="Control/Buttons/Exit/Button" to="Control/Buttons" method="_on_exit_button_mouse_exited"]

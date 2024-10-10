@@ -6,7 +6,7 @@ extends Control
 @onready var G_image: TextureRect = $Control/G
 @onready var H_image: TextureRect = $Control/H
 @onready var T_image: TextureRect = $Control/T
-@onready var any_key_label: Label = $AnyKeyToStart
+@onready var any_key_label: Label = $AnyKeyDown
 
 # 字体抖动的角度
 @export var shake_rotation: float = 8.0
@@ -26,7 +26,8 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey or event is InputEventMouseButton:
 		$AnimationPlayer.stop()
-		start()
+		$AnyKeyDown.hide()
+		show_menu_buttons()
 		
 		
 func bind_shake_event(image: TextureRect) -> void:
@@ -38,6 +39,10 @@ func bind_shake_event(image: TextureRect) -> void:
 func shake_image(image: TextureRect) -> void:
 	var dir: float = [-1.0, 1.0].pick_random()
 	image.rotation = shake_rotation * deg_to_rad(dir)
+	
+	
+func show_menu_buttons() -> void:
+	$Control/Buttons.show()
 	
 	
 func start() -> void:
