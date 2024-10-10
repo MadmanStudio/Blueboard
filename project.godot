@@ -13,12 +13,13 @@ config_version=5
 config/name="LIGHT"
 run/main_scene="res://entry/main.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
-config/icon="res://base/icon.png"
+config/icon="res://assets/texture/icon.png"
 
 [autoload]
 
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 SoundManager="*res://addons/sound_manager/sound_manager.gd"
+Paths="*res://preloaded/paths.gd"
 
 [debug]
 
@@ -39,7 +40,7 @@ main=""
 
 [gui]
 
-theme/custom_font="res://base/fusion-pixel-12px-monospaced-zh_hans.ttf"
+theme/custom_font="res://assets/font/fusion-pixel-12px-monospaced-zh_hans.ttf"
 
 [rendering]
 

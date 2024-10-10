@@ -49,4 +49,4 @@ func start() -> void:
 	
 func load_level() -> void:
 	var main: Main = get_tree().get_first_node_in_group("main")
-	main.load_scene("test load scene")
+	main.load_scene(Paths.map_L_home)

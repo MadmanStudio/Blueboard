@@ -1,3 +1,5 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+Ovani Plugin 1.4/
+*.tmp
