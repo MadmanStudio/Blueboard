@@ -1,11 +1,11 @@
 extends Control
 
 
-@onready var L_image: TextureRect = $Control/L
-@onready var I_image: TextureRect = $Control/I
-@onready var G_image: TextureRect = $Control/G
-@onready var H_image: TextureRect = $Control/H
-@onready var T_image: TextureRect = $Control/T
+@onready var L_image: TextureRect = $L
+@onready var I_image: TextureRect = $I
+@onready var G_image: TextureRect = $G
+@onready var H_image: TextureRect = $H
+@onready var T_image: TextureRect = $T
 @onready var any_key_label: Label = $AnyKeyDown
 
 # 字体抖动的角度
@@ -42,16 +42,5 @@ func shake_image(image: TextureRect) -> void:
 	
 	
 func show_menu_buttons() -> void:
-	$Control/Buttons.show()
+	$Buttons.show()
 	
-	
-func start() -> void:
-	any_key_label.hide()
-	var tween: Tween = get_tree().create_tween()
-	tween.tween_property($Control, "modulate", Color(1.0, 1.0, 1.0, 0.0), 1)
-	tween.tween_callback(load_level)
-	
-	
-func load_level() -> void:
-	var main: Main = get_tree().get_first_node_in_group("main")
-	main.load_scene(Paths.map_L_home)
