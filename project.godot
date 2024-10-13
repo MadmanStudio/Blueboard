@@ -20,6 +20,7 @@ config/icon="res://assets/texture/icon.png"
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 SoundManager="*res://addons/sound_manager/sound_manager.gd"
 Paths="*res://preloaded/paths.gd"
+Tables="*res://preloaded/tables.gd"
 
 [debug]
 
@@ -29,6 +30,7 @@ gdscript/warnings/untyped_declaration=1
 
 window/size/viewport_height=640
 window/size/resizable=false
+mouse_cursor/custom_image="res://assets/texture/cursor.png"
 
 [editor_plugins]
 

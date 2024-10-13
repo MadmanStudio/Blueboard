@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://do50q0jwegwf8"]
+
+[ext_resource type="Script" path="res://element/L/element_l.gd" id="1_i5j00"]
+[ext_resource type="PackedScene" uid="uid://bbtvaphcjmt2x" path="res://element/element_component/element_component.tscn" id="1_svmi0"]
+
+[node name="ElementL" type="Node2D"]
+script = ExtResource("1_i5j00")
+
+[node name="ElementComponent" parent="." instance=ExtResource("1_svmi0")]
+position = Vector2(100, 100)
+scale = Vector2(10, 10)

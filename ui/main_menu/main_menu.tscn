@@ -1,7 +1,28 @@
-[gd_scene load_steps=6 format=3 uid="uid://ckjpigq7m00pl"]
+[gd_scene load_steps=12 format=3 uid="uid://ckjpigq7m00pl"]
 
 [ext_resource type="Script" path="res://ui/main_menu/main_menu.gd" id="1_exuqm"]
+[ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/elements.aseprite" id="2_byy8o"]
 [ext_resource type="Script" path="res://ui/main_menu/buttons.gd" id="3_o31m0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_esr3p"]
+atlas = ExtResource("2_byy8o")
+region = Rect2(5, 20, 6, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pkw2i"]
+atlas = ExtResource("2_byy8o")
+region = Rect2(22, 20, 4, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dcjnn"]
+atlas = ExtResource("2_byy8o")
+region = Rect2(37, 20, 6, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yibfv"]
+atlas = ExtResource("2_byy8o")
+region = Rect2(53, 20, 6, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uspqv"]
+atlas = ExtResource("2_byy8o")
+region = Rect2(69, 20, 6, 8)
 
 [sub_resource type="Animation" id="Animation_b82qc"]
 resource_name = "AnyKeyHint"
@@ -61,45 +82,49 @@ color = Color(0, 0, 0, 1)
 
 [node name="L" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 108.0
-offset_top = 172.0
-offset_right = 308.0
-offset_bottom = 372.0
-pivot_offset = Vector2(100, 100)
+offset_left = 153.0
+offset_top = 104.0
+offset_right = 273.0
+offset_bottom = 264.0
+pivot_offset = Vector2(60, 80)
 mouse_filter = 2
+texture = SubResource("AtlasTexture_esr3p")
 
 [node name="Timer" type="Timer" parent="L"]
 
 [node name="I" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 237.0
-offset_top = 73.0
-offset_right = 437.0
-offset_bottom = 273.0
-pivot_offset = Vector2(100, 100)
+offset_left = 338.0
+offset_top = 154.0
+offset_right = 418.0
+offset_bottom = 314.0
+pivot_offset = Vector2(40, 80)
 mouse_filter = 2
+texture = SubResource("AtlasTexture_pkw2i")
 
 [node name="Timer" type="Timer" parent="I"]
 
 [node name="G" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 464.0
-offset_top = 128.0
-offset_right = 664.0
-offset_bottom = 328.0
-pivot_offset = Vector2(100, 100)
+offset_left = 532.0
+offset_top = 105.0
+offset_right = 652.0
+offset_bottom = 265.0
+pivot_offset = Vector2(60, 80)
 mouse_filter = 2
+texture = SubResource("AtlasTexture_dcjnn")
 
 [node name="Timer" type="Timer" parent="G"]
 
 [node name="H" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 678.0
-offset_top = 152.0
-offset_right = 878.0
-offset_bottom = 408.0
-pivot_offset = Vector2(100, 128)
+offset_left = 739.0
+offset_top = 161.0
+offset_right = 859.0
+offset_bottom = 321.0
+pivot_offset = Vector2(60, 80)
 mouse_filter = 2
+texture = SubResource("AtlasTexture_yibfv")
 
 [node name="Timer" type="Timer" parent="H"]
 
@@ -107,10 +132,11 @@ mouse_filter = 2
 layout_mode = 0
 offset_left = 909.0
 offset_top = 106.0
-offset_right = 1109.0
-offset_bottom = 362.0
-pivot_offset = Vector2(100, 128)
+offset_right = 1029.0
+offset_bottom = 266.0
+pivot_offset = Vector2(60, 80)
 mouse_filter = 2
+texture = SubResource("AtlasTexture_uspqv")
 
 [node name="Timer" type="Timer" parent="T"]
 
@@ -129,25 +155,30 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 30
 text = "by zhtsu"
 
-[node name="Buttons" type="VBoxContainer" parent="."]
+[node name="Buttons" type="Control" parent="."]
 visible = false
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 32.0
 offset_top = -195.0
-offset_right = 152.0
+offset_right = 120.0
 offset_bottom = -32.0
 grow_vertical = 0
-theme_override_constants/separation = 20
 script = ExtResource("3_o31m0")
 
 [node name="Start" type="Label" parent="Buttons"]
+custom_minimum_size = Vector2(152, 0)
 layout_mode = 2
+offset_right = 152.0
+offset_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
 theme_override_font_sizes/font_size = 40
 text = "新游戏"
+horizontal_alignment = 2
 
 [node name="Button" type="Button" parent="Buttons/Start"]
 modulate = Color(0, 0, 0, 0)
@@ -158,13 +189,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Continue" type="Label" parent="Buttons"]
+[node name="Load" type="Label" parent="Buttons"]
+custom_minimum_size = Vector2(112, 0)
 layout_mode = 2
+offset_top = 61.0
+offset_right = 112.0
+offset_bottom = 102.0
+size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
 theme_override_font_sizes/font_size = 40
-text = "继续"
+text = "加载"
+horizontal_alignment = 2
 
-[node name="Button" type="Button" parent="Buttons/Continue"]
+[node name="Button" type="Button" parent="Buttons/Load"]
 modulate = Color(0, 0, 0, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -174,10 +211,16 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Exit" type="Label" parent="Buttons"]
+custom_minimum_size = Vector2(112, 0)
 layout_mode = 2
+offset_top = 122.0
+offset_right = 112.0
+offset_bottom = 163.0
+size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
 theme_override_font_sizes/font_size = 40
 text = "退出"
+horizontal_alignment = 2
 
 [node name="Button" type="Button" parent="Buttons/Exit"]
 modulate = Color(0, 0, 0, 0)
@@ -213,8 +256,8 @@ autoplay = "AnyKeyHint"
 
 [connection signal="mouse_entered" from="Buttons/Start/Button" to="Buttons" method="_on_start_button_mouse_entered"]
 [connection signal="mouse_exited" from="Buttons/Start/Button" to="Buttons" method="_on_start_button_mouse_exited"]
-[connection signal="mouse_entered" from="Buttons/Continue/Button" to="Buttons" method="_on_continue_button_mouse_entered"]
-[connection signal="mouse_exited" from="Buttons/Continue/Button" to="Buttons" method="_on_continue_button_mouse_exited"]
+[connection signal="mouse_entered" from="Buttons/Load/Button" to="Buttons" method="_on_load_button_mouse_entered"]
+[connection signal="mouse_exited" from="Buttons/Load/Button" to="Buttons" method="_on_load_button_mouse_exited"]
 [connection signal="button_up" from="Buttons/Exit/Button" to="Buttons" method="_on_button_button_up"]
 [connection signal="mouse_entered" from="Buttons/Exit/Button" to="Buttons" method="_on_exit_button_mouse_entered"]
 [connection signal="mouse_exited" from="Buttons/Exit/Button" to="Buttons" method="_on_exit_button_mouse_exited"]

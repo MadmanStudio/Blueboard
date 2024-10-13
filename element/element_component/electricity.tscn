@@ -1,0 +1,67 @@
+[gd_scene load_steps=6 format=3 uid="uid://ctban177deixj"]
+
+[ext_resource type="Script" path="res://element/element_component/electricity.gd" id="1_r174l"]
+
+[sub_resource type="Animation" id="Animation_lftye"]
+resource_name = "Input"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:points")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [PackedVector2Array(10, 0, 10, 0), PackedVector2Array(10, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_nhygt"]
+resource_name = "Output"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:points")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 0, 0), PackedVector2Array(0, 0, 10, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_p5a2j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:points")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v371c"]
+_data = {
+"Input": SubResource("Animation_lftye"),
+"Output": SubResource("Animation_nhygt"),
+"RESET": SubResource("Animation_p5a2j")
+}
+
+[node name="Electricity" type="Line2D"]
+points = PackedVector2Array(0, 0, 0, 0)
+width = 4.0
+script = ExtResource("1_r174l")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_v371c")
+}
