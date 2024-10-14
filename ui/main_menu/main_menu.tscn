@@ -1,28 +1,28 @@
 [gd_scene load_steps=12 format=3 uid="uid://ckjpigq7m00pl"]
 
 [ext_resource type="Script" path="res://ui/main_menu/main_menu.gd" id="1_exuqm"]
-[ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/elements.aseprite" id="2_byy8o"]
+[ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="2_byy8o"]
 [ext_resource type="Script" path="res://ui/main_menu/buttons.gd" id="3_o31m0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_esr3p"]
 atlas = ExtResource("2_byy8o")
-region = Rect2(5, 20, 6, 8)
+region = Rect2(176, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pkw2i"]
 atlas = ExtResource("2_byy8o")
-region = Rect2(22, 20, 4, 8)
+region = Rect2(192, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dcjnn"]
 atlas = ExtResource("2_byy8o")
-region = Rect2(37, 20, 6, 8)
+region = Rect2(208, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yibfv"]
 atlas = ExtResource("2_byy8o")
-region = Rect2(53, 20, 6, 8)
+region = Rect2(224, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uspqv"]
 atlas = ExtResource("2_byy8o")
-region = Rect2(69, 20, 6, 8)
+region = Rect2(240, 0, 16, 16)
 
 [sub_resource type="Animation" id="Animation_b82qc"]
 resource_name = "AnyKeyHint"
@@ -85,8 +85,8 @@ layout_mode = 0
 offset_left = 153.0
 offset_top = 104.0
 offset_right = 273.0
-offset_bottom = 264.0
-pivot_offset = Vector2(60, 80)
+offset_bottom = 224.0
+pivot_offset = Vector2(60, 60)
 mouse_filter = 2
 texture = SubResource("AtlasTexture_esr3p")
 
@@ -96,9 +96,9 @@ texture = SubResource("AtlasTexture_esr3p")
 layout_mode = 0
 offset_left = 338.0
 offset_top = 154.0
-offset_right = 418.0
-offset_bottom = 314.0
-pivot_offset = Vector2(40, 80)
+offset_right = 458.0
+offset_bottom = 274.0
+pivot_offset = Vector2(60, 60)
 mouse_filter = 2
 texture = SubResource("AtlasTexture_pkw2i")
 
@@ -109,8 +109,8 @@ layout_mode = 0
 offset_left = 532.0
 offset_top = 105.0
 offset_right = 652.0
-offset_bottom = 265.0
-pivot_offset = Vector2(60, 80)
+offset_bottom = 225.0
+pivot_offset = Vector2(60, 60)
 mouse_filter = 2
 texture = SubResource("AtlasTexture_dcjnn")
 
@@ -121,8 +121,8 @@ layout_mode = 0
 offset_left = 739.0
 offset_top = 161.0
 offset_right = 859.0
-offset_bottom = 321.0
-pivot_offset = Vector2(60, 80)
+offset_bottom = 281.0
+pivot_offset = Vector2(60, 60)
 mouse_filter = 2
 texture = SubResource("AtlasTexture_yibfv")
 
@@ -133,8 +133,8 @@ layout_mode = 0
 offset_left = 909.0
 offset_top = 106.0
 offset_right = 1029.0
-offset_bottom = 266.0
-pivot_offset = Vector2(60, 80)
+offset_bottom = 226.0
+pivot_offset = Vector2(60, 60)
 mouse_filter = 2
 texture = SubResource("AtlasTexture_uspqv")
 
@@ -151,7 +151,7 @@ offset_left = -120.0
 offset_top = -30.0
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
 theme_override_font_sizes/font_size = 30
 text = "by zhtsu"
 

@@ -7,5 +7,6 @@ var ElectricityColorTable: Dictionary = {
 	Electricity.Type.YELLOW: Color.from_string("#ffec27", Color.BLACK),
 	Electricity.Type.GREEN: Color.from_string("#00e436", Color.BLACK),
 	Electricity.Type.BLUE: Color.from_string("#29adff", Color.BLACK),
-	Electricity.Type.WHITE: Color.from_string("#fff1e8", Color.BLACK)
+	Electricity.Type.WHITE: Color.from_string("#fff1e8", Color.BLACK),
+	Electricity.Type.PURPLE: Color.from_string("#7e2553", Color.BLACK)
 }

@@ -11,7 +11,7 @@ func _ready() -> void:
 	pass
 	
 	
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if loading:
 		var progress : Array = []
 		ResourceLoader.load_threaded_get_status(current_loaded_scene_path, progress)

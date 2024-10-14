@@ -4,7 +4,7 @@ class_name Electricity
 
 enum Type
 {
-	RED, ORANGE, YELLOW, GREEN, BLUE, WHITE
+	RED, BLUE, YELLOW, PURPLE, ORANGE, GREEN, WHITE
 }
 
 

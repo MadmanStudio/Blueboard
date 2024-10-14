@@ -1,3 +1,4 @@
+@tool
 extends Node2D
 class_name ElementComponent
 
@@ -9,12 +10,18 @@ enum Direction
 
 # 每个电路允许输入的电力类型
 # 如果电路不支持该电力类型，则无法在该电路上输入或输出电力
-# 对于一个电路，只有两种情况：允许全部类型，允许单一类型
+# 对于一个电路，只有二种情况：允许全部类型（ALL），允许单一类型
+# 这个枚举的类型定义位置十分关键，前面的类型顺序必须时刻与 Electricity.Type 保持同步
 enum AllowInputType
 {
-	RED, ORANGE, YELLOW, GREEN, BLUE, ALL
+	RED, BLUE, YELLOW, PURPLE, ORANGE, GREEN, WHITE, ALL
 }
 
+@export var surface_texture: Texture2D:
+	set(new_texture):
+		surface_texture = new_texture
+		if Engine.is_editor_hint():
+			$Control/Surface.texture = new_texture
 
 # 当前元件的四个电路的数据，在元件被顺时针旋转后进行滚动
 # 按照下标依次为：上，右，下，左
@@ -60,7 +67,6 @@ func input_electricity(type: Electricity.Type, dir: Direction) -> void:
 	electricity_array[dir].input(type)
 	await get_tree().create_timer(0.4).timeout
 	fill_core(type)
-	transmit_electricity(type, dir)
 	
 	
 func check_line_allow_input_type(type: Electricity.Type, dir: Direction) -> bool:
@@ -71,9 +77,3 @@ func check_line_allow_input_type(type: Electricity.Type, dir: Direction) -> bool
 	else:
 		return false
 		
-	
-func transmit_electricity(type: Electricity.Type, input_dir: Direction) -> void:
-	for dir: Direction in Direction.values():
-		if input_dir == dir:
-			continue
-		output_electricity(type, dir)
