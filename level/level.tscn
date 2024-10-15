@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cj11wvt8yl5gq"]
+
+[ext_resource type="Script" path="res://level/level.gd" id="1_kf6bj"]
+[ext_resource type="PackedScene" uid="uid://njkcbtgmj7nk" path="res://level/map_test/map_test.tmx" id="2_3jmcf"]
+
+[node name="Level" type="Node"]
+script = ExtResource("1_kf6bj")
+
+[node name="Map" type="Node" parent="."]
+
+[node name="map_test" parent="Map" instance=ExtResource("2_3jmcf")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+physics_interpolation_mode = 2
+limit_left = 0
+limit_top = 0
+limit_right = 1152
+limit_bottom = 640

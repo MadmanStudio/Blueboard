@@ -1,4 +1,5 @@
 extends Node
 
 
-const map_L_home = "res://map/L_home/map_L_home.tscn"
+const level = "res://level/level.tscn"
+const map_test = "res://level/map_test/map_test.tscn"

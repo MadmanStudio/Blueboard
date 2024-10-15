@@ -17,7 +17,6 @@ config/icon="res://assets/texture/icon.png"
 
 [autoload]
 
-PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 SoundManager="*res://addons/sound_manager/sound_manager.gd"
 Paths="*res://preloaded/paths.gd"
 Tables="*res://preloaded/tables.gd"
@@ -34,7 +33,7 @@ mouse_cursor/custom_image="res://assets/texture/cursor.png"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/YATI/plugin.cfg", "res://addons/nklbdev.importality/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/sound_manager/plugin.cfg")
+enabled=PackedStringArray("res://addons/YATI/plugin.cfg", "res://addons/nklbdev.importality/plugin.cfg", "res://addons/sound_manager/plugin.cfg")
 
 [global_group]
 

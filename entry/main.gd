@@ -2,7 +2,15 @@ extends Node
 class_name Main
 
 
-var loading: bool = false
+var loading: bool = false:
+	set(new_state):
+		loading = new_state
+		if new_state == true:
+			$Loading.show()
+		else:
+			$Loading.hide()
+
+
 var current_loaded_scene_path: String
 var loaded_scene: PackedScene
 
@@ -20,18 +28,18 @@ func _process(_delta: float) -> void:
 	
 	
 func load_scene(loaded_scene_path: String) -> void:
-	$Loading.show()
+	loading = true
 	clear_canvas_layer($Level)
 	ResourceLoader.load_threaded_request(loaded_scene_path)
 	current_loaded_scene_path = loaded_scene_path
-	loading = true
 	
 	
 func on_load_scene_completed() -> void:
-	loading = false
 	loaded_scene = ResourceLoader.load_threaded_get(current_loaded_scene_path)
-	$Loading.hide()
-	$Level.add_child(loaded_scene.instantiate())
+	if loaded_scene != null:
+		loading = false
+		var scene: Node = loaded_scene.instantiate()
+		$Level.add_child(scene)
 	
 	
 func clear_canvas_layer(canvas_layer: CanvasLayer) -> void:

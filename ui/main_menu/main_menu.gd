@@ -14,6 +14,8 @@ extends Control
 @export var min_shake_time: float = 0.4
 @export var max_shake_time: float = 0.5
 
+var any_key_down: bool = false
+
 
 func _ready() -> void:
 	bind_shake_event(L_image)
@@ -25,9 +27,21 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey or event is InputEventMouseButton:
-		$AnimationPlayer.stop()
-		$AnyKeyDown.hide()
-		show_menu_buttons()
+		if event is InputEventMouseButton:
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP or\
+			event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+				return
+		if any_key_down == false:
+			any_key_down = true
+			$AnyKeyDown.hide()
+			$AnimationPlayer.pause()
+			show_menu_buttons()
+		if event is InputEventKey:
+			if event.keycode == KEY_ESCAPE && any_key_down == true:
+				any_key_down = false
+				$AnyKeyDown.show()
+				$AnimationPlayer.play()
+				$Buttons.hide()
 		
 		
 func bind_shake_event(image: TextureRect) -> void:
@@ -42,5 +56,8 @@ func shake_image(image: TextureRect) -> void:
 	
 	
 func show_menu_buttons() -> void:
-	$Buttons.show()
+	var tween: Tween = get_tree().create_tween()
+	$Buttons.modulate.a = 0
+	$Buttons.visible = true
+	tween.tween_property($Buttons, "modulate", Color.WHITE, 1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
 	
