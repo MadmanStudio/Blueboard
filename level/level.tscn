@@ -6,13 +6,13 @@
 [node name="Level" type="Node"]
 script = ExtResource("1_kf6bj")
 
-[node name="Map" type="Node" parent="."]
+[node name="Map" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(576, 320)
 
 [node name="map_test" parent="Map" instance=ExtResource("2_3jmcf")]
-
-[node name="Camera2D" type="Camera2D" parent="."]
-physics_interpolation_mode = 2
-limit_left = 0
-limit_top = 0
-limit_right = 1152
-limit_bottom = 640
