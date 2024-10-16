@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.11.0" name="element" tilewidth="32" tileheight="32" tilecount="256" columns="16">
+<tileset version="1.5" tiledversion="1.7.2" name="element" tilewidth="32" tileheight="32" tilecount="256" columns="16">
  <image source="../assets/texture/element.png" width="512" height="512"/>
  <tile id="0">
   <properties>
    <property name="id" value="L_purple"/>
   </properties>
  </tile>
+ <tile id="1">
+  <properties>
+   <property name="id" value="I_purple"/>
+  </properties>
+ </tile>
  <tile id="2">
   <properties>
    <property name="id" value="G_red"/>
+  </properties>
+ </tile>
+ <tile id="3">
+  <properties>
+   <property name="id" value="hinderer"/>
+  </properties>
+ </tile>
+ <tile id="4">
+  <properties>
+   <property name="id" value="T_b2r"/>
   </properties>
  </tile>
  <tile id="5">
@@ -26,29 +41,24 @@
    <property name="id" value="line_one"/>
   </properties>
  </tile>
- <tile id="8">
-  <properties>
-   <property name="id" value="line_two"/>
-  </properties>
- </tile>
- <tile id="9">
-  <properties>
-   <property name="id" value="line_three"/>
-  </properties>
- </tile>
- <tile id="10">
-  <properties>
-   <property name="id" value="line_four"/>
-  </properties>
- </tile>
  <tile id="16">
   <properties>
    <property name="id" value="L_green"/>
   </properties>
  </tile>
+ <tile id="17">
+  <properties>
+   <property name="id" value="I_green"/>
+  </properties>
+ </tile>
  <tile id="18">
   <properties>
    <property name="id" value="G_blue"/>
+  </properties>
+ </tile>
+ <tile id="20">
+  <properties>
+   <property name="id" value="T_y2r"/>
   </properties>
  </tile>
  <tile id="22">
@@ -86,9 +96,19 @@
    <property name="id" value="L_yellow"/>
   </properties>
  </tile>
+ <tile id="33">
+  <properties>
+   <property name="id" value="I_orange"/>
+  </properties>
+ </tile>
  <tile id="34">
   <properties>
    <property name="id" value="G_yellow"/>
+  </properties>
+ </tile>
+ <tile id="36">
+  <properties>
+   <property name="id" value="T_r2b"/>
   </properties>
  </tile>
  <tile id="37">
@@ -141,6 +161,11 @@
    <property name="id" value="blueboard_08"/>
   </properties>
  </tile>
+ <tile id="52">
+  <properties>
+   <property name="id" value="T_y2b"/>
+  </properties>
+ </tile>
  <tile id="53">
   <properties>
    <property name="id" value="blueboard_point_09"/>
@@ -189,6 +214,11 @@
  <tile id="62">
   <properties>
    <property name="id" value="blueboard_13"/>
+  </properties>
+ </tile>
+ <tile id="68">
+  <properties>
+   <property name="id" value="T_r2y"/>
   </properties>
  </tile>
  <tile id="69">
@@ -241,6 +271,11 @@
    <property name="id" value="blueboard_18"/>
   </properties>
  </tile>
+ <tile id="84">
+  <properties>
+   <property name="id" value="T_b2y"/>
+  </properties>
+ </tile>
  <tile id="86">
   <properties>
    <property name="id" value="blueboard_point_19"/>
@@ -269,6 +304,11 @@
  <tile id="93">
   <properties>
    <property name="id" value="blueboard_21"/>
+  </properties>
+ </tile>
+ <tile id="96">
+  <properties>
+   <property name="id" value="blueboard_03"/>
   </properties>
  </tile>
  <wangsets>

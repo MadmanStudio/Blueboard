@@ -11,7 +11,7 @@ var ElectricityColorTable: Dictionary = {
 	Electricity.Type.PURPLE: Color.from_string("#7e2553", Color.BLACK)
 }
 
-var BlueboardTileAtlasCoordTable: Dictionary = {
+var BlueboardTileAtlasCoordsTable: Dictionary = {
 	"blueboard_point_01": Vector2i(11, 1),
 	"blueboard_point_02": Vector2i(12, 1),
 	"blueboard_point_03": Vector2i(13, 1),
@@ -63,4 +63,23 @@ var BlueboardTileAtlasCoordTable: Dictionary = {
 	"blueboard_19": Vector2i(6, 5),
 	"blueboard_20": Vector2i(7, 5),
 	"blueboard_21": Vector2i(8, 5)
+}
+
+var ElementPathTable: Dictionary = {
+	"G_red": "res://element/generator/element_G_red.tscn",
+	"G_blue": "res://element/generator/element_G_blue.tscn",
+	"G_yellow": "res://element/generator/element_G_yellow.tscn",
+	"L_purple": "res://element/leacher/element_L_purple.tscn",
+	"L_green": "res://element/leacher/element_L_green.tscn",
+	"L_orange": "res://element/leacher/element_L_orange.tscn",
+	"I_purple": "res://element/intermixer/element_I_purple.tscn",
+	"I_green": "res://element/intermixer/element_I_green.tscn",
+	"I_orange": "res://element/intermixer/element_I_orange.tscn",
+	"hinderer": "res://element/hinderer/element_H.tscn",
+	"jumper_in": "res://element/jumper/element_jumper_in.tscn",
+	"jumper_out": "res://element/jumper/element_jumper_out.tscn",
+	"line_one": "res://element/line/element_L_yellow.tscn",
+	"line_two": "res://element/line/element_L_yellow.tscn",
+	"line_three": "res://element/line/element_L_yellow.tscn",
+	"line_four": "res://element/line/element_L_yellow.tscn"
 }

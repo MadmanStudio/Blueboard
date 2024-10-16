@@ -20,8 +20,7 @@ enum AllowInputType
 @export var surface_texture: Texture2D:
 	set(new_texture):
 		surface_texture = new_texture
-		if Engine.is_editor_hint():
-			$Control/Surface.texture = new_texture
+		$Control/Surface.texture = new_texture
 
 # 当前元件的四个电路的数据，在元件被顺时针旋转后进行滚动
 # 按照下标依次为：上，右，下，左
@@ -49,12 +48,20 @@ func clear_core() -> void:
 	$Control/Core.color = Tables.ElectricityColorTable.get(Electricity.Type.WHITE)
 
 
-func output_electricity(type: Electricity.Type, dir: Direction) -> void:
+func output_electricity(dir: Direction) -> void:
 	if line_disabled_array[dir] == true:
 		return
 	if line_outputable_array[dir] == false:
 		return
 	electricity_array[dir].output(line_output_type_array[dir])
+	
+	
+func output_electricity_with_type(type: Electricity.Type, dir: Direction) -> void:
+	if line_disabled_array[dir] == true:
+		return
+	if line_outputable_array[dir] == false:
+		return
+	electricity_array[dir].output(type)
 	
 	
 func input_electricity(type: Electricity.Type, dir: Direction) -> void:
