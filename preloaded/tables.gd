@@ -10,3 +10,57 @@ var ElectricityColorTable: Dictionary = {
 	Electricity.Type.WHITE: Color.from_string("#fff1e8", Color.BLACK),
 	Electricity.Type.PURPLE: Color.from_string("#7e2553", Color.BLACK)
 }
+
+var BlueboardTileAtlasCoordTable: Dictionary = {
+	"blueboard_point_01": Vector2i(11, 1),
+	"blueboard_point_02": Vector2i(12, 1),
+	"blueboard_point_03": Vector2i(13, 1),
+	
+	"blueboard_point_04": Vector2i(10, 2),
+	"blueboard_point_05": Vector2i(11, 2),
+	"blueboard_point_06": Vector2i(12, 2),
+	"blueboard_point_07": Vector2i(13, 2),
+	"blueboard_point_08": Vector2i(14, 2),
+	
+	"blueboard_point_09": Vector2i(10, 3),
+	"blueboard_point_10": Vector2i(11, 3),
+	"blueboard_point_11": Vector2i(12, 3),
+	"blueboard_point_12": Vector2i(13, 3),
+	"blueboard_point_13": Vector2i(14, 3),
+	
+	"blueboard_point_14": Vector2i(10, 4),
+	"blueboard_point_15": Vector2i(11, 4),
+	"blueboard_point_16": Vector2i(12, 4),
+	"blueboard_point_17": Vector2i(13, 4),
+	"blueboard_point_18": Vector2i(14, 4),
+	
+	"blueboard_point_19": Vector2i(11, 5),
+	"blueboard_point_20": Vector2i(12, 5),
+	"blueboard_point_21": Vector2i(13, 5),
+	
+	"blueboard_01": Vector2i(6, 1),
+	"blueboard_02": Vector2i(7, 1),
+	"blueboard_03": Vector2i(8, 1),
+	
+	"blueboard_04": Vector2i(5, 2),
+	"blueboard_05": Vector2i(6, 2),
+	"blueboard_06": Vector2i(7, 2),
+	"blueboard_07": Vector2i(8, 2),
+	"blueboard_08": Vector2i(9, 2),
+	
+	"blueboard_09": Vector2i(5, 3),
+	"blueboard_10": Vector2i(6, 3),
+	"blueboard_11": Vector2i(7, 3),
+	"blueboard_12": Vector2i(8, 3),
+	"blueboard_13": Vector2i(9, 3),
+	
+	"blueboard_14": Vector2i(5, 4),
+	"blueboard_15": Vector2i(6, 4),
+	"blueboard_16": Vector2i(7, 4),
+	"blueboard_17": Vector2i(8, 4),
+	"blueboard_18": Vector2i(9, 4),
+	
+	"blueboard_19": Vector2i(6, 5),
+	"blueboard_20": Vector2i(7, 5),
+	"blueboard_21": Vector2i(8, 5)
+}

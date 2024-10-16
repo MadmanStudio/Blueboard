@@ -3,15 +3,11 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ob1kv08o0ocy"
-path="res://.godot/imported/element.aseprite-7d31fec5d50885145a8a8179e9ce42f9.ctex"
-metadata={
-"vram_texture": false
-}
+valid=false
 
 [deps]
 
 source_file="res://assets/texture/element.aseprite"
-dest_files=["res://.godot/imported/element.aseprite-7d31fec5d50885145a8a8179e9ce42f9.ctex"]
 
 [params]
 

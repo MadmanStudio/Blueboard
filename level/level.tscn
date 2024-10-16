@@ -1,18 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://cj11wvt8yl5gq"]
+[gd_scene load_steps=4 format=3 uid="uid://cj11wvt8yl5gq"]
 
 [ext_resource type="Script" path="res://level/level.gd" id="1_kf6bj"]
-[ext_resource type="PackedScene" uid="uid://njkcbtgmj7nk" path="res://level/map_test/map_test.tmx" id="2_3jmcf"]
+[ext_resource type="PackedScene" uid="uid://bpwbue0gf3hjp" path="res://level/map_tutorial_001/map_tutorial_001.tmx" id="2_l070w"]
+[ext_resource type="Script" path="res://level/map_tutorial_001/map_tutorial_001.gd" id="3_n0gga"]
 
 [node name="Level" type="Node"]
 script = ExtResource("1_kf6bj")
 
 [node name="Map" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(576, 320)
+script = ExtResource("3_n0gga")
 
-[node name="map_test" parent="Map" instance=ExtResource("2_3jmcf")]
+[node name="map_tutorial_001" parent="Map" instance=ExtResource("2_l070w")]

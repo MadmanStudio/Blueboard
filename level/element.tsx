@@ -1,14 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.5" tiledversion="1.7.2" name="element" tilewidth="32" tileheight="32" tilecount="256" columns="16">
+<tileset version="1.10" tiledversion="1.11.0" name="element" tilewidth="32" tileheight="32" tilecount="256" columns="16">
  <image source="../assets/texture/element.png" width="512" height="512"/>
  <tile id="0">
   <properties>
    <property name="id" value="L_purple"/>
   </properties>
  </tile>
+ <tile id="2">
+  <properties>
+   <property name="id" value="G_red"/>
+  </properties>
+ </tile>
+ <tile id="5">
+  <properties>
+   <property name="id" value="jumper_in"/>
+  </properties>
+ </tile>
+ <tile id="6">
+  <properties>
+   <property name="id" value="jumper_out"/>
+  </properties>
+ </tile>
+ <tile id="7">
+  <properties>
+   <property name="id" value="line_one"/>
+  </properties>
+ </tile>
+ <tile id="8">
+  <properties>
+   <property name="id" value="line_two"/>
+  </properties>
+ </tile>
+ <tile id="9">
+  <properties>
+   <property name="id" value="line_three"/>
+  </properties>
+ </tile>
+ <tile id="10">
+  <properties>
+   <property name="id" value="line_four"/>
+  </properties>
+ </tile>
  <tile id="16">
   <properties>
    <property name="id" value="L_green"/>
+  </properties>
+ </tile>
+ <tile id="18">
+  <properties>
+   <property name="id" value="G_blue"/>
   </properties>
  </tile>
  <tile id="22">
@@ -44,6 +84,11 @@
  <tile id="32">
   <properties>
    <property name="id" value="L_yellow"/>
+  </properties>
+ </tile>
+ <tile id="34">
+  <properties>
+   <property name="id" value="G_yellow"/>
   </properties>
  </tile>
  <tile id="37">
@@ -166,6 +211,11 @@
    <property name="id" value="blueboard_point_17"/>
   </properties>
  </tile>
+ <tile id="73">
+  <properties>
+   <property name="id" value="blueboard_point_18"/>
+  </properties>
+ </tile>
  <tile id="74">
   <properties>
    <property name="id" value="blueboard_14"/>
@@ -193,32 +243,32 @@
  </tile>
  <tile id="86">
   <properties>
-   <property name="id" value="blueboard_point_18"/>
+   <property name="id" value="blueboard_point_19"/>
   </properties>
  </tile>
  <tile id="87">
   <properties>
-   <property name="id" value="blueboard_point_19"/>
+   <property name="id" value="blueboard_point_20"/>
   </properties>
  </tile>
  <tile id="88">
   <properties>
-   <property name="id" value="blueboard_point_20"/>
+   <property name="id" value="blueboard_point_21"/>
   </properties>
  </tile>
  <tile id="91">
   <properties>
-   <property name="id" value="blueboard_18"/>
+   <property name="id" value="blueboard_19"/>
   </properties>
  </tile>
  <tile id="92">
   <properties>
-   <property name="id" value="blueboard_19"/>
+   <property name="id" value="blueboard_20"/>
   </properties>
  </tile>
  <tile id="93">
   <properties>
-   <property name="id" value="blueboard_20"/>
+   <property name="id" value="blueboard_21"/>
   </properties>
  </tile>
  <wangsets>

@@ -3,15 +3,11 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://7rhjxwpc7ea5"
-path="res://.godot/imported/cursor.aseprite-c5fc1a2fa3fad05c7cfd860514b4c7df.ctex"
-metadata={
-"vram_texture": false
-}
+valid=false
 
 [deps]
 
 source_file="res://assets/texture/cursor.aseprite"
-dest_files=["res://.godot/imported/cursor.aseprite-c5fc1a2fa3fad05c7cfd860514b4c7df.ctex"]
 
 [params]
 
