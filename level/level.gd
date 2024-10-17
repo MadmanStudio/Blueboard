@@ -3,10 +3,14 @@ extends Node
 
 @onready var map: Control = $Map
 
-const MinMapScale = 1.0
-const MaxMapScale = 2.0
-const MapScaleStep = 0.2
-const MapScaleTime = 0.05
+const MinMapZoom = 1.0
+const MaxMapZoom = 2.0
+const MapZoomSpeed = 0.2
+const MapZoomTime = 0.05
+
+var zoom_focus_point: Vector2
+var current_zoom: float = 1.0
+var zoom_tween: Tween
 
 var mouse_button_right_down: bool = false
 var mouse_button_right_down_position: Vector2
@@ -43,7 +47,6 @@ func _ready() -> void:
 		blueboard_layer = tmx_map.find_child("Blueboard")
 		element_layer = tmx_map.find_child("Element")
 		var center: Marker2D = tmx_map.find_child("point")
-		map.pivot_offset = center.position
 		map.position -= center.position
 		for element_coords in element_layer.get_used_cells():
 			var tile_data: TileData = element_layer.get_cell_tile_data(element_coords)
@@ -74,19 +77,27 @@ func _input(event: InputEvent) -> void:
 		if mouse_button_right_down:
 			map.position = map_position + (event.position - mouse_button_right_down_position)
 		
-	var tween: Tween = get_tree().create_tween()
 	if Input.is_action_just_pressed("ZoomIn"):
-		tween.tween_property(map, "scale", Vector2(
-			min(map.scale.x + MapScaleStep, MaxMapScale),
-			min(map.scale.y + MapScaleStep, MaxMapScale)
-		), MapScaleTime).set_ease(Tween.EASE_OUT)
+		zoom_at_point(1 + MapZoomSpeed, map.get_local_mouse_position())
 	elif Input.is_action_just_pressed("ZoomOut"):
-		tween.tween_property(map, "scale", Vector2(
-			max(map.scale.x - MapScaleStep, MinMapScale),
-			max(map.scale.y - MapScaleStep, MinMapScale)
-		), MapScaleTime).set_ease(Tween.EASE_OUT)
-	else:
-		tween.kill()
+		zoom_at_point(1 - MapZoomSpeed, map.get_local_mouse_position())
+		
+		
+func zoom_at_point(zoom_change: float, point: Vector2) -> void:
+	zoom_focus_point = point
+	var new_zoom: float = clamp(current_zoom * zoom_change, MinMapZoom, MaxMapZoom)
+	if zoom_tween:
+		zoom_tween.kill()
+	zoom_tween = get_tree().create_tween()
+	zoom_tween.tween_method(update_zoom, current_zoom, new_zoom, 0.1)
+
+
+func update_zoom(new_zoom: float) -> void:
+	var zoom_center: Vector2 = zoom_focus_point
+	var zoom_diff: float = new_zoom / current_zoom
+	map.scale = Vector2.ONE * new_zoom
+	map.position -= (zoom_center * map.scale * (zoom_diff - 1))
+	current_zoom = new_zoom
 		
 		
 func switch_blueboard_tile() -> void:
