@@ -10,11 +10,17 @@ enum Type
 
 func input(type: Type) -> void:
 	default_color = Tables.ElectricityColorTable.get(type)
+	if material is ShaderMaterial:
+		material.set_shader_parameter("direction", -1)
+		material.set_shader_parameter("color2", default_color)
 	$AnimationPlayer.play("Input")
 
 
 func output(type: Type) -> void:
 	default_color = Tables.ElectricityColorTable.get(type)
+	if material is ShaderMaterial:
+		material.set_shader_parameter("direction", 1)
+		material.set_shader_parameter("color2", default_color)
 	$AnimationPlayer.play("Output")
 	
 	

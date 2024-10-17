@@ -1,17 +1,17 @@
 extends Node
 
 
-var ElectricityColorTable: Dictionary = {
-	Electricity.Type.RED: Color.from_string("#ff004d", Color.BLACK),
-	Electricity.Type.ORANGE: Color.from_string("#ffa300", Color.BLACK),
-	Electricity.Type.YELLOW: Color.from_string("#ffec27", Color.BLACK),
-	Electricity.Type.GREEN: Color.from_string("#00e436", Color.BLACK),
-	Electricity.Type.BLUE: Color.from_string("#29adff", Color.BLACK),
-	Electricity.Type.WHITE: Color.from_string("#fff1e8", Color.BLACK),
-	Electricity.Type.PURPLE: Color.from_string("#7e2553", Color.BLACK)
+const ElectricityColorTable: Dictionary = {
+	Electricity.Type.RED: Color("#ff004d", 1.0),
+	Electricity.Type.ORANGE: Color("#ffa300", 1.0),
+	Electricity.Type.YELLOW: Color("#ffec27", 1.0),
+	Electricity.Type.GREEN: Color("#00e436", 1.0),
+	Electricity.Type.BLUE: Color("#29adff", 1.0),
+	Electricity.Type.WHITE: Color("#fff1e8", 1.0),
+	Electricity.Type.PURPLE: Color("#7e2553", 1.0)
 }
 
-var BlueboardTileAtlasCoordsTable: Dictionary = {
+const BlueboardTileAtlasCoordsTable: Dictionary = {
 	"blueboard_point_01": Vector2i(11, 1),
 	"blueboard_point_02": Vector2i(12, 1),
 	"blueboard_point_03": Vector2i(13, 1),
@@ -65,7 +65,7 @@ var BlueboardTileAtlasCoordsTable: Dictionary = {
 	"blueboard_21": Vector2i(8, 5)
 }
 
-var ElementPathTable: Dictionary = {
+const ElementPathTable: Dictionary = {
 	"G_red": "res://element/generator/element_G_red.tscn",
 	"G_blue": "res://element/generator/element_G_blue.tscn",
 	"G_yellow": "res://element/generator/element_G_yellow.tscn",
@@ -78,8 +78,27 @@ var ElementPathTable: Dictionary = {
 	"hinderer": "res://element/hinderer/element_H.tscn",
 	"jumper_in": "res://element/jumper/element_jumper_in.tscn",
 	"jumper_out": "res://element/jumper/element_jumper_out.tscn",
-	"line_one": "res://element/line/element_L_yellow.tscn",
-	"line_two": "res://element/line/element_L_yellow.tscn",
-	"line_three": "res://element/line/element_L_yellow.tscn",
-	"line_four": "res://element/line/element_L_yellow.tscn"
+	"line_one": "res://element/line/element_line_one.tscn",
+	"line_two": "res://element/line/element_line_two.tscn",
+	"line_three": "res://element/line/element_line_three.tscn",
+	"line_four": "res://element/line/element_line_four.tscn"
+}
+
+const ElementIconTable: Dictionary = {
+	"G_red": "res://element/generator/res/element_G_red.atlastex",
+	"G_blue": "res://element/generator/element_G_blue.atlastex",
+	"G_yellow": "res://element/generator/res/element_G_yellow.atlastex",
+	"L_purple": "res://element/leacher/res/element_L_purple.atlastex",
+	"L_green": "res://element/leacher/res/element_L_green.atlastex",
+	"L_orange": "res://element/leacher/res/element_L_orange.atlastex",
+	"I_purple": "res://element/intermixer/res/element_I_purple.atlastex",
+	"I_green": "res://element/intermixer/res/element_I_green.atlastex",
+	"I_orange": "res://element/intermixer/res/element_I_orange.atlastex",
+	"hinderer": "res://element/hinderer/res/element_H.atlastex",
+	"jumper_in": "res://element/jumper/res/element_jumper_in.atlastex",
+	"jumper_out": "res://element/jumper/res/element_jumper_out.atlastex",
+	"line_one": "res://element/line/res/element_line_one.atlastex",
+	"line_two": "res://element/line/res/element_line_two.atlastex",
+	"line_three": "res://element/line/res/element_line_three.atlastex",
+	"line_four": "res://element/line/res/element_line_four.atlastex"
 }

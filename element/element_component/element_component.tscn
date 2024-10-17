@@ -9,15 +9,21 @@
 atlas = ExtResource("1_bdr2h")
 region = Rect2(48, 32, 16, 16)
 
-[node name="ElementComponent" type="Node2D"]
+[node name="ElementComponent" type="Control"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 3
+anchors_preset = 0
+pivot_offset = Vector2(16, 16)
 script = ExtResource("1_2e0ql")
 
 [node name="Control" type="Control" parent="."]
 custom_minimum_size = Vector2(32, 32)
-layout_mode = 3
-anchors_preset = 0
-offset_right = 32.0
-offset_bottom = 32.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 pivot_offset = Vector2(16, 16)
 
 [node name="Base" type="TextureRect" parent="Control"]

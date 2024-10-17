@@ -21,6 +21,9 @@ var blueboard_layer: TileMapLayer
 var element_layer: TileMapLayer
 var install_point_shown: bool = false
 
+var element_matrix: Array
+var matrix_size: Vector2i
+
 var ElementTable: Dictionary = {
 	"G_red": load("res://element/generator/element_G_red.tscn"),
 	"G_blue": load("res://element/generator/element_G_blue.tscn"),
@@ -46,16 +49,32 @@ func _ready() -> void:
 	if tmx_map != null:
 		blueboard_layer = tmx_map.find_child("Blueboard")
 		element_layer = tmx_map.find_child("Element")
+		matrix_size = blueboard_layer.get_used_rect().size
+		for r in matrix_size.x:
+			var array: Array = []
+			for c in matrix_size.y:
+				array.append(null)
+			element_matrix.append(array)
 		var center: Marker2D = tmx_map.find_child("point")
+		var element_layer_rect: Rect2i = element_layer.get_used_rect()
 		map.position -= center.position
 		for element_coords in element_layer.get_used_cells():
 			var tile_data: TileData = element_layer.get_cell_tile_data(element_coords)
 			var id: String = tile_data.get_meta("id")
 			var element_inst: Node2D = ElementTable.get(id).instantiate()
 			element_inst.position = element_coords * 32
-			element_inst.rotation = deg_to_rad(calculate_tile_rotation(tile_data))
+			element_inst.get_child(0).rotation = deg_to_rad(calculate_tile_rotation(tile_data))
 			element_layer.add_child(element_inst)
-			element_layer.set_cell(element_coords)
+			var relative_coords: Vector2i = get_element_relative_coords(element_layer_rect, element_coords)
+			element_matrix[relative_coords.x][relative_coords.y] = element_inst
+			element_layer.erase_cell(element_coords)
+			
+		
+func get_element_relative_coords(element_layer_rect: Rect2i, element_coords: Vector2i) -> Vector2i:
+	var relative_coords: Vector2i
+	var blueboard_layer_rect: Rect2i = blueboard_layer.get_used_rect()
+	return (Vector2i(element_layer.position) - Vector2i(blueboard_layer_rect.position)) + element_coords
+	
 
 
 func _input(event: InputEvent) -> void:
@@ -130,3 +149,7 @@ func calculate_tile_rotation(tile_data: TileData) -> int:
 		if flipped_h and flipped_v:
 			rotation = 180
 	return rotation
+	
+	
+func _process(delta: float) -> void:
+	print_debug(map.scale)

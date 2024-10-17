@@ -1,5 +1,5 @@
 @tool
-extends Node2D
+extends Control
 class_name ElementComponent
 
 
@@ -37,15 +37,18 @@ enum AllowInputType
 ]
 
 @onready var electricity_array: Array[Electricity] = [$Electricity1, $Electricity2, $Electricity3, $Electricity4]
-var line_active_array: Array[bool] = [false, false, false, false]
+var line_outputting_array: Array[bool] = [false, false, false, false]
+var line_inputting_array: Array[bool] = [false, false, false, false]
 	
 	
 func fill_core(electricity_type: Electricity.Type) -> void:
-	$Control/Core.color = Tables.ElectricityColorTable.get(electricity_type)
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property($Control/Core, "color", Tables.ElectricityColorTable.get(electricity_type), 0.1).set_ease(Tween.EASE_IN)
 
 
 func clear_core() -> void:
-	$Control/Core.color = Tables.ElectricityColorTable.get(Electricity.Type.WHITE)
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property($Control/Core, "color", Tables.ElectricityColorTable.get(Electricity.Type.WHITE), 0.1).set_ease(Tween.EASE_IN)
 
 
 func output_electricity(dir: Direction) -> void:
@@ -53,6 +56,7 @@ func output_electricity(dir: Direction) -> void:
 		return
 	if line_outputable_array[dir] == false:
 		return
+	line_outputting_array[dir] = true
 	electricity_array[dir].output(line_output_type_array[dir])
 	
 	
@@ -61,6 +65,7 @@ func output_electricity_with_type(type: Electricity.Type, dir: Direction) -> voi
 		return
 	if line_outputable_array[dir] == false:
 		return
+	line_outputting_array[dir] = true
 	electricity_array[dir].output(type)
 	
 	
@@ -71,9 +76,16 @@ func input_electricity(type: Electricity.Type, dir: Direction) -> void:
 		return
 	if check_line_allow_input_type(type, dir) == false:
 		return
+	line_inputting_array[dir] = true
 	electricity_array[dir].input(type)
 	await get_tree().create_timer(0.4).timeout
 	fill_core(type)
+	
+	
+func vanish_electricity() -> void:
+	clear_core()
+	for electricity: Electricity in electricity_array:
+		electricity.vanish()
 	
 	
 func check_line_allow_input_type(type: Electricity.Type, dir: Direction) -> bool:

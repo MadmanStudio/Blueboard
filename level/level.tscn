@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cj11wvt8yl5gq"]
+[gd_scene load_steps=5 format=3 uid="uid://cj11wvt8yl5gq"]
 
 [ext_resource type="Script" path="res://level/level.gd" id="1_kf6bj"]
 [ext_resource type="PackedScene" uid="uid://bpwbue0gf3hjp" path="res://level/map_tutorial_001/map_tutorial_001.tmx" id="2_l070w"]
 [ext_resource type="Script" path="res://level/map_tutorial_001/map_tutorial_001.gd" id="3_n0gga"]
+[ext_resource type="PackedScene" uid="uid://bnlbp0jrpdef1" path="res://ui/operation_panel/operation_panel.tscn" id="4_c47ef"]
 
 [node name="Level" type="Node"]
 script = ExtResource("1_kf6bj")
@@ -19,3 +20,5 @@ grow_vertical = 2
 script = ExtResource("3_n0gga")
 
 [node name="map_tutorial_001" parent="Map" instance=ExtResource("2_l070w")]
+
+[node name="OperationPanel" parent="." instance=ExtResource("4_c47ef")]

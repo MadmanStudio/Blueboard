@@ -1,16 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://slwodjpktwj7"]
+[gd_scene load_steps=3 format=3 uid="uid://slwodjpktwj7"]
 
 [ext_resource type="PackedScene" uid="uid://bbtvaphcjmt2x" path="res://element/element_component/element_component.tscn" id="1_3fbna"]
-[ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="2_v2okv"]
+[ext_resource type="Texture2D" uid="uid://dy0q8q13gg7kf" path="res://element/transformer/res/element_T_blue2yellow.atlastex" id="2_jgvrc"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7tiv8"]
-atlas = ExtResource("2_v2okv")
-region = Rect2(64, 0, 16, 16)
-
-[node name="Element_T_Blue2Red" type="Node2D"]
+[node name="Element_T_Blue2Yellow" type="Node2D"]
 
 [node name="ElementComponent" parent="." instance=ExtResource("1_3fbna")]
-surface_texture = SubResource("AtlasTexture_7tiv8")
+surface_texture = ExtResource("2_jgvrc")
 line_disabled_array = Array[bool]([true, false, true, false])
 line_inputable_array = Array[bool]([false, false, false, true])
 line_outputable_array = Array[bool]([false, true, false, false])
