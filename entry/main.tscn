@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://c3u0yhsxkp83c"]
+[gd_scene load_steps=14 format=3 uid="uid://c3u0yhsxkp83c"]
 
 [ext_resource type="Script" path="res://entry/main.gd" id="1_73xx2"]
 [ext_resource type="PackedScene" uid="uid://ckjpigq7m00pl" path="res://ui/main_menu/main_menu.tscn" id="2_f0blk"]
+[ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="2_f4h0g"]
 [ext_resource type="PackedScene" uid="uid://crj283gtq266f" path="res://ui/main_menu/loading.tscn" id="3_ogg2a"]
 [ext_resource type="Script" path="res://Ovani Plugin 1.4/OvaniPlayer.gd" id="4_0wxfs"]
 [ext_resource type="Script" path="res://Ovani Plugin 1.4/OvaniSong.gd" id="5_p0h3a"]
@@ -10,6 +11,10 @@
 [ext_resource type="AudioStream" uid="uid://dwyo3o4r6nw7c" path="res://assets/music/Phat & Lazy (RT 4)/Lo-Fi Phat & Lazy Main.wav" id="8_8adt8"]
 [ext_resource type="AudioStream" uid="uid://bq848gp1fcuer" path="res://assets/music/Phat & Lazy (RT 4)/Lo-Fi Phat & Lazy Cut 30.wav" id="9_grr5y"]
 [ext_resource type="AudioStream" uid="uid://cfvcrulcrw1yj" path="res://assets/music/Phat & Lazy (RT 4)/Lo-Fi Phat & Lazy Cut 60.wav" id="10_nu3im"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ynok5"]
+atlas = ExtResource("2_f4h0g")
+region = Rect2(240, 0, 16, 16)
 
 [sub_resource type="Resource" id="Resource_tol36"]
 script = ExtResource("5_p0h3a")
@@ -33,6 +38,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.152941, 0.160784, 0.176471, 1)
+metadata/_edit_group_ = true
+
+[node name="TextureRect" type="TextureRect" parent="BG/ColorRect"]
+modulate = Color(1, 1, 1, 0.0235294)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 250.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_ynok5")
 
 [node name="Level" type="CanvasLayer" parent="."]
 

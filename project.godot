@@ -20,6 +20,7 @@ config/icon="res://assets/texture/icon.png"
 SoundManager="*res://addons/sound_manager/sound_manager.gd"
 Paths="*res://preloaded/paths.gd"
 Tables="*res://preloaded/tables.gd"
+Globals="*res://preloaded/globals.gd"
 
 [debug]
 

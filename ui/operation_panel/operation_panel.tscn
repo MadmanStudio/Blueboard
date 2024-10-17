@@ -1,74 +1,332 @@
-[gd_scene load_steps=2 format=3 uid="uid://bnlbp0jrpdef1"]
+[gd_scene load_steps=12 format=3 uid="uid://bnlbp0jrpdef1"]
 
-[ext_resource type="PackedScene" uid="uid://buj6lbtoxrlon" path="res://ui/operation_panel/element_button.tscn" id="1_jgtbe"]
+[ext_resource type="Script" path="res://ui/operation_panel/operation_panel.gd" id="1_k4jd0"]
+[ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="1_mlr13"]
+[ext_resource type="Script" path="res://ui/operation_panel/buttons.gd" id="2_713g5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lebeu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rdd1s"]
+draw_center = false
+border_width_left = 12
+border_width_top = 10
+border_width_right = 12
+border_color = Color(0.643137, 0.615686, 0.596078, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u3jqj"]
+bg_color = Color(0.156863, 0.156863, 0.156863, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0.643137, 0.615686, 0.596078, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8xijx"]
+size = Vector2(200, 640)
+
+[sub_resource type="Animation" id="Animation_quf4s"]
+resource_name = "ToolboxEnter"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.5, 0.5),
+"update": 0,
+"values": [Vector2(-178, 134), Vector2(16, 134)]
+}
+
+[sub_resource type="Animation" id="Animation_sku3i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-178, 134)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ciwtd"]
+_data = {
+"RESET": SubResource("Animation_sku3i"),
+"ToolboxEnter": SubResource("Animation_quf4s")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t0its"]
+atlas = ExtResource("1_mlr13")
+region = Rect2(240, 0, 16, 16)
 
 [node name="OperationPanel" type="CanvasLayer"]
+script = ExtResource("1_k4jd0")
 
 [node name="Panel" type="Panel" parent="."]
-custom_minimum_size = Vector2(138, 434)
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -217.0
-offset_right = 138.0
-offset_bottom = 217.0
-grow_vertical = 2
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -178.0
+offset_top = -506.0
+offset_bottom = -16.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_lebeu")
 
-[node name="GridContainer" type="GridContainer" parent="Panel"]
+[node name="Handle" type="Panel" parent="Panel"]
 layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -40.0
+offset_right = 40.0
+offset_bottom = 15.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rdd1s")
+
+[node name="Panel" type="Panel" parent="Panel"]
+custom_minimum_size = Vector2(178, 474)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -89.0
+offset_top = -474.0
+offset_right = 89.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_u3jqj")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/Panel"]
+custom_minimum_size = Vector2(138, 434)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -89.0
+offset_top = -237.0
+offset_right = 89.0
+offset_bottom = 237.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="GridContainer" type="GridContainer" parent="Panel/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="ToolboxButton" type="Button" parent="."]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 80.0
+offset_bottom = 80.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 50
+toggle_mode = true
+text = "T"
+
+[node name="MenuButton" type="Button" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -80.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 80.0
+grow_horizontal = 0
+focus_mode = 0
+theme_override_font_sizes/font_size = 50
+text = "M"
+
+[node name="LevelNumber" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 16.0
+offset_right = 20.0
+offset_bottom = 57.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 40
+text = "6"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(100, 320)
+shape = SubResource("RectangleShape2D_8xijx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ciwtd")
+}
+
+[node name="MenuBG" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/h_separation = 10
-theme_override_constants/v_separation = 10
-columns = 2
+mouse_force_pass_scroll_events = false
+color = Color(0.152941, 0.160784, 0.176471, 1)
 
-[node name="ElementButton" parent="Panel/GridContainer" instance=ExtResource("1_jgtbe")]
-layout_mode = 2
-element_id = "line_four"
+[node name="TextureRect" type="TextureRect" parent="MenuBG"]
+modulate = Color(1, 1, 1, 0.0235294)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 250.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_t0its")
 
-[node name="ElementButton2" parent="Panel/GridContainer" instance=ExtResource("1_jgtbe")]
-layout_mode = 2
-element_id = "line_four"
+[node name="Buttons" type="Control" parent="MenuBG"]
+visible = false
+custom_minimum_size = Vector2(200, 163)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -195.0
+offset_bottom = -32.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("2_713g5")
+metadata/_edit_group_ = true
 
-[node name="ElementButton3" parent="Panel/GridContainer" instance=ExtResource("1_jgtbe")]
-layout_mode = 2
-element_id = "line_four"
+[node name="Back" type="Label" parent="MenuBG/Buttons"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -264.0
+offset_right = -32.0
+offset_bottom = 41.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
+theme_override_font_sizes/font_size = 40
+text = "返回操作台"
+horizontal_alignment = 2
 
-[node name="ElementButton4" parent="Panel/GridContainer" instance=ExtResource("1_jgtbe")]
-layout_mode = 2
-element_id = "line_four"
+[node name="Button" type="Button" parent="MenuBG/Buttons/Back"]
+modulate = Color(0, 0, 0, 0)
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 168.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="ElementButton5" parent="Panel/GridContainer" instance=ExtResource("1_jgtbe")]
-layout_mode = 2
-element_id = "line_four"
+[node name="Manual" type="Label" parent="MenuBG/Buttons"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -224.0
+offset_top = -20.5
+offset_right = -32.0
+offset_bottom = 20.5
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
+theme_override_font_sizes/font_size = 40
+text = "元件手册"
+horizontal_alignment = 2
 
-[node name="ElementButton6" parent="Panel/GridContainer" instance=ExtResource("1_jgtbe")]
-layout_mode = 2
-element_id = "line_four"
+[node name="Button" type="Button" parent="MenuBG/Buttons/Manual"]
+modulate = Color(0, 0, 0, 0)
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 208.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="ElementButton7" parent="Panel/GridContainer" instance=ExtResource("1_jgtbe")]
-layout_mode = 2
-element_id = "line_four"
+[node name="MainMenu" type="Label" parent="MenuBG/Buttons"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -184.0
+offset_top = -41.0
+offset_right = -32.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
+theme_override_font_sizes/font_size = 40
+text = "主菜单"
+horizontal_alignment = 2
 
-[node name="ElementButton8" parent="Panel/GridContainer" instance=ExtResource("1_jgtbe")]
-layout_mode = 2
-element_id = "line_four"
+[node name="Button" type="Button" parent="MenuBG/Buttons/MainMenu"]
+modulate = Color(0, 0, 0, 0)
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 248.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="ElementButton9" parent="Panel/GridContainer" instance=ExtResource("1_jgtbe")]
-layout_mode = 2
-element_id = "line_four"
-
-[node name="ElementButton10" parent="Panel/GridContainer" instance=ExtResource("1_jgtbe")]
-layout_mode = 2
-element_id = "line_four"
-
-[node name="ElementButton11" parent="Panel/GridContainer" instance=ExtResource("1_jgtbe")]
-layout_mode = 2
-element_id = "line_four"
-
-[node name="ElementButton12" parent="Panel/GridContainer" instance=ExtResource("1_jgtbe")]
-layout_mode = 2
-element_id = "line_four"
+[connection signal="toggled" from="ToolboxButton" to="." method="_on_toolbox_button_toggled"]
+[connection signal="button_down" from="MenuButton" to="." method="_on_menu_button_button_down"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
+[connection signal="button_down" from="MenuBG/Buttons/Back/Button" to="MenuBG/Buttons" method="_on_back_button_button_down"]
+[connection signal="mouse_entered" from="MenuBG/Buttons/Back/Button" to="MenuBG/Buttons" method="_on_back_button_mouse_entered"]
+[connection signal="mouse_exited" from="MenuBG/Buttons/Back/Button" to="MenuBG/Buttons" method="_on_back_button_mouse_exited"]
+[connection signal="mouse_entered" from="MenuBG/Buttons/Manual/Button" to="MenuBG/Buttons" method="_on_manual_button_mouse_entered"]
+[connection signal="mouse_exited" from="MenuBG/Buttons/Manual/Button" to="MenuBG/Buttons" method="_on_manual_button_mouse_exited"]
+[connection signal="mouse_entered" from="MenuBG/Buttons/MainMenu/Button" to="MenuBG/Buttons" method="_on_main_menu_button_mouse_entered"]
+[connection signal="mouse_exited" from="MenuBG/Buttons/MainMenu/Button" to="MenuBG/Buttons" method="_on_main_menu_button_mouse_exited"]

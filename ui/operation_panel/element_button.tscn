@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://buj6lbtoxrlon"]
+[gd_scene load_steps=3 format=3 uid="uid://buj6lbtoxrlon"]
 
 [ext_resource type="Script" path="res://ui/operation_panel/element_button.gd" id="1_h32me"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gap2s"]
+size = Vector2(64, 64)
 
 [node name="ElementButton" type="Button"]
 custom_minimum_size = Vector2(64, 64)
@@ -11,6 +14,9 @@ offset_right = -1088.0
 offset_bottom = -576.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(32, 32)
+focus_mode = 0
+mouse_filter = 1
 flat = true
 script = ExtResource("1_h32me")
 
@@ -22,3 +28,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(32, 32)
+shape = SubResource("RectangleShape2D_gap2s")
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]
+[connection signal="button_up" from="." to="." method="_on_button_up"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

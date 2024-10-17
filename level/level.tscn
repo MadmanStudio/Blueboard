@@ -21,4 +21,6 @@ script = ExtResource("3_n0gga")
 
 [node name="map_tutorial_001" parent="Map" instance=ExtResource("2_l070w")]
 
-[node name="OperationPanel" parent="." instance=ExtResource("4_c47ef")]
+[node name="OperationPanel" parent="." node_paths=PackedStringArray("level") instance=ExtResource("4_c47ef")]
+element_list = Array[String](["hinderer"])
+level = NodePath("..")

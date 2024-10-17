@@ -1,4 +1,4 @@
-extends Control
+extends CanvasLayer
 
 
 @onready var L_image: TextureRect = $L

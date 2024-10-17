@@ -1,4 +1,5 @@
 extends Node
+class_name Level
 
 
 @onready var map: Control = $Map
@@ -74,19 +75,21 @@ func get_element_relative_coords(element_layer_rect: Rect2i, element_coords: Vec
 	var relative_coords: Vector2i
 	var blueboard_layer_rect: Rect2i = blueboard_layer.get_used_rect()
 	return (Vector2i(element_layer.position) - Vector2i(blueboard_layer_rect.position)) + element_coords
-	
 
 
 func _input(event: InputEvent) -> void:
+	if Globals.allow_operate == false:
+		return
+		
 	if Input.is_action_just_pressed("Pan"):
 		mouse_button_right_down = true
 		mouse_button_right_down_position = event.position
 		map_position = map.position
 	if Input.is_action_just_released("Pan"):
 		mouse_button_right_down = false
-		
+	
 	if Input.is_action_pressed("Click"):
-		if install_point_shown == false:
+		if Globals.dragging and install_point_shown == false:
 			switch_blueboard_tile()
 	if Input.is_action_just_released("Click"):
 		if install_point_shown == true:
@@ -129,7 +132,7 @@ func switch_blueboard_tile() -> void:
 			var id: String = tile_data.get_custom_data("id")
 			var new_atlas_coords: Vector2i = Tables.BlueboardTileAtlasCoordsTable.get(id)
 			blueboard_layer.set_cell(tile_coords, 0, new_atlas_coords)
-			
+
 
 func calculate_tile_rotation(tile_data: TileData) -> int:
 	var flipped_h: bool = tile_data.flip_h
@@ -151,5 +154,10 @@ func calculate_tile_rotation(tile_data: TileData) -> int:
 	return rotation
 	
 	
-func _process(delta: float) -> void:
-	print_debug(map.scale)
+func is_dropable(idxs: Vector2i) -> bool:
+	if element_matrix[idxs.x][idxs.y] == null:
+		return true
+	else:
+		return false
+		
+		
