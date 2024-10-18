@@ -4,6 +4,7 @@ class_name Level
 
 @onready var map: Control = $Map
 
+const TileSize = 32.0
 const MinMapZoom = 1.0
 const MaxMapZoom = 2.0
 const MapZoomSpeed = 0.2
@@ -11,6 +12,7 @@ const MapZoomTime = 0.05
 
 var zoom_focus_point: Vector2
 var current_zoom: float = 1.0
+var current_scale: Vector2 = Vector2(1.0, 1.0)
 var zoom_tween: Tween
 
 var mouse_button_right_down: bool = false
@@ -72,7 +74,6 @@ func _ready() -> void:
 			
 		
 func get_element_relative_coords(element_layer_rect: Rect2i, element_coords: Vector2i) -> Vector2i:
-	var relative_coords: Vector2i
 	var blueboard_layer_rect: Rect2i = blueboard_layer.get_used_rect()
 	return (Vector2i(element_layer.position) - Vector2i(blueboard_layer_rect.position)) + element_coords
 
@@ -118,6 +119,7 @@ func update_zoom(new_zoom: float) -> void:
 	var zoom_center: Vector2 = zoom_focus_point
 	var zoom_diff: float = new_zoom / current_zoom
 	map.scale = Vector2.ONE * new_zoom
+	current_scale = map.scale
 	map.position -= (zoom_center * map.scale * (zoom_diff - 1))
 	current_zoom = new_zoom
 		
@@ -132,8 +134,12 @@ func switch_blueboard_tile() -> void:
 			var id: String = tile_data.get_custom_data("id")
 			var new_atlas_coords: Vector2i = Tables.BlueboardTileAtlasCoordsTable.get(id)
 			blueboard_layer.set_cell(tile_coords, 0, new_atlas_coords)
-
-
+			var new_tile_data: TileData = blueboard_layer.get_cell_tile_data(tile_coords)
+			var tile_position: Vector2 = map.global_position + tile_coords * TileSize * current_scale
+			var tile_size: Vector2 = TileSize * current_scale
+			new_tile_data.set_meta("rect", Rect2(tile_position, tile_size))
+			
+			
 func calculate_tile_rotation(tile_data: TileData) -> int:
 	var flipped_h: bool = tile_data.flip_h
 	var flipped_v: bool = tile_data.flip_v

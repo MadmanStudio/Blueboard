@@ -10,7 +10,7 @@ signal released
 var is_inside_dropable: bool = false
 var offset: Vector2
 var initial_pos: Vector2
-var ready_to_drop: bool = false
+var inside_toolbox: bool = true
 var dragging: bool = false
 
 
@@ -48,7 +48,7 @@ func _on_button_up() -> void:
 	if Globals.dragging:
 		Globals.dragging = false
 		dragging = false
-		if ready_to_drop == false:
+		if inside_toolbox == true:
 			global_position = initial_pos
 		released.emit()
 		

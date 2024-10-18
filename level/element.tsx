@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.5" tiledversion="1.7.2" name="element" tilewidth="32" tileheight="32" tilecount="256" columns="16">
+<tileset version="1.10" tiledversion="1.11.0" name="element" tilewidth="32" tileheight="32" tilecount="256" columns="16">
  <image source="../assets/texture/element.png" width="512" height="512"/>
  <tile id="0">
   <properties>
@@ -79,16 +79,19 @@
  <tile id="22">
   <properties>
    <property name="id" value="blueboard_point_01"/>
+   <property name="is_border" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="23">
   <properties>
    <property name="id" value="blueboard_point_02"/>
+   <property name="is_border" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="24">
   <properties>
    <property name="id" value="blueboard_point_03"/>
+   <property name="is_border" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="27">
@@ -129,26 +132,31 @@
  <tile id="37">
   <properties>
    <property name="id" value="blueboard_point_04"/>
+   <property name="is_border" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="38">
   <properties>
    <property name="id" value="blueboard_point_05"/>
+   <property name="is_border" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="39">
   <properties>
    <property name="id" value="blueboard_point_06"/>
+   <property name="is_border" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="40">
   <properties>
    <property name="id" value="blueboard_point_07"/>
+   <property name="is_border" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="41">
   <properties>
    <property name="id" value="blueboard_point_08"/>
+   <property name="is_border" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="42">
@@ -184,26 +192,31 @@
  <tile id="53">
   <properties>
    <property name="id" value="blueboard_point_09"/>
+   <property name="is_border" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="54">
   <properties>
    <property name="id" value="blueboard_point_10"/>
+   <property name="is_border" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="55">
   <properties>
    <property name="id" value="blueboard_point_11"/>
+   <property name="is_border" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="56">
   <properties>
    <property name="id" value="blueboard_point_12"/>
+   <property name="is_border" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="57">
   <properties>
    <property name="id" value="blueboard_point_13"/>
+   <property name="is_border" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="58">
@@ -239,26 +252,31 @@
  <tile id="69">
   <properties>
    <property name="id" value="blueboard_point_14"/>
+   <property name="is_border" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="70">
   <properties>
    <property name="id" value="blueboard_point_15"/>
+   <property name="is_border" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="71">
   <properties>
    <property name="id" value="blueboard_point_16"/>
+   <property name="is_border" type="bool" value="false"/>
   </properties>
  </tile>
  <tile id="72">
   <properties>
    <property name="id" value="blueboard_point_17"/>
+   <property name="is_border" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="73">
   <properties>
    <property name="id" value="blueboard_point_18"/>
+   <property name="is_border" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="74">
@@ -294,16 +312,19 @@
  <tile id="86">
   <properties>
    <property name="id" value="blueboard_point_19"/>
+   <property name="is_border" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="87">
   <properties>
    <property name="id" value="blueboard_point_20"/>
+   <property name="is_border" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="88">
   <properties>
    <property name="id" value="blueboard_point_21"/>
+   <property name="is_border" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="91">

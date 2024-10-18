@@ -1,8 +1,19 @@
-[gd_scene load_steps=12 format=3 uid="uid://bnlbp0jrpdef1"]
+[gd_scene load_steps=15 format=3 uid="uid://bnlbp0jrpdef1"]
 
 [ext_resource type="Script" path="res://ui/operation_panel/operation_panel.gd" id="1_k4jd0"]
 [ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="1_mlr13"]
 [ext_resource type="Script" path="res://ui/operation_panel/buttons.gd" id="2_713g5"]
+[ext_resource type="Script" path="res://ui/operation_panel/curve.gd" id="2_j17kj"]
+
+[sub_resource type="Curve2D" id="Curve2D_37fx1"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 673, 220)
+}
+point_count = 2
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_77761"]
+atlas = ExtResource("1_mlr13")
+region = Rect2(48, 48, 16, 16)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lebeu"]
 
@@ -30,6 +41,21 @@ corner_radius_bottom_left = 3
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8xijx"]
 size = Vector2(200, 640)
 
+[sub_resource type="Animation" id="Animation_sku3i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Panel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-178, 134)]
+}
+
 [sub_resource type="Animation" id="Animation_quf4s"]
 resource_name = "ToolboxEnter"
 length = 0.2
@@ -46,21 +72,6 @@ tracks/0/keys = {
 "values": [Vector2(-178, 134), Vector2(16, 134)]
 }
 
-[sub_resource type="Animation" id="Animation_sku3i"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Panel:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-178, 134)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ciwtd"]
 _data = {
 "RESET": SubResource("Animation_sku3i"),
@@ -73,6 +84,19 @@ region = Rect2(240, 0, 16, 16)
 
 [node name="OperationPanel" type="CanvasLayer"]
 script = ExtResource("1_k4jd0")
+
+[node name="Curve" type="Path2D" parent="."]
+visible = false
+curve = SubResource("Curve2D_37fx1")
+script = ExtResource("2_j17kj")
+
+[node name="Hover" type="TextureRect" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.141176)
+offset_right = 16.0
+offset_bottom = 16.0
+pivot_offset = Vector2(8, 8)
+texture = SubResource("AtlasTexture_77761")
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 2
@@ -138,10 +162,10 @@ columns = 2
 [node name="ToolboxButton" type="Button" parent="."]
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 80.0
-offset_bottom = 80.0
+offset_right = 48.0
+offset_bottom = 48.0
 focus_mode = 0
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 20
 toggle_mode = true
 text = "T"
 
@@ -149,32 +173,31 @@ text = "T"
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -80.0
+offset_left = -48.0
 offset_top = 16.0
 offset_right = -16.0
-offset_bottom = 80.0
+offset_bottom = 48.0
 grow_horizontal = 0
 focus_mode = 0
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 20
 text = "M"
 
 [node name="LevelNumber" type="Label" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.0
+offset_left = -8.0
 offset_top = 16.0
-offset_right = 20.0
-offset_bottom = 57.0
+offset_right = 8.0
+offset_bottom = 48.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 31
 text = "6"
 horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="Area2D" type="Area2D" parent="."]
 
