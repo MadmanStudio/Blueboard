@@ -1,6 +1,9 @@
 extends CanvasLayer
 
 
+signal element_installed(element_button: ElementButton)
+
+
 @export var element_list: Array[String] = []
 @export var level: Level
 
@@ -11,9 +14,12 @@ var dragging_element_button: ElementButton
 func _ready() -> void:
 	for id in element_list:
 		var ebtn: ElementButton = element_button_tscn.instantiate()
+		ebtn.size = Vector2(64.0, 64.0)
 		ebtn.element_id = id
 		ebtn.clicked.connect(element_button_clicked)
-		ebtn.released.connect(hide_curve)
+		ebtn.released.connect(on_element_button_released)
+		ebtn.element_installed.connect(on_element_installed)
+		ebtn.tree_exited.connect(on_queue_free)
 		$Panel/Panel/MarginContainer/GridContainer.add_child(ebtn)
 
 
@@ -22,7 +28,7 @@ func _input(event: InputEvent) -> void:
 		if dragging_element_button == null:
 			return
 		if Input.is_action_pressed("Click"):
-			if not dragging_element_button.inside_toolbox and Globals.dragging:
+			if dragging_element_button.ready_to_install:
 				var curve_start: Vector2 = dragging_element_button.global_position + dragging_element_button.size * 0.5
 				show_and_update_curve(curve_start)
 			else:
@@ -52,33 +58,37 @@ func find_target_positon(start: Vector2) -> Vector2:
 		var tile_data: TileData = level.blueboard_layer.get_cell_tile_data(coords)
 		if tile_data.get_custom_data("is_border"):
 			continue
-		var tile_position: Vector2 = tile_data.get_meta("rect").position
-		var tile_size: Vector2 = tile_data.get_meta("rect").size
+		var tile_position: Vector2 = level.blueboard_tile_data_matrix[coords.x][coords.y].position
+		var tile_size: Vector2 = level.blueboard_tile_data_matrix[coords.x][coords.y].size
 		$Hover.size = tile_size
 		var center: Vector2 = tile_position + tile_size * 0.5
-		print_debug(coords, tile_position)
 		var distance: float = start.distance_to(center)
 		if distance < min_distance:
 			min_distance = distance
 			target_position = center
+			dragging_element_button.installed_coords = coords
 	return target_position
 		
+	
+	
+func on_queue_free() -> void:
+	hide_curve()
+	if Globals.dragging:
+		Globals.dragging = false
 	
 	
 func hide_curve() -> void:
 	$Curve.hide()
 	$Hover.hide()
-
-
-func _on_area_2d_area_entered(area: Area2D) -> void:
-	if area.owner is ElementButton:
-		area.owner.inside_toolbox = true
-
-
-func _on_area_2d_area_exited(area: Area2D) -> void:
-	if area.owner is ElementButton:
-		area.owner.inside_toolbox = false
-		
+	
+	
+func on_element_button_released(element_button: ElementButton) -> void:
+	hide_curve()
+	
+	
+func on_element_installed(element_button: ElementButton) -> void:
+	element_installed.emit(element_button)
+	
 	
 func element_button_clicked(element_button: ElementButton) -> void:
 	dragging_element_button = element_button

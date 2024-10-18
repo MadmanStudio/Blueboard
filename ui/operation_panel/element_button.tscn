@@ -7,14 +7,10 @@
 size = Vector2(64, 64)
 
 [node name="ElementButton" type="Button"]
+z_index = 1
 custom_minimum_size = Vector2(64, 64)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -1088.0
-offset_bottom = -576.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 64.0
+offset_bottom = 64.0
 pivot_offset = Vector2(32, 32)
 focus_mode = 0
 mouse_filter = 1
@@ -37,7 +33,15 @@ grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("2_3582q")
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(32, 32)
+scale = Vector2(3.2, 3.2)
+
 [connection signal="button_down" from="." to="." method="_on_button_down"]
 [connection signal="button_up" from="." to="." method="_on_button_up"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

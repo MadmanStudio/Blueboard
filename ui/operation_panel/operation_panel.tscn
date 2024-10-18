@@ -5,16 +5,6 @@
 [ext_resource type="Script" path="res://ui/operation_panel/buttons.gd" id="2_713g5"]
 [ext_resource type="Script" path="res://ui/operation_panel/curve.gd" id="2_j17kj"]
 
-[sub_resource type="Curve2D" id="Curve2D_37fx1"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 673, 220)
-}
-point_count = 2
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_77761"]
-atlas = ExtResource("1_mlr13")
-region = Rect2(48, 48, 16, 16)
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lebeu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rdd1s"]
@@ -37,6 +27,16 @@ corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
+
+[sub_resource type="Curve2D" id="Curve2D_37fx1"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 673, 220)
+}
+point_count = 2
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_77761"]
+atlas = ExtResource("1_mlr13")
+region = Rect2(48, 48, 16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8xijx"]
 size = Vector2(200, 640)
@@ -84,19 +84,6 @@ region = Rect2(240, 0, 16, 16)
 
 [node name="OperationPanel" type="CanvasLayer"]
 script = ExtResource("1_k4jd0")
-
-[node name="Curve" type="Path2D" parent="."]
-visible = false
-curve = SubResource("Curve2D_37fx1")
-script = ExtResource("2_j17kj")
-
-[node name="Hover" type="TextureRect" parent="."]
-visible = false
-modulate = Color(1, 1, 1, 0.141176)
-offset_right = 16.0
-offset_bottom = 16.0
-pivot_offset = Vector2(8, 8)
-texture = SubResource("AtlasTexture_77761")
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 2
@@ -159,11 +146,24 @@ theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 2
 
+[node name="Curve" type="Path2D" parent="."]
+visible = false
+curve = SubResource("Curve2D_37fx1")
+script = ExtResource("2_j17kj")
+
+[node name="Hover" type="TextureRect" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.141176)
+offset_right = 16.0
+offset_bottom = 16.0
+pivot_offset = Vector2(8, 8)
+texture = SubResource("AtlasTexture_77761")
+
 [node name="ToolboxButton" type="Button" parent="."]
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 48.0
-offset_bottom = 48.0
+offset_right = 80.0
+offset_bottom = 80.0
 focus_mode = 0
 theme_override_font_sizes/font_size = 20
 toggle_mode = true
@@ -173,10 +173,10 @@ text = "T"
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -48.0
+offset_left = -80.0
 offset_top = 16.0
 offset_right = -16.0
-offset_bottom = 48.0
+offset_bottom = 80.0
 grow_horizontal = 0
 focus_mode = 0
 theme_override_font_sizes/font_size = 20
@@ -191,11 +191,11 @@ offset_top = 16.0
 offset_right = 8.0
 offset_bottom = 48.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
+theme_override_colors/font_color = Color(0.643137, 0.615686, 0.596078, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
-theme_override_font_sizes/font_size = 31
+theme_override_font_sizes/font_size = 48
 text = "6"
 horizontal_alignment = 1
 
@@ -213,6 +213,7 @@ libraries = {
 [node name="MenuBG" type="ColorRect" parent="."]
 unique_name_in_owner = true
 visible = false
+z_index = 2
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -344,8 +345,6 @@ grow_vertical = 2
 
 [connection signal="toggled" from="ToolboxButton" to="." method="_on_toolbox_button_toggled"]
 [connection signal="button_down" from="MenuButton" to="." method="_on_menu_button_button_down"]
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
-[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
 [connection signal="button_down" from="MenuBG/Buttons/Back/Button" to="MenuBG/Buttons" method="_on_back_button_button_down"]
 [connection signal="mouse_entered" from="MenuBG/Buttons/Back/Button" to="MenuBG/Buttons" method="_on_back_button_mouse_entered"]
 [connection signal="mouse_exited" from="MenuBG/Buttons/Back/Button" to="MenuBG/Buttons" method="_on_back_button_mouse_exited"]

@@ -25,6 +25,7 @@ var element_layer: TileMapLayer
 var install_point_shown: bool = false
 
 var element_matrix: Array
+var blueboard_tile_data_matrix: Array
 var matrix_size: Vector2i
 
 var ElementTable: Dictionary = {
@@ -48,32 +49,33 @@ var ElementTable: Dictionary = {
 
 
 func _ready() -> void:
+	$OperationPanel.element_installed.connect(on_element_installed)
 	tmx_map = map.get_child(0)
 	if tmx_map != null:
 		blueboard_layer = tmx_map.find_child("Blueboard")
 		element_layer = tmx_map.find_child("Element")
 		matrix_size = blueboard_layer.get_used_rect().size
 		for r in matrix_size.x:
-			var array: Array = []
+			var array_a: Array = []
+			var array_b: Array = []
 			for c in matrix_size.y:
-				array.append(null)
-			element_matrix.append(array)
+				array_a.append(null)
+				array_b.append(null)
+			element_matrix.append(array_a)
+			blueboard_tile_data_matrix.append(array_b)
 		var center: Marker2D = tmx_map.find_child("point")
 		var element_layer_rect: Rect2i = element_layer.get_used_rect()
 		map.position -= center.position
 		for element_coords in element_layer.get_used_cells():
 			var tile_data: TileData = element_layer.get_cell_tile_data(element_coords)
 			var id: String = tile_data.get_meta("id")
-			var element_inst: Node2D = ElementTable.get(id).instantiate()
-			element_inst.position = element_coords * 32
-			element_inst.get_child(0).rotation = deg_to_rad(calculate_tile_rotation(tile_data))
-			element_layer.add_child(element_inst)
-			var relative_coords: Vector2i = get_element_relative_coords(element_layer_rect, element_coords)
+			var element_inst: Node2D = create_element(id, element_coords * TileSize, calculate_tile_rotation(tile_data))
+			var relative_coords: Vector2i = get_element_relative_coords(element_coords)
 			element_matrix[relative_coords.x][relative_coords.y] = element_inst
 			element_layer.erase_cell(element_coords)
 			
 		
-func get_element_relative_coords(element_layer_rect: Rect2i, element_coords: Vector2i) -> Vector2i:
+func get_element_relative_coords(element_coords: Vector2i) -> Vector2i:
 	var blueboard_layer_rect: Rect2i = blueboard_layer.get_used_rect()
 	return (Vector2i(element_layer.position) - Vector2i(blueboard_layer_rect.position)) + element_coords
 
@@ -137,7 +139,8 @@ func switch_blueboard_tile() -> void:
 			var new_tile_data: TileData = blueboard_layer.get_cell_tile_data(tile_coords)
 			var tile_position: Vector2 = map.global_position + tile_coords * TileSize * current_scale
 			var tile_size: Vector2 = TileSize * current_scale
-			new_tile_data.set_meta("rect", Rect2(tile_position, tile_size))
+			var tile_rect: Rect2 = Rect2(tile_position, tile_size)
+			blueboard_tile_data_matrix[tile_coords.x][tile_coords.y] = tile_rect
 			
 			
 func calculate_tile_rotation(tile_data: TileData) -> int:
@@ -165,5 +168,26 @@ func is_dropable(idxs: Vector2i) -> bool:
 		return true
 	else:
 		return false
+		
+		
+func on_element_installed(element_button: ElementButton) -> void:
+	var element_id: String = element_button.element_id
+	var installed_pos: Vector2 = element_button.installed_coords * TileSize
+	var created_pos: Vector2 = element_layer.to_local(element_button.global_position)
+	var element_inst: Node2D = create_element(element_id, created_pos, 0, 2.0)
+	element_button.queue_free()
+	var tween: Tween = get_tree().create_tween()
+	tween.set_parallel()
+	tween.tween_property(element_inst, "position", installed_pos, 0.05).set_ease(Tween.EASE_IN)
+	tween.tween_property(element_inst, "scale", current_scale, 0.05).set_ease(Tween.EASE_IN)
+	
+	
+func create_element(id: String, pos: Vector2, deg: int, scale: float = 1.0) -> Node2D:
+	var element_inst: Node2D = ElementTable.get(id).instantiate()
+	element_inst.position = pos
+	element_inst.get_child(0).rotate(deg)
+	element_inst.scale = Vector2(scale, scale)
+	element_layer.add_child(element_inst)
+	return element_inst
 		
 		

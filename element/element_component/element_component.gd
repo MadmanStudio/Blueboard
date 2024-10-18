@@ -96,3 +96,31 @@ func check_line_allow_input_type(type: Electricity.Type, dir: Direction) -> bool
 	else:
 		return false
 		
+		
+func rotate(deg: int) -> void:
+	rotation = deg_to_rad(deg)
+	var step: int = 0
+	if deg == 90:
+		step = 1
+	elif deg == 180:
+		step = 2
+	elif step == 270:
+		step = 3
+	rotate_array(line_disabled_array, step)
+	rotate_array(line_inputable_array, step)
+	rotate_array(line_outputable_array, step)
+	rotate_array(line_allow_input_type_array, step)
+	rotate_array(line_output_type_array, step)
+	rotate_array(electricity_array, step)
+	rotate_array(line_outputting_array, step)
+	rotate_array(line_inputting_array, step)
+	
+	
+func rotate_array(in_array: Array, step: int) -> void:
+	if step == 0:
+		return
+	var len: int = in_array.size()
+	step = step % len
+	var temp: Array = in_array.duplicate()
+	for i in range(len):
+		in_array[(i + step) % len] = temp[i]
