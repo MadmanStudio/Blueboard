@@ -27,18 +27,19 @@ var installed_coords: Vector2
 func _on_mouse_entered() -> void:
 	if Input.is_action_pressed("Pan"):
 		return
-	if not Globals.dragging:
+	if not Globals.dragging and not ready_to_install:
 		var tween: Tween = get_tree().create_tween()
 		tween.tween_property(self, "scale", Vector2(1.06, 1.06), 0.06).set_ease(Tween.EASE_OUT)
 
 
 func _on_mouse_exited() -> void:
-	if not Globals.dragging:
+	if not Globals.dragging and not ready_to_install:
 		var tween: Tween = get_tree().create_tween()
 		tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.1).set_ease(Tween.EASE_OUT)
 
 
 func _on_button_down() -> void:
+	z_index = 100
 	if not Globals.dragging:
 		Globals.dragging = true
 		dragging = true
@@ -49,6 +50,7 @@ func _on_button_down() -> void:
 
 
 func _on_button_up() -> void:
+	z_index = 1
 	if Globals.dragging:
 		Globals.dragging = false
 		dragging = false
@@ -76,12 +78,14 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	ready_to_install = false
 
 
-func _on_area_2d_area_entered(_area: Area2D) -> void:
-	inside_toolbox = true
-	ready_to_install = false
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	if area.owner is OperationPanel:
+		inside_toolbox = true
+		ready_to_install = false
 
 
-func _on_area_2d_area_exited(_area: Area2D) -> void:
-	inside_toolbox = false
-	if $VisibleOnScreenNotifier2D.is_on_screen():
-		ready_to_install = true
+func _on_area_2d_area_exited(area: Area2D) -> void:
+	if area.owner is OperationPanel:
+		inside_toolbox = false
+		if $VisibleOnScreenNotifier2D.is_on_screen():
+			ready_to_install = true

@@ -119,8 +119,8 @@ func rotate(deg: int) -> void:
 func rotate_array(in_array: Array, step: int) -> void:
 	if step == 0:
 		return
-	var len: int = in_array.size()
-	step = step % len
+	var length: int = in_array.size()
+	step = step % length
 	var temp: Array = in_array.duplicate()
-	for i in range(len):
-		in_array[(i + step) % len] = temp[i]
+	for i in range(length):
+		in_array[(i + step) % length] = temp[i]

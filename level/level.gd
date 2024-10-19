@@ -2,22 +2,20 @@ extends Node
 class_name Level
 
 
-@onready var map: Control = $Map
+@onready var map: Node = $Map
 
 const TileSize = 32.0
-const MinMapZoom = 1.0
-const MaxMapZoom = 2.0
+const MinMapZoom = Vector2.ONE
+const MaxMapZoom = Vector2.ONE * 2.0
 const MapZoomSpeed = 0.2
 const MapZoomTime = 0.05
 
 var zoom_focus_point: Vector2
-var current_zoom: float = 1.0
-var current_scale: Vector2 = Vector2(1.0, 1.0)
+var current_zoom: Vector2 = Vector2.ONE
 var zoom_tween: Tween
 
 var mouse_button_right_down: bool = false
 var mouse_button_right_down_position: Vector2
-var map_position: Vector2
 
 var tmx_map: Node2D
 var blueboard_layer: TileMapLayer
@@ -27,6 +25,7 @@ var install_point_shown: bool = false
 var element_matrix: Array
 var blueboard_tile_data_matrix: Array
 var matrix_size: Vector2i
+var map_center: Vector2
 
 var ElementTable: Dictionary = {
 	"G_red": load("res://element/generator/element_G_red.tscn"),
@@ -64,8 +63,8 @@ func _ready() -> void:
 			element_matrix.append(array_a)
 			blueboard_tile_data_matrix.append(array_b)
 		var center: Marker2D = tmx_map.find_child("point")
-		var element_layer_rect: Rect2i = element_layer.get_used_rect()
-		map.position -= center.position
+		map_center = center.position
+		$Camera2D.position = center.position
 		for element_coords in element_layer.get_used_cells():
 			var tile_data: TileData = element_layer.get_cell_tile_data(element_coords)
 			var id: String = tile_data.get_meta("id")
@@ -87,7 +86,6 @@ func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("Pan"):
 		mouse_button_right_down = true
 		mouse_button_right_down_position = event.position
-		map_position = map.position
 	if Input.is_action_just_released("Pan"):
 		mouse_button_right_down = false
 	
@@ -100,30 +98,26 @@ func _input(event: InputEvent) -> void:
 		
 	if event is InputEventMouseMotion:
 		if mouse_button_right_down:
-			map.position = map_position + (event.position - mouse_button_right_down_position)
+			$Camera2D.position -= event.relative / current_zoom
 		
-	if Input.is_action_just_pressed("ZoomIn"):
-		zoom_at_point(1 + MapZoomSpeed, map.get_local_mouse_position())
-	elif Input.is_action_just_pressed("ZoomOut"):
-		zoom_at_point(1 - MapZoomSpeed, map.get_local_mouse_position())
+	if Input.is_action_just_pressed("ZoomIn") and not Globals.dragging:
+		zoom_at_point(1 + MapZoomSpeed)
+	elif Input.is_action_just_pressed("ZoomOut") and not Globals.dragging:
+		zoom_at_point(1 - MapZoomSpeed)
 		
 		
-func zoom_at_point(zoom_change: float, point: Vector2) -> void:
-	zoom_focus_point = point
-	var new_zoom: float = clamp(current_zoom * zoom_change, MinMapZoom, MaxMapZoom)
+func zoom_at_point(zoom_change: float) -> void:
+	var new_zoom: Vector2 = current_zoom * zoom_change
+	new_zoom = new_zoom.clamp(MinMapZoom, MaxMapZoom)
 	if zoom_tween:
 		zoom_tween.kill()
 	zoom_tween = get_tree().create_tween()
 	zoom_tween.tween_method(update_zoom, current_zoom, new_zoom, 0.1)
 
 
-func update_zoom(new_zoom: float) -> void:
-	var zoom_center: Vector2 = zoom_focus_point
-	var zoom_diff: float = new_zoom / current_zoom
-	map.scale = Vector2.ONE * new_zoom
-	current_scale = map.scale
-	map.position -= (zoom_center * map.scale * (zoom_diff - 1))
-	current_zoom = new_zoom
+func update_zoom(new_zoom: Vector2) -> void:
+	$Camera2D.zoom = new_zoom
+	current_zoom = $Camera2D.zoom
 		
 		
 func switch_blueboard_tile() -> void:
@@ -136,9 +130,9 @@ func switch_blueboard_tile() -> void:
 			var id: String = tile_data.get_custom_data("id")
 			var new_atlas_coords: Vector2i = Tables.BlueboardTileAtlasCoordsTable.get(id)
 			blueboard_layer.set_cell(tile_coords, 0, new_atlas_coords)
-			var new_tile_data: TileData = blueboard_layer.get_cell_tile_data(tile_coords)
-			var tile_position: Vector2 = map.global_position + tile_coords * TileSize * current_scale
-			var tile_size: Vector2 = TileSize * current_scale
+			var tile_global_pos: Vector2 = blueboard_layer.map_to_local(tile_coords) - TileSize * Vector2.ONE * 0.5
+			var tile_position: Vector2 = (tile_global_pos - $Camera2D.global_position) * current_zoom + get_viewport().size * 0.5
+			var tile_size: Vector2 = TileSize * current_zoom
 			var tile_rect: Rect2 = Rect2(tile_position, tile_size)
 			blueboard_tile_data_matrix[tile_coords.x][tile_coords.y] = tile_rect
 			
@@ -171,15 +165,22 @@ func is_dropable(idxs: Vector2i) -> bool:
 		
 		
 func on_element_installed(element_button: ElementButton) -> void:
+	element_button.hide()
 	var element_id: String = element_button.element_id
-	var installed_pos: Vector2 = element_button.installed_coords * TileSize
-	var created_pos: Vector2 = element_layer.to_local(element_button.global_position)
-	var element_inst: Node2D = create_element(element_id, created_pos, 0, 2.0)
+	var element_coords: Vector2i = element_button.installed_coords
+	var installed_pos: Vector2 = element_coords * TileSize
+	var button_viewport_pos: Vector2 = element_button.get_global_transform_with_canvas().origin
 	element_button.queue_free()
+	var viewport_size: Vector2 = get_viewport().size
+	var centered_viewport_pos: Vector2 = button_viewport_pos - viewport_size / 2
+	var world_pos: Vector2 = (centered_viewport_pos / current_zoom) + $Camera2D.global_position
+	var created_pos: Vector2 = element_layer.to_local(world_pos)
+	var element_inst: Node2D = create_element(element_id, created_pos, 0, 2.0 / current_zoom.x)
+	element_matrix[element_coords.x][element_coords.y] = element_inst
 	var tween: Tween = get_tree().create_tween()
 	tween.set_parallel()
-	tween.tween_property(element_inst, "position", installed_pos, 0.05).set_ease(Tween.EASE_IN)
-	tween.tween_property(element_inst, "scale", current_scale, 0.05).set_ease(Tween.EASE_IN)
+	tween.tween_property(element_inst, "position", installed_pos, 0.1).set_ease(Tween.EASE_IN)
+	tween.tween_property(element_inst, "scale", Vector2.ONE, 0.1).set_ease(Tween.EASE_IN)
 	
 	
 func create_element(id: String, pos: Vector2, deg: int, scale: float = 1.0) -> Node2D:

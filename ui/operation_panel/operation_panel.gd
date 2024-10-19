@@ -1,4 +1,5 @@
 extends CanvasLayer
+class_name OperationPanel
 
 
 signal element_installed(element_button: ElementButton)
@@ -28,6 +29,8 @@ func _input(event: InputEvent) -> void:
 		if dragging_element_button == null:
 			return
 		if Input.is_action_pressed("Click"):
+			if dragging_element_button.inside_toolbox:
+				hide_curve()
 			if dragging_element_button.ready_to_install:
 				var curve_start: Vector2 = dragging_element_button.global_position + dragging_element_button.size * 0.5
 				show_and_update_curve(curve_start)
@@ -82,7 +85,7 @@ func hide_curve() -> void:
 	$Hover.hide()
 	
 	
-func on_element_button_released(element_button: ElementButton) -> void:
+func on_element_button_released(_element_button: ElementButton) -> void:
 	hide_curve()
 	
 	
