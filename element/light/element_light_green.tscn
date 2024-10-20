@@ -18,6 +18,5 @@ line_outputable_array = Array[bool]([false, false, false, false])
 line_allow_input_type_array = Array[int]([5, 7, 7, 7])
 
 [node name="PointLight" parent="." instance=ExtResource("3_t5ubu")]
-visible = false
 position = Vector2(16, 16)
 color = Color(0, 0.894118, 0.211765, 1)
