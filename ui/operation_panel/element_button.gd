@@ -28,14 +28,12 @@ func _on_mouse_entered() -> void:
 	if Input.is_action_pressed("Pan"):
 		return
 	if not Globals.dragging and not ready_to_install:
-		var tween: Tween = get_tree().create_tween()
-		tween.tween_property(self, "scale", Vector2(1.06, 1.06), 0.06).set_ease(Tween.EASE_OUT)
+		scale = Vector2.ONE * 1.06
 
 
 func _on_mouse_exited() -> void:
 	if not Globals.dragging and not ready_to_install:
-		var tween: Tween = get_tree().create_tween()
-		tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.1).set_ease(Tween.EASE_OUT)
+		scale = Vector2.ONE * 1.0
 
 
 func _on_button_down() -> void:
@@ -52,12 +50,13 @@ func _on_button_down() -> void:
 func _on_button_up() -> void:
 	z_index = 1
 	if Globals.dragging:
-		Globals.dragging = false
-		dragging = false
 		if inside_toolbox == true or ready_to_install == false:
 			global_position = initial_pos
 		else:
+			Globals.installing = true
 			element_installed.emit(self)
+		Globals.dragging = false
+		dragging = false
 		released.emit(self)
 		
 		

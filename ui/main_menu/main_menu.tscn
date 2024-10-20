@@ -241,6 +241,11 @@ libraries = {
 }
 autoplay = "AnyKeyHint"
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+autostart = true
+
 [connection signal="button_down" from="Buttons/Start/Button" to="Buttons" method="_on_start_button_down"]
 [connection signal="mouse_entered" from="Buttons/Start/Button" to="Buttons" method="_on_start_button_mouse_entered"]
 [connection signal="mouse_exited" from="Buttons/Start/Button" to="Buttons" method="_on_start_button_mouse_exited"]

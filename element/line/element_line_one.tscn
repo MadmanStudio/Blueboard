@@ -12,3 +12,4 @@ region = Rect2(112, 0, 16, 16)
 [node name="ElementComponent" parent="." instance=ExtResource("1_07oh7")]
 surface_texture = SubResource("AtlasTexture_v74e0")
 line_disabled_array = Array[bool]([true, false, true, false])
+rotatable = true

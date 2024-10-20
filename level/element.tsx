@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.11.0" name="element" tilewidth="32" tileheight="32" tilecount="256" columns="16">
+<tileset version="1.5" tiledversion="1.7.2" name="element" tilewidth="32" tileheight="32" tilecount="256" columns="16">
  <image source="../assets/texture/element.png" width="512" height="512"/>
  <tile id="0">
   <properties>
@@ -29,31 +29,37 @@
  <tile id="5">
   <properties>
    <property name="id" value="jumper_in"/>
+   <property name="rotatable" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="6">
   <properties>
    <property name="id" value="jumper_out"/>
+   <property name="rotatable" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="7">
   <properties>
    <property name="id" value="line_one"/>
+   <property name="rotatable" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="8">
   <properties>
    <property name="id" value="line_two"/>
+   <property name="rotatable" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="9">
   <properties>
    <property name="id" value="line_three"/>
+   <property name="rotatable" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="10">
   <properties>
    <property name="id" value="line_four"/>
+   <property name="rotatable" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="16">
@@ -244,6 +250,21 @@
    <property name="id" value="blueboard_13"/>
   </properties>
  </tile>
+ <tile id="64">
+  <properties>
+   <property name="id" value="light_purple"/>
+  </properties>
+ </tile>
+ <tile id="66">
+  <properties>
+   <property name="id" value="light_red"/>
+  </properties>
+ </tile>
+ <tile id="67">
+  <properties>
+   <property name="id" value="light_blue"/>
+  </properties>
+ </tile>
  <tile id="68">
   <properties>
    <property name="id" value="T_r2y"/>
@@ -302,6 +323,21 @@
  <tile id="78">
   <properties>
    <property name="id" value="blueboard_18"/>
+  </properties>
+ </tile>
+ <tile id="80">
+  <properties>
+   <property name="id" value="light_green"/>
+  </properties>
+ </tile>
+ <tile id="81">
+  <properties>
+   <property name="id" value="light_orange"/>
+  </properties>
+ </tile>
+ <tile id="82">
+  <properties>
+   <property name="id" value="light_yellow"/>
   </properties>
  </tile>
  <tile id="84">

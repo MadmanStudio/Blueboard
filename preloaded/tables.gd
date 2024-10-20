@@ -76,12 +76,18 @@ const ElementPathTable: Dictionary = {
 	"I_green": "res://element/intermixer/element_I_green.tscn",
 	"I_orange": "res://element/intermixer/element_I_orange.tscn",
 	"hinderer": "res://element/hinderer/element_H.tscn",
-	"jumper_in": "res://element/jumper/element_jumper_in.tscn",
-	"jumper_out": "res://element/jumper/element_jumper_out.tscn",
+	"jumper_in": "res://element/line/element_jumper_in.tscn",
+	"jumper_out": "res://element/line/element_jumper_out.tscn",
 	"line_one": "res://element/line/element_line_one.tscn",
 	"line_two": "res://element/line/element_line_two.tscn",
 	"line_three": "res://element/line/element_line_three.tscn",
-	"line_four": "res://element/line/element_line_four.tscn"
+	"line_four": "res://element/line/element_line_four.tscn",
+	"light_purple": "res://element/light/element_light_purple.tscn",
+	"light_blue": "res://element/light/element_light_blue.tscn",
+	"light_red": "res://element/light/element_light_red.tscn",
+	"light_greed": "res://element/light/element_light_greed.tscn",
+	"light_orange": "res://element/light/element_light_orange.tscn",
+	"light_yellow": "res://element/light/element_light_yellow.tscn",
 }
 
 const ElementIconTable: Dictionary = {

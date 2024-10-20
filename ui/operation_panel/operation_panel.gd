@@ -8,6 +8,8 @@ signal element_installed(element_button: ElementButton)
 @export var element_list: Array[String] = []
 @export var level: Level
 
+var toolbox_icon: AtlasTexture = load("res://ui/operation_panel/res/toolbox_button.atlastex")
+var close_icon: AtlasTexture = load("res://ui/operation_panel/res/close_button.atlastex")
 var element_button_tscn: PackedScene = load("res://ui/operation_panel/element_button.tscn")
 var dragging_element_button: ElementButton
 
@@ -100,8 +102,10 @@ func element_button_clicked(element_button: ElementButton) -> void:
 func _on_toolbox_button_toggled(toggled_on: bool) -> void:
 	if toggled_on:
 		$AnimationPlayer.play("ToolboxEnter")
+		$ToolboxButton.icon = close_icon
 	else:
 		$AnimationPlayer.play_backwards("ToolboxEnter")
+		$ToolboxButton.icon = toolbox_icon
 		
 		
 func show_menu() -> void:
@@ -115,3 +119,16 @@ func show_menu() -> void:
 
 func _on_menu_button_button_down() -> void:
 	show_menu()
+
+
+func _on_button_button_down() -> void:
+	var main: Main = get_tree().get_first_node_in_group("main")
+	main.load_scene(Paths.main_menu)
+	
+	
+func add_element_button(element_button: ElementButton) -> void:
+	element_button.clicked.connect(element_button_clicked)
+	element_button.released.connect(on_element_button_released)
+	element_button.element_installed.connect(on_element_installed)
+	element_button.tree_exited.connect(on_queue_free)
+	$Panel/Panel/MarginContainer/GridContainer.add_child(element_button)

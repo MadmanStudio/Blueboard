@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://depodaqqchc14"]
+
+[ext_resource type="Texture2D" uid="uid://c0e3hnabmvhoi" path="res://element/light/texture/light.png" id="1_mcv5s"]
+
+[sub_resource type="Animation" id="Animation_6kk0i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.1]
+}
+
+[sub_resource type="Animation" id="Animation_wpqrw"]
+resource_name = "Shine"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.1, 0.12, 0.1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7jd1w"]
+_data = {
+"RESET": SubResource("Animation_6kk0i"),
+"Shine": SubResource("Animation_wpqrw")
+}
+
+[node name="PointLight" type="PointLight2D"]
+color = Color(1, 0, 1, 1)
+energy = 2.0
+shadow_enabled = true
+texture = ExtResource("1_mcv5s")
+texture_scale = 0.1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7jd1w")
+}
+autoplay = "Shine"

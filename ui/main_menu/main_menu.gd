@@ -15,6 +15,7 @@ extends CanvasLayer
 @export var max_shake_time: float = 0.5
 
 var any_key_down: bool = false
+var is_ready: bool = false
 
 
 func _ready() -> void:
@@ -23,9 +24,12 @@ func _ready() -> void:
 	bind_shake_event(G_image)
 	bind_shake_event(H_image)
 	bind_shake_event(T_image)
+	$Timer.timeout.connect(func() -> void: is_ready = true)
 
 
 func _input(event: InputEvent) -> void:
+	if not is_ready:
+		return
 	if event is InputEventKey or event is InputEventMouseButton:
 		if event is InputEventMouseButton:
 			if event.button_index == MOUSE_BUTTON_WHEEL_UP or\

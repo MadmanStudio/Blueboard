@@ -14,3 +14,4 @@ surface_texture = SubResource("AtlasTexture_4vui1")
 line_disabled_array = Array[bool]([false, true, true, true])
 line_inputable_array = Array[bool]([true, false, false, false])
 line_outputable_array = Array[bool]([false, false, false, false])
+rotatable = true

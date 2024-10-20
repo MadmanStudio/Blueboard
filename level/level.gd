@@ -38,13 +38,21 @@ var ElementTable: Dictionary = {
 	"I_green": load("res://element/intermixer/element_I_green.tscn"),
 	"I_orange": load("res://element/intermixer/element_I_orange.tscn"),
 	"hinderer": load("res://element/hinderer/element_H.tscn"),
-	"jumper_in": load("res://element/jumper/element_jumer_in.tscn"),
-	"jumper_out": load("res://element/jumper/element_jumer_out.tscn"),
+	"jumper_in": load("res://element/line/element_jumer_in.tscn"),
+	"jumper_out": load("res://element/line/element_jumer_out.tscn"),
 	"line_one": load("res://element/line/element_line_one.tscn"),
 	"line_two": load("res://element/line/element_line_two.tscn"),
 	"line_three": load("res://element/line/element_line_three.tscn"),
-	"line_four": load("res://element/line/element_line_four.tscn")
+	"line_four": load("res://element/line/element_line_four.tscn"),
+	"light_purple": load("res://element/light/element_light_purple.tscn"),
+	"light_blue": load("res://element/light/element_light_blue.tscn"),
+	"light_red": load("res://element/light/element_light_red.tscn"),
+	"light_greed": load("res://element/light/element_light_green.tscn"),
+	"light_orange": load("res://element/light/element_light_orange.tscn"),
+	"light_yellow": load("res://element/light/element_light_yellow.tscn")
 }
+
+var element_button_tscn: PackedScene = load("res://ui/operation_panel/element_button.tscn")
 
 
 func _ready() -> void:
@@ -69,6 +77,8 @@ func _ready() -> void:
 			var tile_data: TileData = element_layer.get_cell_tile_data(element_coords)
 			var id: String = tile_data.get_meta("id")
 			var element_inst: Node2D = create_element(id, element_coords * TileSize, calculate_tile_rotation(tile_data))
+			element_inst.get_child(0).id = id
+			element_inst.get_child(0).rotatable = false
 			var relative_coords: Vector2i = get_element_relative_coords(element_coords)
 			element_matrix[relative_coords.x][relative_coords.y] = element_inst
 			element_layer.erase_cell(element_coords)
@@ -176,19 +186,31 @@ func on_element_installed(element_button: ElementButton) -> void:
 	var world_pos: Vector2 = (centered_viewport_pos / current_zoom) + $Camera2D.global_position
 	var created_pos: Vector2 = element_layer.to_local(world_pos)
 	var element_inst: Node2D = create_element(element_id, created_pos, 0, 2.0 / current_zoom.x)
+	element_inst.get_child(0).detachabled = true
 	element_matrix[element_coords.x][element_coords.y] = element_inst
 	var tween: Tween = get_tree().create_tween()
 	tween.set_parallel()
 	tween.tween_property(element_inst, "position", installed_pos, 0.1).set_ease(Tween.EASE_IN)
 	tween.tween_property(element_inst, "scale", Vector2.ONE, 0.1).set_ease(Tween.EASE_IN)
+	tween.tween_callback(func() -> void: Globals.installing = false)
 	
 	
 func create_element(id: String, pos: Vector2, deg: int, scale: float = 1.0) -> Node2D:
 	var element_inst: Node2D = ElementTable.get(id).instantiate()
+	element_inst.get_child(0).id = id
 	element_inst.position = pos
-	element_inst.get_child(0).rotate(deg)
 	element_inst.scale = Vector2(scale, scale)
 	element_layer.add_child(element_inst)
+	element_inst.get_child(0).rotate(deg)
 	return element_inst
 		
 		
+func on_element_uninstalled(element: Node2D) -> void:
+	var element_comp: ElementComponent = element.get_child(0)
+	var element_id: String = element_comp.id
+	var element_button: ElementButton = element_button_tscn.instantiate()
+	element.queue_free()
+	element_button.element_id = element_id
+	element_button.global_position = element.global_position
+	$OperationPanel.add_element_button(element_button)
+	

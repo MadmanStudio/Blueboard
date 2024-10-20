@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://bnlbp0jrpdef1"]
+[gd_scene load_steps=17 format=3 uid="uid://bnlbp0jrpdef1"]
 
 [ext_resource type="Script" path="res://ui/operation_panel/operation_panel.gd" id="1_k4jd0"]
 [ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="1_mlr13"]
 [ext_resource type="Script" path="res://ui/operation_panel/buttons.gd" id="2_713g5"]
 [ext_resource type="Script" path="res://ui/operation_panel/curve.gd" id="2_j17kj"]
+[ext_resource type="Texture2D" uid="uid://d0a8u1w34kuv5" path="res://ui/operation_panel/res/toolbox_button.atlastex" id="4_mk6oy"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lebeu"]
 
@@ -37,6 +38,10 @@ point_count = 2
 [sub_resource type="AtlasTexture" id="AtlasTexture_77761"]
 atlas = ExtResource("1_mlr13")
 region = Rect2(48, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tigup"]
+atlas = ExtResource("1_mlr13")
+region = Rect2(16, 64, 16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8xijx"]
 size = Vector2(200, 640)
@@ -167,7 +172,10 @@ offset_bottom = 80.0
 focus_mode = 0
 theme_override_font_sizes/font_size = 20
 toggle_mode = true
-text = "T"
+icon = ExtResource("4_mk6oy")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
 [node name="MenuButton" type="Button" parent="."]
 anchors_preset = 1
@@ -180,7 +188,9 @@ offset_bottom = 80.0
 grow_horizontal = 0
 focus_mode = 0
 theme_override_font_sizes/font_size = 20
-text = "M"
+icon = SubResource("AtlasTexture_tigup")
+flat = true
+expand_icon = true
 
 [node name="LevelNumber" type="Label" parent="."]
 anchors_preset = 5
@@ -191,7 +201,7 @@ offset_top = 16.0
 offset_right = 8.0
 offset_bottom = 48.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(0.643137, 0.615686, 0.596078, 1)
+theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
@@ -350,5 +360,6 @@ grow_vertical = 2
 [connection signal="mouse_exited" from="MenuBG/Buttons/Back/Button" to="MenuBG/Buttons" method="_on_back_button_mouse_exited"]
 [connection signal="mouse_entered" from="MenuBG/Buttons/Manual/Button" to="MenuBG/Buttons" method="_on_manual_button_mouse_entered"]
 [connection signal="mouse_exited" from="MenuBG/Buttons/Manual/Button" to="MenuBG/Buttons" method="_on_manual_button_mouse_exited"]
+[connection signal="button_down" from="MenuBG/Buttons/MainMenu/Button" to="." method="_on_button_button_down"]
 [connection signal="mouse_entered" from="MenuBG/Buttons/MainMenu/Button" to="MenuBG/Buttons" method="_on_main_menu_button_mouse_entered"]
 [connection signal="mouse_exited" from="MenuBG/Buttons/MainMenu/Button" to="MenuBG/Buttons" method="_on_main_menu_button_mouse_exited"]

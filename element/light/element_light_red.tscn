@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvemx1ov27ygp"]
+
+[ext_resource type="PackedScene" uid="uid://bbtvaphcjmt2x" path="res://element/element_component/element_component.tscn" id="1_uqb58"]
+[ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="2_mqcqs"]
+[ext_resource type="PackedScene" uid="uid://depodaqqchc14" path="res://element/light/point_light.tscn" id="3_7ajns"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jqyp6"]
+atlas = ExtResource("2_mqcqs")
+region = Rect2(32, 64, 16, 16)
+
+[node name="Element_Light_Red" type="Node2D"]
+
+[node name="ElementComponent" parent="." instance=ExtResource("1_uqb58")]
+surface_texture = SubResource("AtlasTexture_jqyp6")
+line_disabled_array = Array[bool]([false, true, true, true])
+line_inputable_array = Array[bool]([true, false, false, false])
+line_outputable_array = Array[bool]([false, false, false, false])
+line_allow_input_type_array = Array[int]([0, 7, 7, 7])
+
+[node name="PointLight" parent="." instance=ExtResource("3_7ajns")]
+visible = false
+position = Vector2(16, 16)
+color = Color(1, 0, 0.301961, 1)

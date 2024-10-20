@@ -3,6 +3,10 @@ extends Control
 class_name ElementComponent
 
 
+var id: String
+var detachabled: bool = false
+var current_deg: int = 0
+
 enum Direction
 {
 	UP, RIGHT, DOWN, LEFT
@@ -35,8 +39,13 @@ enum AllowInputType
 	Electricity.Type.RED, Electricity.Type.RED,
 	Electricity.Type.RED, Electricity.Type.RED
 ]
+@export var rotatable: bool = false
 
-@onready var electricity_array: Array[Electricity] = [$Electricity1, $Electricity2, $Electricity3, $Electricity4]
+@onready var e1: Electricity = $Electricity1
+@onready var e2: Electricity = $Electricity2
+@onready var e3: Electricity = $Electricity3
+@onready var e4: Electricity = $Electricity4
+@onready var electricity_array: Array[Electricity] = [e1, e2, e3, e4]
 var line_outputting_array: Array[bool] = [false, false, false, false]
 var line_inputting_array: Array[bool] = [false, false, false, false]
 	
@@ -97,8 +106,18 @@ func check_line_allow_input_type(type: Electricity.Type, dir: Direction) -> bool
 		return false
 		
 		
-func rotate(deg: int) -> void:
-	rotation = deg_to_rad(deg)
+func rotate(deg: int, with_anim: bool = false) -> void:
+	current_deg = deg
+	if with_anim:
+		z_index = 100
+		var tween: Tween = get_tree().create_tween()
+		tween.tween_property(self, "scale", Vector2.ONE * 1.2, 0.1).set_ease(Tween.EASE_OUT)
+		tween.tween_property(self, "rotation", deg_to_rad(deg), 0.1)
+		tween.tween_property(self, "scale", Vector2.ONE * 1.0, 0.1).set_ease(Tween.EASE_IN)
+		tween.tween_callback(func() -> void: z_index = 0)
+	else:
+		rotation = deg_to_rad(deg)
+	$Control/Disdetachabled.rotation -= rotation
 	var step: int = 0
 	if deg == 90:
 		step = 1
@@ -120,7 +139,44 @@ func rotate_array(in_array: Array, step: int) -> void:
 	if step == 0:
 		return
 	var length: int = in_array.size()
-	step = step % length
+	step = (step + length) % length
 	var temp: Array = in_array.duplicate()
 	for i in range(length):
 		in_array[(i + step) % length] = temp[i]
+
+
+func detach() -> void:
+	if not Globals.dragging and not Globals.installing:
+		var main: Main = get_tree().get_first_node_in_group("main")
+		main.active_level.on_element_uninstalled(owner)
+
+
+func hint_disdetachabled() -> void:
+	$Control/Disdetachabled/AnimationPlayer.play("Disdetachabled")
+
+
+func rotate_90deg() -> void:
+	current_deg += 90
+	rotate(current_deg, true)
+
+
+func _on_button_gui_input(event: InputEvent) -> void:
+	var local_mouse_position: Vector2 = $Control/Button.get_local_mouse_position()
+	var button_size: Vector2 = $Control/Button.size
+	if local_mouse_position.x >= 0 and local_mouse_position.x <= button_size.x and \
+	local_mouse_position.y >= 0 and local_mouse_position.y <= button_size.y:
+		pass
+	else:
+		return
+		
+	if event is InputEventMouseButton and event.is_released():
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if rotatable:
+				rotate_90deg()
+			else:
+				hint_disdetachabled()
+		elif event.button_index == MOUSE_BUTTON_RIGHT:
+			if detachabled:
+				detach()
+			else:
+				hint_disdetachabled()
