@@ -112,8 +112,8 @@ func rotate(deg: int, with_anim: bool = false) -> void:
 		z_index = 100
 		var tween: Tween = get_tree().create_tween()
 		tween.tween_property(self, "scale", Vector2.ONE * 1.2, 0.1).set_ease(Tween.EASE_OUT)
-		tween.tween_property(self, "rotation", deg_to_rad(deg), 0.1)
-		tween.tween_property(self, "scale", Vector2.ONE * 1.0, 0.1).set_ease(Tween.EASE_IN)
+		tween.chain().tween_property(self, "rotation", deg_to_rad(deg), 0.1)
+		tween.chain().tween_property(self, "scale", Vector2.ONE * 1.0, 0.1).set_ease(Tween.EASE_IN)
 		tween.tween_callback(func() -> void: z_index = 0)
 	else:
 		rotation = deg_to_rad(deg)
