@@ -14,5 +14,5 @@ script = ExtResource("1_kf6bj")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="OperationPanel" parent="." node_paths=PackedStringArray("level") instance=ExtResource("4_c47ef")]
-element_list = Array[String](["hinderer", "hinderer", "hinderer", "line_one"])
+element_list = Array[String](["L_orange", "I_green", "G_blue", "hinderer", "T_b2y", "line_one", "line_two", "line_three", "line_four", "jumper_in", "jumper_out"])
 level = NodePath("..")
