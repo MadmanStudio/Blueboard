@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://ctban177deixj"]
 
-[ext_resource type="Shader" path="res://element/element_component/flow.gdshader" id="1_iipsu"]
+[ext_resource type="Shader" path="res://element/element_component/res/flow.gdshader" id="1_iipsu"]
 [ext_resource type="Script" path="res://element/element_component/electricity.gd" id="1_r174l"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hm18p"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yk7je"]
 shader = ExtResource("1_iipsu")
 shader_parameter/frequency = 1.5
 shader_parameter/amplitude = 1000.0
@@ -11,7 +11,6 @@ shader_parameter/speed = 10.0
 shader_parameter/direction = -1.0
 shader_parameter/color1 = Color(0.760784, 0.764706, 0.780392, 1)
 shader_parameter/color2 = Color(0, 0, 0, 1)
-shader_parameter/opacity = 1.0
 
 [sub_resource type="Animation" id="Animation_lftye"]
 resource_name = "Input"
@@ -68,7 +67,7 @@ _data = {
 }
 
 [node name="Electricity" type="Line2D"]
-material = SubResource("ShaderMaterial_hm18p")
+material = SubResource("ShaderMaterial_yk7je")
 points = PackedVector2Array(0, 0, 0, 0)
 width = 4.0
 texture_mode = 1

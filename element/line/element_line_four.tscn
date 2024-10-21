@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bf6mjbg7johrq"]
 
 [ext_resource type="PackedScene" uid="uid://bbtvaphcjmt2x" path="res://element/element_component/element_component.tscn" id="1_ia8v5"]
-[ext_resource type="Script" path="res://element/line/element_line_four.gd" id="1_qug71"]
+[ext_resource type="Script" path="res://element/line/line.gd" id="1_scv6k"]
 [ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="2_23xhe"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_68bln"]
@@ -9,7 +9,7 @@ atlas = ExtResource("2_23xhe")
 region = Rect2(160, 0, 16, 16)
 
 [node name="Element_Line_Four" type="Node2D"]
-script = ExtResource("1_qug71")
+script = ExtResource("1_scv6k")
 
 [node name="ElementComponent" parent="." instance=ExtResource("1_ia8v5")]
 surface_texture = SubResource("AtlasTexture_68bln")

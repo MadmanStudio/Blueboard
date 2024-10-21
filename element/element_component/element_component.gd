@@ -3,9 +3,13 @@ extends Control
 class_name ElementComponent
 
 
+signal detached(element: Node2D)
+
+
 var id: String
-var detachabled: bool = false
+var detachable: bool = false
 var current_deg: int = 0
+var installed_coords: Vector2
 
 enum Direction
 {
@@ -60,25 +64,27 @@ func clear_core() -> void:
 	tween.tween_property($Control/Core, "color", Tables.ElectricityColorTable.get(Electricity.Type.WHITE), 0.1).set_ease(Tween.EASE_IN)
 
 
-func output_electricity(dir: Direction) -> void:
+func output_electricity(dir: Direction, switch_flowing_color: bool = false) -> void:
 	if line_disabled_array[dir] == true:
 		return
 	if line_outputable_array[dir] == false:
 		return
 	line_outputting_array[dir] = true
-	electricity_array[dir].output(line_output_type_array[dir])
+	electricity_array[dir].output(line_output_type_array[dir], switch_flowing_color)
+	line_outputting_array[dir] = true
 	
 	
-func output_electricity_with_type(type: Electricity.Type, dir: Direction) -> void:
+func output_electricity_with_type(type: Electricity.Type, dir: Direction, switch_flowing_color: bool = false) -> void:
 	if line_disabled_array[dir] == true:
 		return
 	if line_outputable_array[dir] == false:
 		return
 	line_outputting_array[dir] = true
-	electricity_array[dir].output(type)
+	electricity_array[dir].output(type, switch_flowing_color)
+	line_outputting_array[dir] = true
 	
 	
-func input_electricity(type: Electricity.Type, dir: Direction) -> void:
+func input_electricity(type: Electricity.Type, dir: Direction, switch_flowing_color: bool = false) -> void:
 	if line_disabled_array[dir] == true:
 		return
 	if line_inputable_array[dir] == false:
@@ -86,7 +92,7 @@ func input_electricity(type: Electricity.Type, dir: Direction) -> void:
 	if check_line_allow_input_type(type, dir) == false:
 		return
 	line_inputting_array[dir] = true
-	electricity_array[dir].input(type)
+	electricity_array[dir].input(type, switch_flowing_color)
 	await get_tree().create_timer(0.4).timeout
 	fill_core(type)
 	
@@ -95,6 +101,9 @@ func vanish_electricity() -> void:
 	clear_core()
 	for electricity: Electricity in electricity_array:
 		electricity.vanish()
+	for dir in Direction:
+		line_inputting_array[dir] = false
+		line_outputting_array[dir] = false
 	
 	
 func check_line_allow_input_type(type: Electricity.Type, dir: Direction) -> bool:
@@ -146,9 +155,7 @@ func rotate_array(in_array: Array, step: int) -> void:
 
 
 func detach() -> void:
-	if not Globals.dragging and not Globals.installing:
-		var main: Main = get_tree().get_first_node_in_group("main")
-		main.active_level.on_element_uninstalled(owner)
+	detached.emit(owner)
 
 
 func hint_disdetachabled() -> void:
@@ -176,7 +183,7 @@ func _on_button_gui_input(event: InputEvent) -> void:
 			else:
 				hint_disdetachabled()
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
-			if detachabled:
+			if detachable:
 				detach()
 			else:
 				hint_disdetachabled()

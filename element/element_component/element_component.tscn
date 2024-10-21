@@ -57,6 +57,21 @@ anchors_preset = 0
 pivot_offset = Vector2(16, 16)
 script = ExtResource("1_2e0ql")
 
+[node name="Electricity1" parent="." instance=ExtResource("4_rg0i7")]
+position = Vector2(16, 10)
+rotation = -1.5708
+
+[node name="Electricity2" parent="." instance=ExtResource("4_rg0i7")]
+position = Vector2(22, 16)
+
+[node name="Electricity3" parent="." instance=ExtResource("4_rg0i7")]
+position = Vector2(16, 22)
+rotation = 1.5708
+
+[node name="Electricity4" parent="." instance=ExtResource("4_rg0i7")]
+position = Vector2(10, 16)
+rotation = 3.14159
+
 [node name="Control" type="Control" parent="."]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 1
@@ -126,20 +141,5 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 button_mask = 2
-
-[node name="Electricity1" parent="." instance=ExtResource("4_rg0i7")]
-position = Vector2(16, 10)
-rotation = -1.5708
-
-[node name="Electricity2" parent="." instance=ExtResource("4_rg0i7")]
-position = Vector2(22, 16)
-
-[node name="Electricity3" parent="." instance=ExtResource("4_rg0i7")]
-position = Vector2(16, 22)
-rotation = 1.5708
-
-[node name="Electricity4" parent="." instance=ExtResource("4_rg0i7")]
-position = Vector2(10, 16)
-rotation = 3.14159
 
 [connection signal="gui_input" from="Control/Button" to="." method="_on_button_gui_input"]

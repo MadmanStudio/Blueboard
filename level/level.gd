@@ -192,7 +192,9 @@ func on_element_installed(element_button: ElementButton) -> void:
 	var world_pos: Vector2 = (centered_viewport_pos / current_zoom) + $Camera2D.global_position
 	var created_pos: Vector2 = element_layer.to_local(world_pos)
 	var element_inst: Node2D = create_element(element_id, created_pos, 0, 2.0 / current_zoom.x)
-	element_inst.get_child(0).detachabled = true
+	element_inst.get_child(0).detachable = true
+	element_inst.get_child(0).installed_coords = element_button.installed_coords
+	element_inst.get_child(0).detached.connect(on_element_uninstalled)
 	element_matrix[element_coords.x][element_coords.y] = element_inst
 	var tween: Tween = get_tree().create_tween()
 	tween.set_parallel()
@@ -220,3 +222,30 @@ func on_element_uninstalled(element: Node2D) -> void:
 	element_button.global_position = element.global_position
 	$OperationPanel.add_element_button(element_button)
 	
+	
+func propagate_electricity(start_element: Node2D):
+	if start_element == null:
+		return
+	var element_comp: ElementComponent = start_element.get_child(0)
+	var queue: Array = []
+	var visited: Dictionary = {}
+	queue.append(start_element)
+	visited[element_comp.installed_coords] = true
+	while queue.size() > 0:
+		var current_comp: ElementComponent = queue.pop_front().get_child(0)
+		var dirs: Array = [Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(-1, 0)]
+		for dir in dirs:
+			var next_coord = current_comp.installed_coords + dir
+			if next_coord.x >= 0 and next_coord.x < matrix_size.x and next_coord.y >= 0 and next_coord.y < matrix_size.y:
+				var next_element = element_matrix[next_coord.x][next_coord.y]
+				if not visited.has(next_coord) and next_element != null:
+					queue.append(next_element)
+					visited[next_coord] = true
+	
+	
+func extinguish_electricity(start_element: Node2D):
+	var element_comp: ElementComponent = start_element.get_child(0)
+
+
+func handle_propagate(center_comp: ElementComponent, surrounding_comps: Array) -> void:
+	pass
