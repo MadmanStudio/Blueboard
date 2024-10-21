@@ -91,7 +91,7 @@ const ElementPathTable: Dictionary = {
 	"light_purple": "res://element/light/element_light_purple.tscn",
 	"light_blue": "res://element/light/element_light_blue.tscn",
 	"light_red": "res://element/light/element_light_red.tscn",
-	"light_greed": "res://element/light/element_light_greed.tscn",
+	"light_green": "res://element/light/element_light_green.tscn",
 	"light_orange": "res://element/light/element_light_orange.tscn",
 	"light_yellow": "res://element/light/element_light_yellow.tscn",
 }
@@ -122,7 +122,7 @@ const ElementIconTable: Dictionary = {
 	"light_purple": "res://element/light/res/element_light_purple.atlastex",
 	"light_blue": "res://element/light/res/element_light_blue.atlastex",
 	"light_red": "res://element/light/res/element_light_red.atlastex",
-	"light_greed": "res://element/light/res/element_light_greed.atlastex",
+	"light_green": "res://element/light/res/element_light_green.atlastex",
 	"light_orange": "res://element/light/res/element_light_orange.atlastex",
 	"light_yellow": "res://element/light/res/element_light_yellow.atlastex",
 }

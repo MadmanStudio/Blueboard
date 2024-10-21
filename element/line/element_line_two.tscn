@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://element/line/line.gd" id="1_mn7yk"]
 [ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="2_x5a6o"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8qxi1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7w7w"]
 atlas = ExtResource("2_x5a6o")
 region = Rect2(128, 0, 16, 16)
 
@@ -12,6 +12,7 @@ region = Rect2(128, 0, 16, 16)
 script = ExtResource("1_mn7yk")
 
 [node name="ElementComponent" parent="." instance=ExtResource("1_74x8q")]
-surface_texture = SubResource("AtlasTexture_8qxi1")
-line_disabled_array = Array[bool]([false, false, true, true])
+surface_texture = SubResource("AtlasTexture_v7w7w")
+line_inputable_array = Array[bool]([true, true, false, false])
+line_outputable_array = Array[bool]([true, true, false, false])
 rotatable = true

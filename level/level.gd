@@ -9,6 +9,7 @@ const MinMapZoom = Vector2.ONE
 const MaxMapZoom = Vector2.ONE * 2.0
 const MapZoomSpeed = 0.2
 const MapZoomTime = 0.05
+const Dirs: Array = [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]
 
 var zoom_focus_point: Vector2
 var current_zoom: Vector2 = Vector2.ONE
@@ -53,7 +54,7 @@ var ElementTable: Dictionary = {
 	"light_purple": load("res://element/light/element_light_purple.tscn"),
 	"light_blue": load("res://element/light/element_light_blue.tscn"),
 	"light_red": load("res://element/light/element_light_red.tscn"),
-	"light_greed": load("res://element/light/element_light_green.tscn"),
+	"light_green": load("res://element/light/element_light_green.tscn"),
 	"light_orange": load("res://element/light/element_light_orange.tscn"),
 	"light_yellow": load("res://element/light/element_light_yellow.tscn")
 }
@@ -200,7 +201,12 @@ func on_element_installed(element_button: ElementButton) -> void:
 	tween.set_parallel()
 	tween.tween_property(element_inst, "position", installed_pos, 0.1).set_ease(Tween.EASE_IN)
 	tween.tween_property(element_inst, "scale", Vector2.ONE, 0.1).set_ease(Tween.EASE_IN)
-	tween.tween_callback(func() -> void: Globals.installing = false)
+	tween.tween_callback(on_element_install_completed.bind(element_inst))
+	
+	
+func on_element_install_completed(element: Node2D) -> void:
+	Globals.installing = false
+	propagate_electricity(element)
 	
 	
 func create_element(id: String, pos: Vector2, deg: int, scale: float = 1.0) -> Node2D:
@@ -210,6 +216,7 @@ func create_element(id: String, pos: Vector2, deg: int, scale: float = 1.0) -> N
 	element_inst.scale = Vector2(scale, scale)
 	element_layer.add_child(element_inst)
 	element_inst.get_child(0).rotate(deg)
+	element_inst.get_child(0).rotated.connect(on_element_rotated.bind(element_inst))
 	return element_inst
 		
 		
@@ -217,13 +224,14 @@ func on_element_uninstalled(element: Node2D) -> void:
 	var element_comp: ElementComponent = element.get_child(0)
 	var element_id: String = element_comp.id
 	var element_button: ElementButton = element_button_tscn.instantiate()
+	element_matrix[element_comp.installed_coords.x][element_comp.installed_coords.y] = null
 	element.queue_free()
 	element_button.element_id = element_id
 	element_button.global_position = element.global_position
 	$OperationPanel.add_element_button(element_button)
 	
 	
-func propagate_electricity(start_element: Node2D):
+func propagate_electricity(start_element: Node2D) -> void:
 	if start_element == null:
 		return
 	var element_comp: ElementComponent = start_element.get_child(0)
@@ -233,19 +241,70 @@ func propagate_electricity(start_element: Node2D):
 	visited[element_comp.installed_coords] = true
 	while queue.size() > 0:
 		var current_comp: ElementComponent = queue.pop_front().get_child(0)
-		var dirs: Array = [Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(-1, 0)]
-		for dir in dirs:
-			var next_coord = current_comp.installed_coords + dir
+		var x: int = current_comp.installed_coords.x
+		var y: int = current_comp.installed_coords.y
+		handle_propagate(current_comp, [
+			element_matrix[x + Dirs[0].x][y + Dirs[0].y],
+			element_matrix[x + Dirs[1].x][y + Dirs[1].y],
+			element_matrix[x + Dirs[2].x][y + Dirs[2].y],
+			element_matrix[x + Dirs[3].x][y + Dirs[3].y]
+		])
+		for dir: Vector2i in Dirs:
+			var next_coord: Vector2i = current_comp.installed_coords + dir
 			if next_coord.x >= 0 and next_coord.x < matrix_size.x and next_coord.y >= 0 and next_coord.y < matrix_size.y:
-				var next_element = element_matrix[next_coord.x][next_coord.y]
+				var next_element: Node2D = element_matrix[next_coord.x][next_coord.y]
 				if not visited.has(next_coord) and next_element != null:
 					queue.append(next_element)
 					visited[next_coord] = true
 	
 	
-func extinguish_electricity(start_element: Node2D):
+func extinguish_electricity(start_element: Node2D) -> void:
 	var element_comp: ElementComponent = start_element.get_child(0)
 
 
-func handle_propagate(center_comp: ElementComponent, surrounding_comps: Array) -> void:
-	pass
+func handle_propagate(center_comp: ElementComponent, surrounding_elements: Array) -> void:
+	var up_comp: ElementComponent = null
+	var right_comp: ElementComponent = null
+	var down_comp: ElementComponent = null
+	var left_comp: ElementComponent = null
+	if surrounding_elements[0] != null:
+		up_comp = surrounding_elements[0].get_child(0)
+	if surrounding_elements[1] != null:
+		right_comp = surrounding_elements[1].get_child(0)
+	if surrounding_elements[2] != null:
+		down_comp = surrounding_elements[2].get_child(0)
+	if surrounding_elements[3] != null:
+		left_comp = surrounding_elements[3].get_child(0)
+	var UP: ElementComponent.Direction = ElementComponent.Direction.UP
+	var DOWN: ElementComponent.Direction = ElementComponent.Direction.DOWN
+	var LEFT: ElementComponent.Direction = ElementComponent.Direction.LEFT
+	var RIGHT: ElementComponent.Direction = ElementComponent.Direction.RIGHT
+	if up_comp != null:
+		handle_line(center_comp, up_comp, UP, DOWN)
+	if right_comp != null:
+		handle_line(center_comp, right_comp, RIGHT, LEFT)
+	if down_comp != null:
+		handle_line(center_comp, down_comp, DOWN, UP)
+	if left_comp != null:
+		handle_line(center_comp, left_comp, LEFT, RIGHT)
+		
+		
+func handle_line(center_comp: ElementComponent, target_comp: ElementComponent, center_line_dir: ElementComponent.Direction, target_line_dir: ElementComponent.Direction) -> void:
+	if center_comp.is_outputting(center_line_dir) and target_comp.is_outputting(target_line_dir):
+		pass
+	else:
+		if center_comp.is_outputting(center_line_dir):
+			if target_comp.is_inputable(target_line_dir):
+				var cuot: Electricity.Type = center_comp.get_output_type(center_line_dir)
+				if target_comp.get_allow_input_type(target_line_dir) == cuot:
+					target_comp.input_electricity(cuot, target_line_dir)
+		if target_comp.is_outputting(target_line_dir):
+			if center_comp.is_inputable(center_line_dir):
+				var tdot: Electricity.Type = target_comp.get_output_type(target_line_dir)
+				var center_allow_input_type: ElementComponent.AllowInputType = center_comp.get_allow_input_type(center_line_dir)
+				if center_allow_input_type == tdot || center_allow_input_type == ElementComponent.AllowInputType.ALL:
+					center_comp.input_electricity(tdot, center_line_dir, true)
+
+func on_element_rotated(element: Node2D) -> void:
+	element.get_child(0).vanish_electricity()
+	propagate_electricity(element)

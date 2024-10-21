@@ -9,6 +9,9 @@ enum Type
 
 const gray = Color("#c2c3c7")
 
+var current_color1: Color
+var current_color2: Color
+
 
 func _ready() -> void:
 	var shader_mat: ShaderMaterial = ShaderMaterial.new()
@@ -33,11 +36,18 @@ func output(type: Type, switch_flowing_color: bool) -> void:
 	
 func enable_shader(color: Color, switch_flowing_color: bool) -> void:
 	if switch_flowing_color:
-		material.set_shader_parameter("color1", gray)
-		material.set_shader_parameter("color2", default_color)
+		current_color1 = color
+		current_color2 = gray
+		var color_temp: Color = current_color1
+		current_color1 = current_color2
+		current_color2 = color_temp
+		material.set_shader_parameter("color1", current_color1)
+		material.set_shader_parameter("color2", current_color2)
 	else:
-		material.set_shader_parameter("color1", default_color)
-		material.set_shader_parameter("color2", gray)
+		current_color1 = color
+		current_color2 = gray
+		material.set_shader_parameter("color1", current_color1)
+		material.set_shader_parameter("color2", current_color2)
 	
 	
 func vanish() -> void:

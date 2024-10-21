@@ -4,12 +4,15 @@ class_name ElementComponent
 
 
 signal detached(element: Node2D)
+signal core_filled(type: Electricity.Type)
+signal rotated
 
 
 var id: String
 var detachable: bool = false
 var current_deg: int = 0
-var installed_coords: Vector2
+var fixed_deg: int = 0
+var installed_coords: Vector2i
 
 enum Direction
 {
@@ -32,7 +35,6 @@ enum AllowInputType
 
 # 当前元件的四个电路的数据，在元件被顺时针旋转后进行滚动
 # 按照下标依次为：上，右，下，左
-@export var line_disabled_array: Array[bool] = [false, false, false, false]
 @export var line_inputable_array: Array[bool] = [true, true, true, true]
 @export var line_outputable_array: Array[bool] = [true, true, true, true]
 @export var line_allow_input_type_array: Array[AllowInputType] = [
@@ -54,9 +56,14 @@ var line_outputting_array: Array[bool] = [false, false, false, false]
 var line_inputting_array: Array[bool] = [false, false, false, false]
 	
 	
-func fill_core(electricity_type: Electricity.Type) -> void:
+func fill_core(from_dir: Direction, electricity_type: Electricity.Type) -> void:
+	core_filled.emit(electricity_type)
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property($Control/Core, "color", Tables.ElectricityColorTable.get(electricity_type), 0.1).set_ease(Tween.EASE_IN)
+	for dir: Direction in Direction.values():
+		if dir == from_dir:
+			continue
+		output_electricity(dir)
 
 
 func clear_core() -> void:
@@ -65,8 +72,6 @@ func clear_core() -> void:
 
 
 func output_electricity(dir: Direction, switch_flowing_color: bool = false) -> void:
-	if line_disabled_array[dir] == true:
-		return
 	if line_outputable_array[dir] == false:
 		return
 	line_outputting_array[dir] = true
@@ -75,8 +80,6 @@ func output_electricity(dir: Direction, switch_flowing_color: bool = false) -> v
 	
 	
 func output_electricity_with_type(type: Electricity.Type, dir: Direction, switch_flowing_color: bool = false) -> void:
-	if line_disabled_array[dir] == true:
-		return
 	if line_outputable_array[dir] == false:
 		return
 	line_outputting_array[dir] = true
@@ -85,8 +88,6 @@ func output_electricity_with_type(type: Electricity.Type, dir: Direction, switch
 	
 	
 func input_electricity(type: Electricity.Type, dir: Direction, switch_flowing_color: bool = false) -> void:
-	if line_disabled_array[dir] == true:
-		return
 	if line_inputable_array[dir] == false:
 		return
 	if check_line_allow_input_type(type, dir) == false:
@@ -94,14 +95,14 @@ func input_electricity(type: Electricity.Type, dir: Direction, switch_flowing_co
 	line_inputting_array[dir] = true
 	electricity_array[dir].input(type, switch_flowing_color)
 	await get_tree().create_timer(0.4).timeout
-	fill_core(type)
+	fill_core(dir, type)
 	
 	
 func vanish_electricity() -> void:
 	clear_core()
 	for electricity: Electricity in electricity_array:
 		electricity.vanish()
-	for dir in Direction:
+	for dir: Direction in Direction.values():
 		line_inputting_array[dir] = false
 		line_outputting_array[dir] = false
 	
@@ -116,7 +117,6 @@ func check_line_allow_input_type(type: Electricity.Type, dir: Direction) -> bool
 		
 		
 func rotate(deg: int, with_anim: bool = false) -> void:
-	current_deg = deg
 	if with_anim:
 		z_index = 100
 		var tween: Tween = get_tree().create_tween()
@@ -127,31 +127,31 @@ func rotate(deg: int, with_anim: bool = false) -> void:
 	else:
 		rotation = deg_to_rad(deg)
 	$Control/Disdetachabled.rotation -= rotation
-	var step: int = 0
-	if deg == 90:
+	var step = 0
+	if fixed_deg == 90:
 		step = 1
-	elif deg == 180:
+	elif fixed_deg == 180:
 		step = 2
-	elif step == 270:
+	elif fixed_deg == 270:
 		step = 3
-	rotate_array(line_disabled_array, step)
-	rotate_array(line_inputable_array, step)
-	rotate_array(line_outputable_array, step)
-	rotate_array(line_allow_input_type_array, step)
-	rotate_array(line_output_type_array, step)
-	rotate_array(electricity_array, step)
-	rotate_array(line_outputting_array, step)
-	rotate_array(line_inputting_array, step)
+	roll_array(line_inputable_array, step)
+	roll_array(line_outputable_array, step)
+	roll_array(line_allow_input_type_array, step)
+	roll_array(line_output_type_array, step)
+	roll_array(electricity_array, step)
+	roll_array(line_outputting_array, step)
+	roll_array(line_inputting_array, step)
+	rotated.emit()
 	
 	
-func rotate_array(in_array: Array, step: int) -> void:
-	if step == 0:
-		return
+func roll_array(in_array: Array, step: int) -> void:
 	var length: int = in_array.size()
-	step = (step + length) % length
-	var temp: Array = in_array.duplicate()
+	var temp_arr: Array = in_array.duplicate()
 	for i in range(length):
-		in_array[(i + step) % length] = temp[i]
+		var idx: int = (i + step) % length
+		temp_arr[i] = in_array[idx]
+	for i in range(length):
+		in_array[i] = temp_arr[i]
 
 
 func detach() -> void:
@@ -164,6 +164,9 @@ func hint_disdetachabled() -> void:
 
 func rotate_90deg() -> void:
 	current_deg += 90
+	fixed_deg += 90
+	if fixed_deg == 360:
+		fixed_deg = 0
 	rotate(current_deg, true)
 
 
@@ -187,3 +190,27 @@ func _on_button_gui_input(event: InputEvent) -> void:
 				detach()
 			else:
 				hint_disdetachabled()
+				
+				
+func is_inputting(dir: Direction) -> bool:
+	return line_inputting_array[dir]
+	
+	
+func is_outputting(dir: Direction) -> bool:
+	return line_outputting_array[dir]
+	
+	
+func is_inputable(dir: Direction) -> bool:
+	return line_inputable_array[dir]
+	
+	
+func is_outputable(dir: Direction) -> bool:
+	return line_outputable_array[dir]
+
+
+func get_allow_input_type(dir: Direction) -> AllowInputType:
+	return line_allow_input_type_array[dir]
+	
+	
+func get_output_type(dir: Direction) -> Electricity.Type:
+	return line_output_type_array[dir]

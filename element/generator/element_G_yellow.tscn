@@ -13,7 +13,6 @@ script = ExtResource("1_746s4")
 
 [node name="ElementComponent" parent="." instance=ExtResource("1_n2d3a")]
 surface_texture = SubResource("AtlasTexture_we2sr")
-line_disabled_array = Array[bool]([true, true, false, true])
 line_inputable_array = Array[bool]([false, false, false, false])
 line_outputable_array = Array[bool]([false, false, true, false])
 line_output_type_array = Array[int]([0, 0, 2, 0])

@@ -13,4 +13,3 @@ script = ExtResource("1_scv6k")
 
 [node name="ElementComponent" parent="." instance=ExtResource("1_ia8v5")]
 surface_texture = SubResource("AtlasTexture_68bln")
-rotatable = true
