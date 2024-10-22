@@ -57,21 +57,21 @@ func show_and_update_curve(start: Vector2) -> void:
 func find_target_positon(start: Vector2) -> Vector2:
 	var target_position: Vector2
 	var min_distance: float = INF
-	for coords in level.blueboard_layer.get_used_cells():
-		if level.element_matrix[coords.x][coords.y] != null:
+	for coord in level.blueboard_layer.get_used_cells():
+		if level.element_matrix[coord.x][coord.y] != null:
 			continue
-		var tile_data: TileData = level.blueboard_layer.get_cell_tile_data(coords)
+		var tile_data: TileData = level.blueboard_layer.get_cell_tile_data(coord)
 		if tile_data.get_custom_data("is_border"):
 			continue
-		var tile_position: Vector2 = level.blueboard_tile_data_matrix[coords.x][coords.y].position
-		var tile_size: Vector2 = level.blueboard_tile_data_matrix[coords.x][coords.y].size
+		var tile_position: Vector2 = level.blueboard_tile_data_matrix[coord.x][coord.y].position
+		var tile_size: Vector2 = level.blueboard_tile_data_matrix[coord.x][coord.y].size
 		$Hover.size = tile_size
 		var center: Vector2 = tile_position + tile_size * 0.5
 		var distance: float = start.distance_to(center)
 		if distance < min_distance:
 			min_distance = distance
 			target_position = center
-			dragging_element_button.installed_coords = coords
+			dragging_element_button.installed_coord = coord
 	return target_position
 		
 	

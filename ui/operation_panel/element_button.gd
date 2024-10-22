@@ -14,7 +14,7 @@ var initial_pos: Vector2
 var inside_toolbox: bool = true
 var dragging: bool = false
 var ready_to_install: bool = false
-var installed_coords: Vector2
+var installed_coord: Vector2
 
 
 @export var element_id: String:

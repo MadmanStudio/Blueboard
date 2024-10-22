@@ -28,6 +28,8 @@ var blueboard_tile_data_matrix: Array
 var matrix_size: Vector2i
 var map_center: Vector2
 
+var start_G_elements: Array = []
+
 var ElementTable: Dictionary = {
 	"G_red": load("res://element/generator/element_G_red.tscn"),
 	"G_blue": load("res://element/generator/element_G_blue.tscn"),
@@ -80,15 +82,20 @@ func _ready() -> void:
 		var center: Marker2D = tmx_map.find_child("point")
 		map_center = center.position
 		$Camera2D.position = center.position
-		for element_coords in element_layer.get_used_cells():
-			var tile_data: TileData = element_layer.get_cell_tile_data(element_coords)
+		for element_coord in element_layer.get_used_cells():
+			var tile_data: TileData = element_layer.get_cell_tile_data(element_coord)
 			var id: String = tile_data.get_meta("id")
-			var element_inst: Node2D = create_element(id, element_coords * TileSize, calculate_tile_rotation(tile_data))
+			var element_inst: Node2D = create_element(id, element_coord * TileSize, calculate_tile_rotation(tile_data))
 			element_inst.get_child(0).id = id
 			element_inst.get_child(0).rotatable = false
-			var relative_coords: Vector2i = get_element_relative_coords(element_coords)
-			element_matrix[relative_coords.x][relative_coords.y] = element_inst
-			element_layer.erase_cell(element_coords)
+			element_inst.get_child(0).installed_coord = element_coord
+			var relative_coords: Vector2i = get_element_relative_coords(element_coord)
+			element_matrix[relative_coords.y][relative_coords.x] = element_inst
+			element_layer.erase_cell(element_coord)
+			if id.find("G_") != -1:
+				start_G_elements.append(element_inst)
+		for G_element in start_G_elements:
+			propagate_electricity(G_element)
 			
 		
 func get_element_relative_coords(element_coords: Vector2i) -> Vector2i:
@@ -184,7 +191,7 @@ func is_dropable(idxs: Vector2i) -> bool:
 func on_element_installed(element_button: ElementButton) -> void:
 	element_button.hide()
 	var element_id: String = element_button.element_id
-	var element_coords: Vector2i = element_button.installed_coords
+	var element_coords: Vector2i = element_button.installed_coord
 	var installed_pos: Vector2 = element_coords * TileSize
 	var button_viewport_pos: Vector2 = element_button.get_global_transform_with_canvas().origin
 	element_button.queue_free()
@@ -194,9 +201,9 @@ func on_element_installed(element_button: ElementButton) -> void:
 	var created_pos: Vector2 = element_layer.to_local(world_pos)
 	var element_inst: Node2D = create_element(element_id, created_pos, 0, 2.0 / current_zoom.x)
 	element_inst.get_child(0).detachable = true
-	element_inst.get_child(0).installed_coords = element_button.installed_coords
+	element_inst.get_child(0).installed_coord = element_button.installed_coord
 	element_inst.get_child(0).detached.connect(on_element_uninstalled)
-	element_matrix[element_coords.x][element_coords.y] = element_inst
+	element_matrix[element_coords.y][element_coords.x] = element_inst
 	var tween: Tween = get_tree().create_tween()
 	tween.set_parallel()
 	tween.tween_property(element_inst, "position", installed_pos, 0.1).set_ease(Tween.EASE_IN)
@@ -224,7 +231,7 @@ func on_element_uninstalled(element: Node2D) -> void:
 	var element_comp: ElementComponent = element.get_child(0)
 	var element_id: String = element_comp.id
 	var element_button: ElementButton = element_button_tscn.instantiate()
-	element_matrix[element_comp.installed_coords.x][element_comp.installed_coords.y] = null
+	element_matrix[element_comp.installed_coord.x][element_comp.installed_coord.y] = null
 	element.queue_free()
 	element_button.element_id = element_id
 	element_button.global_position = element.global_position
@@ -238,21 +245,21 @@ func propagate_electricity(start_element: Node2D) -> void:
 	var queue: Array = []
 	var visited: Dictionary = {}
 	queue.append(start_element)
-	visited[element_comp.installed_coords] = true
+	visited[element_comp.installed_coord] = true
 	while queue.size() > 0:
 		var current_comp: ElementComponent = queue.pop_front().get_child(0)
-		var x: int = current_comp.installed_coords.x
-		var y: int = current_comp.installed_coords.y
+		var x: int = current_comp.installed_coord.x
+		var y: int = current_comp.installed_coord.y
 		handle_propagate(current_comp, [
-			element_matrix[x + Dirs[0].x][y + Dirs[0].y],
-			element_matrix[x + Dirs[1].x][y + Dirs[1].y],
-			element_matrix[x + Dirs[2].x][y + Dirs[2].y],
-			element_matrix[x + Dirs[3].x][y + Dirs[3].y]
+			element_matrix[y + Dirs[0].y][x + Dirs[0].x],
+			element_matrix[y + Dirs[1].y][x + Dirs[1].x],
+			element_matrix[y + Dirs[2].y][x + Dirs[2].x],
+			element_matrix[y + Dirs[3].y][x + Dirs[3].x]
 		])
 		for dir: Vector2i in Dirs:
-			var next_coord: Vector2i = current_comp.installed_coords + dir
+			var next_coord: Vector2i = current_comp.installed_coord + dir
 			if next_coord.x >= 0 and next_coord.x < matrix_size.x and next_coord.y >= 0 and next_coord.y < matrix_size.y:
-				var next_element: Node2D = element_matrix[next_coord.x][next_coord.y]
+				var next_element: Node2D = element_matrix[next_coord.y][next_coord.x]
 				if not visited.has(next_coord) and next_element != null:
 					queue.append(next_element)
 					visited[next_coord] = true
@@ -263,6 +270,7 @@ func extinguish_electricity(start_element: Node2D) -> void:
 
 
 func handle_propagate(center_comp: ElementComponent, surrounding_elements: Array) -> void:
+	print_debug(surrounding_elements)
 	var up_comp: ElementComponent = null
 	var right_comp: ElementComponent = null
 	var down_comp: ElementComponent = null
@@ -298,12 +306,13 @@ func handle_line(center_comp: ElementComponent, target_comp: ElementComponent, c
 				var cuot: Electricity.Type = center_comp.get_output_type(center_line_dir)
 				if target_comp.get_allow_input_type(target_line_dir) == cuot:
 					target_comp.input_electricity(cuot, target_line_dir)
-		if target_comp.is_outputting(target_line_dir):
+		elif target_comp.is_outputting(target_line_dir):
 			if center_comp.is_inputable(center_line_dir):
 				var tdot: Electricity.Type = target_comp.get_output_type(target_line_dir)
 				var center_allow_input_type: ElementComponent.AllowInputType = center_comp.get_allow_input_type(center_line_dir)
 				if center_allow_input_type == tdot || center_allow_input_type == ElementComponent.AllowInputType.ALL:
 					center_comp.input_electricity(tdot, center_line_dir, true)
+
 
 func on_element_rotated(element: Node2D) -> void:
 	element.get_child(0).vanish_electricity()

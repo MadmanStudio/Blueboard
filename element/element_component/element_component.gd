@@ -11,7 +11,7 @@ signal rotated
 var id: String
 var detachable: bool = false
 var current_deg: int = 0
-var installed_coords: Vector2i
+var installed_coord: Vector2i
 
 enum Direction
 {
@@ -55,14 +55,9 @@ var line_outputting_array: Array[bool] = [false, false, false, false]
 var line_inputting_array: Array[bool] = [false, false, false, false]
 	
 	
-func fill_core(from_dir: Direction, electricity_type: Electricity.Type) -> void:
-	core_filled.emit(electricity_type)
+func fill_core(electricity_type: Electricity.Type) -> void:
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property($Control/Core, "color", Tables.ElectricityColorTable.get(electricity_type), 0.1).set_ease(Tween.EASE_IN)
-	for dir: Direction in Direction.values():
-		if dir == from_dir:
-			continue
-		output_electricity(dir)
 
 
 func clear_core() -> void:
@@ -75,7 +70,6 @@ func output_electricity(dir: Direction, switch_flowing_color: bool = false) -> v
 		return
 	line_outputting_array[dir] = true
 	electricity_array[dir].output(line_output_type_array[dir], switch_flowing_color)
-	line_outputting_array[dir] = true
 	
 	
 func output_electricity_with_type(type: Electricity.Type, dir: Direction, switch_flowing_color: bool = false) -> void:
@@ -83,7 +77,6 @@ func output_electricity_with_type(type: Electricity.Type, dir: Direction, switch
 		return
 	line_outputting_array[dir] = true
 	electricity_array[dir].output(type, switch_flowing_color)
-	line_outputting_array[dir] = true
 	
 	
 func input_electricity(type: Electricity.Type, dir: Direction, switch_flowing_color: bool = false) -> void:
@@ -93,8 +86,13 @@ func input_electricity(type: Electricity.Type, dir: Direction, switch_flowing_co
 		return
 	line_inputting_array[dir] = true
 	electricity_array[dir].input(type, switch_flowing_color)
-	await get_tree().create_timer(0.4).timeout
-	fill_core(dir, type)
+	core_filled.emit(type)
+	for d: Direction in Direction.values():
+		if d == dir:
+			continue
+		output_electricity(d)
+		line_outputting_array[d] = true
+	fill_core(type)
 	
 	
 func vanish_electricity() -> void:
@@ -122,7 +120,7 @@ func rotate(deg: int, with_anim: bool = false, step: int = 0) -> void:
 		tween.tween_property(self, "scale", Vector2.ONE * 1.2, 0.1).set_ease(Tween.EASE_OUT)
 		tween.chain().tween_property(self, "rotation", deg_to_rad(deg), 0.1)
 		tween.chain().tween_property(self, "scale", Vector2.ONE * 1.0, 0.1).set_ease(Tween.EASE_IN)
-		tween.tween_callback(func() -> void: z_index = 0)
+		tween.tween_callback(on_rotate_completed.bind(deg))
 	else:
 		rotation = deg_to_rad(deg)
 	$Control/Disdetachabled.rotation -= rotation
@@ -140,7 +138,12 @@ func rotate(deg: int, with_anim: bool = false, step: int = 0) -> void:
 	roll_array(electricity_array, step)
 	roll_array(line_outputting_array, step)
 	roll_array(line_inputting_array, step)
-	rotated.emit()
+	
+	
+func on_rotate_completed(deg: int) -> void:
+	z_index = 0
+	if deg != 0:
+		rotated.emit()
 	
 	
 func roll_array(in_array: Array, step: int) -> void:
