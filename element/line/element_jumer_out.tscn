@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://ca6mfjcrhq5it"]
+[gd_scene load_steps=5 format=3 uid="uid://ca6mfjcrhq5it"]
 
+[ext_resource type="Script" path="res://element/line/element_jumer_out.gd" id="1_01bdd"]
 [ext_resource type="PackedScene" uid="uid://bbtvaphcjmt2x" path="res://element/element_component/element_component.tscn" id="1_m7fi7"]
 [ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="2_6m1f3"]
 
@@ -7,11 +8,11 @@
 atlas = ExtResource("2_6m1f3")
 region = Rect2(96, 0, 16, 16)
 
-[node name="element_Jump_Out" type="Node2D"]
+[node name="Element_Jump_Out" type="Node2D"]
+script = ExtResource("1_01bdd")
 
 [node name="ElementComponent" parent="." instance=ExtResource("1_m7fi7")]
 surface_texture = SubResource("AtlasTexture_4vui1")
-line_disabled_array = Array[bool]([false, true, true, true])
-line_inputable_array = Array[bool]([true, false, false, false])
-line_outputable_array = Array[bool]([false, false, false, false])
+line_inputable_array = Array[bool]([false, false, false, false])
+line_outputable_array = Array[bool]([true, false, false, false])
 rotatable = true

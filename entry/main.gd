@@ -14,7 +14,6 @@ var loading: bool = false:
 var current_loaded_scene_path: String
 var loaded_scene: PackedScene
 var loaded_level_data: Dictionary
-var active_level: Level
 
 
 func _ready() -> void:
@@ -43,7 +42,6 @@ func on_load_scene_completed() -> void:
 		loading = false
 		var scene: Node = loaded_scene.instantiate()
 		if scene is Level:
-			active_level = scene
 			for key: String in loaded_level_data.keys():
 				scene.set(key, loaded_level_data.get(key))
 		$LevelLayer.add_child(scene)

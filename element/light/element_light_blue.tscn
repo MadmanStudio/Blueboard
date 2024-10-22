@@ -16,7 +16,7 @@ script = ExtResource("1_5k1fc")
 surface_texture = SubResource("AtlasTexture_n6dya")
 line_inputable_array = Array[bool]([true, false, false, false])
 line_outputable_array = Array[bool]([false, false, false, false])
-line_allow_input_type_array = Array[int]([4, 7, 7, 7])
+line_allow_input_type_array = Array[int]([1, 7, 7, 7])
 
 [node name="PointLight" parent="." instance=ExtResource("3_kp103")]
 position = Vector2(16, 16)

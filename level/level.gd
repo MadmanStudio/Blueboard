@@ -94,7 +94,7 @@ func _ready() -> void:
 			element_layer.erase_cell(element_coord)
 			if id.find("G_") != -1:
 				start_G_elements.append(element_inst)
-		for G_element in start_G_elements:
+		for G_element: Node2D in start_G_elements:
 			propagate_electricity(G_element)
 			
 		
@@ -213,32 +213,38 @@ func on_element_installed(element_button: ElementButton) -> void:
 	
 func on_element_install_completed(element: Node2D) -> void:
 	Globals.installing = false
+	element.get_child(0).installed.emit()
 	propagate_electricity(element)
 	
 	
 func create_element(id: String, pos: Vector2, deg: int, scale: float = 1.0) -> Node2D:
 	var element_inst: Node2D = ElementTable.get(id).instantiate()
+	element_inst.set_meta("level", self)
 	element_inst.get_child(0).id = id
 	element_inst.position = pos
 	element_inst.scale = Vector2(scale, scale)
 	element_layer.add_child(element_inst)
-	element_inst.get_child(0).rotate(deg)
 	element_inst.get_child(0).rotated.connect(on_element_rotated.bind(element_inst))
+	element_inst.get_child(0).rotate(deg)
 	return element_inst
 		
 		
 func on_element_uninstalled(element: Node2D) -> void:
+	element.hide()
 	var element_comp: ElementComponent = element.get_child(0)
 	var element_id: String = element_comp.id
 	var element_button: ElementButton = element_button_tscn.instantiate()
-	element_matrix[element_comp.installed_coord.x][element_comp.installed_coord.y] = null
+	element_comp.disable()
+	propagate_electricity(element)
+	element_matrix[element_comp.installed_coord.y][element_comp.installed_coord.x] = null
+	element.get_child(0).uninstalled.emit()
 	element.queue_free()
 	element_button.element_id = element_id
 	element_button.global_position = element.global_position
 	$OperationPanel.add_element_button(element_button)
 	
 	
-func propagate_electricity(start_element: Node2D) -> void:
+func BFS(start_element: Node2D, action: Callable) -> void:
 	if start_element == null:
 		return
 	var element_comp: ElementComponent = start_element.get_child(0)
@@ -250,7 +256,7 @@ func propagate_electricity(start_element: Node2D) -> void:
 		var current_comp: ElementComponent = queue.pop_front().get_child(0)
 		var x: int = current_comp.installed_coord.x
 		var y: int = current_comp.installed_coord.y
-		handle_propagate(current_comp, [
+		action.call(current_comp, [
 			element_matrix[y + Dirs[0].y][x + Dirs[0].x],
 			element_matrix[y + Dirs[1].y][x + Dirs[1].x],
 			element_matrix[y + Dirs[2].y][x + Dirs[2].x],
@@ -265,8 +271,8 @@ func propagate_electricity(start_element: Node2D) -> void:
 					visited[next_coord] = true
 	
 	
-func extinguish_electricity(start_element: Node2D) -> void:
-	var element_comp: ElementComponent = start_element.get_child(0)
+func propagate_electricity(start_element: Node2D) -> void:
+	BFS(start_element, handle_propagate)
 
 
 func handle_propagate(center_comp: ElementComponent, surrounding_elements: Array) -> void:
@@ -287,16 +293,16 @@ func handle_propagate(center_comp: ElementComponent, surrounding_elements: Array
 	var LEFT: ElementComponent.Direction = ElementComponent.Direction.LEFT
 	var RIGHT: ElementComponent.Direction = ElementComponent.Direction.RIGHT
 	if up_comp != null:
-		handle_line(center_comp, up_comp, UP, DOWN)
+		handle_line_propagate(center_comp, up_comp, UP, DOWN)
 	if right_comp != null:
-		handle_line(center_comp, right_comp, RIGHT, LEFT)
+		handle_line_propagate(center_comp, right_comp, RIGHT, LEFT)
 	if down_comp != null:
-		handle_line(center_comp, down_comp, DOWN, UP)
+		handle_line_propagate(center_comp, down_comp, DOWN, UP)
 	if left_comp != null:
-		handle_line(center_comp, left_comp, LEFT, RIGHT)
+		handle_line_propagate(center_comp, left_comp, LEFT, RIGHT)
 		
 		
-func handle_line(center_comp: ElementComponent, target_comp: ElementComponent, center_line_dir: ElementComponent.Direction, target_line_dir: ElementComponent.Direction) -> void:
+func handle_line_propagate(center_comp: ElementComponent, target_comp: ElementComponent, center_line_dir: ElementComponent.Direction, target_line_dir: ElementComponent.Direction) -> void:
 	if center_comp.is_outputting(center_line_dir) and target_comp.is_outputting(target_line_dir):
 		pass
 	else:
@@ -305,14 +311,27 @@ func handle_line(center_comp: ElementComponent, target_comp: ElementComponent, c
 				var cuot: Electricity.Type = center_comp.get_output_type(center_line_dir)
 				if target_comp.get_allow_input_type(target_line_dir) == cuot:
 					target_comp.input_electricity(cuot, target_line_dir)
-		elif target_comp.is_outputting(target_line_dir):
+		if target_comp.is_outputting(target_line_dir):
 			if center_comp.is_inputable(center_line_dir):
 				var tdot: Electricity.Type = target_comp.get_output_type(target_line_dir)
 				var center_allow_input_type: ElementComponent.AllowInputType = center_comp.get_allow_input_type(center_line_dir)
 				if center_allow_input_type == tdot || center_allow_input_type == ElementComponent.AllowInputType.ALL:
 					center_comp.input_electricity(tdot, center_line_dir, true)
-
-
+		if center_comp.is_inputting(center_line_dir):
+			if not target_comp.is_outputable(target_line_dir):
+				specific_vanish_electricity(center_comp)
+		if target_comp.is_inputting(target_line_dir):
+			if not center_comp.is_outputting(center_line_dir):
+				specific_vanish_electricity(target_comp)
+				
+				
+func specific_vanish_electricity(element_component: ElementComponent) -> void:
+	if element_component.id == "jumper_out":
+		if element_component.owner.active == true:
+			return
+	element_component.vanish_electricity()
+				
+				
 func on_element_rotated(element: Node2D) -> void:
-	element.get_child(0).vanish_electricity()
+	specific_vanish_electricity(element.get_child(0))
 	propagate_electricity(element)

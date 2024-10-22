@@ -6,6 +6,8 @@ class_name ElementComponent
 signal detached(element: Node2D)
 signal core_filled(type: Electricity.Type)
 signal core_cleared
+signal installed
+signal uninstalled
 signal rotated
 
 
@@ -47,10 +49,10 @@ enum AllowInputType
 ]
 @export var rotatable: bool = false
 
-@onready var e1: Electricity = $Control/Electricity1
-@onready var e2: Electricity = $Control/Electricity2
-@onready var e3: Electricity = $Control/Electricity3
-@onready var e4: Electricity = $Control/Electricity4
+@onready var e1: Electricity = $Control/Electricities/Electricity1
+@onready var e2: Electricity = $Control/Electricities/Electricity2
+@onready var e3: Electricity = $Control/Electricities/Electricity3
+@onready var e4: Electricity = $Control/Electricities/Electricity4
 @onready var electricity_array: Array[Electricity] = [e1, e2, e3, e4]
 var line_outputting_array: Array[bool] = [false, false, false, false]
 var line_inputting_array: Array[bool] = [false, false, false, false]
@@ -91,8 +93,19 @@ func input_electricity(type: Electricity.Type, dir: Direction, switch_flowing_co
 	for d: Direction in Direction.values():
 		if d == dir:
 			continue
-		output_electricity(d)
-		line_outputting_array[d] = true
+		if line_outputable_array[d]:
+			output_electricity(d)
+			line_outputting_array[d] = true
+	fill_core(type)
+	
+	
+func fill_core_and_output(type: Electricity.Type) -> void:
+	core_filled.emit(type)
+	line_output_type_array = [type, type, type, type]
+	for dir: Direction in Direction.values():
+		if line_outputable_array[dir]:
+			output_electricity(dir)
+			line_outputting_array[dir] = true
 	fill_core(type)
 	
 	
@@ -101,9 +114,14 @@ func vanish_electricity() -> void:
 	core_cleared.emit()
 	for electricity: Electricity in electricity_array:
 		electricity.vanish()
-	for dir: Direction in Direction.values():
-		line_inputting_array[dir] = false
-		line_outputting_array[dir] = false
+	line_inputting_array = [false, false, false, false]
+	line_outputting_array = [false, false, false, false]
+	
+	
+func disable() -> void:
+	vanish_electricity()
+	line_inputable_array = [false, false, false, false]
+	line_outputable_array = [false, false, false, false]
 	
 	
 func check_line_allow_input_type(type: Electricity.Type, dir: Direction) -> bool:
@@ -118,6 +136,7 @@ func check_line_allow_input_type(type: Electricity.Type, dir: Direction) -> bool
 func rotate(deg: int, with_anim: bool = false, step: int = 0) -> void:
 	if with_anim:
 		z_index = 100
+		$Control/Electricities.hide()
 		var tween: Tween = get_tree().create_tween()
 		tween.tween_property(self, "scale", Vector2.ONE * 1.2, 0.1).set_ease(Tween.EASE_OUT)
 		tween.chain().tween_property(self, "rotation", deg_to_rad(deg), 0.1)
@@ -144,6 +163,7 @@ func rotate(deg: int, with_anim: bool = false, step: int = 0) -> void:
 	
 func on_rotate_completed(deg: int) -> void:
 	z_index = 0
+	$Control/Electricities.show()
 	if deg != 0:
 		rotated.emit()
 	
@@ -155,7 +175,7 @@ func roll_array(in_array: Array, step: int) -> void:
 		
 func roll_array_once(in_array: Array) -> void:
 	var last: Variant = in_array.back()
-	var i = in_array.size() - 1
+	var i: int = in_array.size() - 1
 	while i > 0:
 		in_array[i] = in_array[i - 1]
 		i -= 1

@@ -8,11 +8,12 @@ var lit: bool = false
 
 
 func _ready() -> void:
+	element_comp.line_inputable_array = [true, false, false, false]
 	element_comp.core_filled.connect(on_core_filled)
 	element_comp.core_cleared.connect(on_core_cleared)
 
 
-func on_core_filled(type: Electricity.Type) -> void:
+func on_core_filled(_type: Electricity.Type) -> void:
 	point_light.show()
 	lit = true
 	

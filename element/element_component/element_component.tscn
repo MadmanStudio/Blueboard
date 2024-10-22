@@ -91,18 +91,20 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 0.945098, 0.909804, 1)
 
-[node name="Electricity1" parent="Control" instance=ExtResource("4_rg0i7")]
+[node name="Electricities" type="Node2D" parent="Control"]
+
+[node name="Electricity1" parent="Control/Electricities" instance=ExtResource("4_rg0i7")]
 position = Vector2(16, 10)
 rotation = -1.5708
 
-[node name="Electricity2" parent="Control" instance=ExtResource("4_rg0i7")]
+[node name="Electricity2" parent="Control/Electricities" instance=ExtResource("4_rg0i7")]
 position = Vector2(22, 16)
 
-[node name="Electricity3" parent="Control" instance=ExtResource("4_rg0i7")]
+[node name="Electricity3" parent="Control/Electricities" instance=ExtResource("4_rg0i7")]
 position = Vector2(16, 22)
 rotation = 1.5708
 
-[node name="Electricity4" parent="Control" instance=ExtResource("4_rg0i7")]
+[node name="Electricity4" parent="Control/Electricities" instance=ExtResource("4_rg0i7")]
 position = Vector2(10, 16)
 rotation = 3.14159
 
