@@ -1,11 +1,10 @@
 extends Node2D
 
 
-var element_comp: ElementComponent
+@onready var element_comp: ElementComponent = $ElementComponent
 
 
 func _ready() -> void:
-	element_comp = get_child(0)
 	element_comp.core_filled.connect(on_core_filled)
 	# 莫名其妙的BUG
 	# 从 @export 变量中配置的值不生效

@@ -5,6 +5,7 @@ class_name ElementComponent
 
 signal detached(element: Node2D)
 signal core_filled(type: Electricity.Type)
+signal core_cleared
 signal rotated
 
 
@@ -46,10 +47,10 @@ enum AllowInputType
 ]
 @export var rotatable: bool = false
 
-@onready var e1: Electricity = $Electricity1
-@onready var e2: Electricity = $Electricity2
-@onready var e3: Electricity = $Electricity3
-@onready var e4: Electricity = $Electricity4
+@onready var e1: Electricity = $Control/Electricity1
+@onready var e2: Electricity = $Control/Electricity2
+@onready var e3: Electricity = $Control/Electricity3
+@onready var e4: Electricity = $Control/Electricity4
 @onready var electricity_array: Array[Electricity] = [e1, e2, e3, e4]
 var line_outputting_array: Array[bool] = [false, false, false, false]
 var line_inputting_array: Array[bool] = [false, false, false, false]
@@ -97,6 +98,7 @@ func input_electricity(type: Electricity.Type, dir: Direction, switch_flowing_co
 	
 func vanish_electricity() -> void:
 	clear_core()
+	core_cleared.emit()
 	for electricity: Electricity in electricity_array:
 		electricity.vanish()
 	for dir: Direction in Direction.values():

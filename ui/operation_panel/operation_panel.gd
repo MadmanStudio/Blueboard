@@ -58,7 +58,7 @@ func find_target_positon(start: Vector2) -> Vector2:
 	var target_position: Vector2
 	var min_distance: float = INF
 	for coord in level.blueboard_layer.get_used_cells():
-		if level.element_matrix[coord.x][coord.y] != null:
+		if level.element_matrix[coord.y][coord.x] != null:
 			continue
 		var tile_data: TileData = level.blueboard_layer.get_cell_tile_data(coord)
 		if tile_data.get_custom_data("is_border"):

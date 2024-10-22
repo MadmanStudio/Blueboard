@@ -85,7 +85,7 @@ func _ready() -> void:
 		for element_coord in element_layer.get_used_cells():
 			var tile_data: TileData = element_layer.get_cell_tile_data(element_coord)
 			var id: String = tile_data.get_meta("id")
-			var element_inst: Node2D = create_element(id, element_coord * TileSize, calculate_tile_rotation(tile_data))
+			var element_inst: Node2D = create_element(id, element_coord * TileSize, calculate_tile_deg(tile_data))
 			element_inst.get_child(0).id = id
 			element_inst.get_child(0).rotatable = false
 			element_inst.get_child(0).installed_coord = element_coord
@@ -161,24 +161,24 @@ func switch_blueboard_tile() -> void:
 			blueboard_tile_data_matrix[tile_coords.x][tile_coords.y] = tile_rect
 			
 			
-func calculate_tile_rotation(tile_data: TileData) -> int:
+func calculate_tile_deg(tile_data: TileData) -> int:
 	var flipped_h: bool = tile_data.flip_h
 	var flipped_v: bool = tile_data.flip_v
 	var flipped_d: bool = tile_data.transpose
-	var rotation: int = 0
+	var deg: int = 0
 	if flipped_d:
 		if flipped_h and flipped_v:
-			rotation = 90
+			deg = 90
 		elif flipped_h:
-			rotation = 90
+			deg = 90
 		elif flipped_v:
-			rotation = 270
+			deg = 270
 		else:
-			rotation = 90
+			deg = 90
 	else:
 		if flipped_h and flipped_v:
-			rotation = 180
-	return rotation
+			deg = 180
+	return deg
 	
 	
 func is_dropable(idxs: Vector2i) -> bool:
@@ -270,7 +270,6 @@ func extinguish_electricity(start_element: Node2D) -> void:
 
 
 func handle_propagate(center_comp: ElementComponent, surrounding_elements: Array) -> void:
-	print_debug(surrounding_elements)
 	var up_comp: ElementComponent = null
 	var right_comp: ElementComponent = null
 	var down_comp: ElementComponent = null

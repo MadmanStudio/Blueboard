@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="left-down" width="8" height="8" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="3">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-down" width="8" height="8" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="3">
  <editorsettings>
   <export target="map_tutorial_001..tmj" format="json"/>
  </editorsettings>
@@ -19,12 +19,12 @@
  <layer id="3" name="Element" width="8" height="8">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,
-0,2684354627,0,0,0,0,1610612819,0,
 0,0,0,0,0,0,0,0,
+0,0,0,2684354627,0,3221225539,0,0,
 0,0,3,0,0,0,35,0,
 0,2684354569,11,0,0,0,0,0,
-0,2684354568,0,0,0,0,0,0,
-0,65,81,82,0,0,1610612804,0,
+0,0,0,0,0,0,0,0,
+0,67,81,82,0,0,1610612804,0,
 0,0,0,0,0,0,0,0
 </data>
  </layer>

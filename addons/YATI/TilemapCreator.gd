@@ -570,6 +570,7 @@ func create_map_from_data(layer_data: Array, offset_x: int, offset_y: int, map_w
 					tile_data.flip_h = flipped_h
 					tile_data.flip_v = flipped_v
 					tile_data.transpose = flipped_d
+					tile_data.set_meta("native_id", int_id)
 					var tile_size = atlas_source.texture_region_size
 					if flipped_d:
 						tile_size = Vector2i(tile_size.y, tile_size.x)
