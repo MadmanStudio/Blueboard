@@ -11,7 +11,6 @@ signal rotated
 var id: String
 var detachable: bool = false
 var current_deg: int = 0
-var fixed_deg: int = 0
 var installed_coords: Vector2i
 
 enum Direction
@@ -116,7 +115,7 @@ func check_line_allow_input_type(type: Electricity.Type, dir: Direction) -> bool
 		return false
 		
 		
-func rotate(deg: int, with_anim: bool = false) -> void:
+func rotate(deg: int, with_anim: bool = false, step: int = 0) -> void:
 	if with_anim:
 		z_index = 100
 		var tween: Tween = get_tree().create_tween()
@@ -127,13 +126,13 @@ func rotate(deg: int, with_anim: bool = false) -> void:
 	else:
 		rotation = deg_to_rad(deg)
 	$Control/Disdetachabled.rotation -= rotation
-	var step = 0
-	if fixed_deg == 90:
-		step = 1
-	elif fixed_deg == 180:
-		step = 2
-	elif fixed_deg == 270:
-		step = 3
+	if step == 0:
+		if deg == 90:
+			step = 1
+		elif deg == 180:
+			step = 2
+		elif deg == 270:
+			step = 3
 	roll_array(line_inputable_array, step)
 	roll_array(line_outputable_array, step)
 	roll_array(line_allow_input_type_array, step)
@@ -145,13 +144,17 @@ func rotate(deg: int, with_anim: bool = false) -> void:
 	
 	
 func roll_array(in_array: Array, step: int) -> void:
-	var length: int = in_array.size()
-	var temp_arr: Array = in_array.duplicate()
-	for i in range(length):
-		var idx: int = (i + step) % length
-		temp_arr[i] = in_array[idx]
-	for i in range(length):
-		in_array[i] = temp_arr[i]
+	for i in range(step):
+		roll_array_once(in_array)
+		
+		
+func roll_array_once(in_array: Array) -> void:
+	var last: Variant = in_array.back()
+	var i = in_array.size() - 1
+	while i > 0:
+		in_array[i] = in_array[i - 1]
+		i -= 1
+	in_array[0] = last
 
 
 func detach() -> void:
@@ -164,10 +167,7 @@ func hint_disdetachabled() -> void:
 
 func rotate_90deg() -> void:
 	current_deg += 90
-	fixed_deg += 90
-	if fixed_deg == 360:
-		fixed_deg = 0
-	rotate(current_deg, true)
+	rotate(current_deg, true, 1)
 
 
 func _on_button_gui_input(event: InputEvent) -> void:
