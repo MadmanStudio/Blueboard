@@ -8,7 +8,7 @@ signal core_filled(type: Electricity.Type)
 signal core_cleared
 signal installed
 signal uninstalled
-signal rotated
+signal rotate_completed
 
 
 var id: String
@@ -71,8 +71,13 @@ func clear_core() -> void:
 func output_electricity(dir: Direction, switch_flowing_color: bool = false) -> void:
 	if line_outputable_array[dir] == false:
 		return
-	line_outputting_array[dir] = true
-	electricity_array[dir].output(line_output_type_array[dir], switch_flowing_color)
+	if id == "jumper_out":
+		line_outputting_array[dir] = true
+		electricity_array[dir].output(line_output_type_array[dir], switch_flowing_color)
+		return
+	if line_outputting_array[dir] == false:
+		line_outputting_array[dir] = true
+		electricity_array[dir].output(line_output_type_array[dir], switch_flowing_color)
 	
 	
 func output_electricity_with_type(type: Electricity.Type, dir: Direction, switch_flowing_color: bool = false) -> void:
@@ -104,8 +109,13 @@ func fill_core_and_output(type: Electricity.Type) -> void:
 	line_output_type_array = [type, type, type, type]
 	for dir: Direction in Direction.values():
 		if line_outputable_array[dir]:
-			output_electricity(dir)
-			line_outputting_array[dir] = true
+			if id == "jumper_out":
+				output_electricity(dir)
+				line_outputting_array[dir] = true
+				continue
+			if line_outputting_array[dir] == false:
+				output_electricity(dir)
+				line_outputting_array[dir] = true
 	fill_core(type)
 	
 	
@@ -116,6 +126,13 @@ func vanish_electricity() -> void:
 		electricity.vanish()
 	line_inputting_array = [false, false, false, false]
 	line_outputting_array = [false, false, false, false]
+	
+	
+func specific_vanish_electricity() -> void:
+	if id == "jumper_out":
+		if owner.active == true:
+			return
+	vanish_electricity()
 	
 	
 func disable() -> void:
@@ -135,8 +152,10 @@ func check_line_allow_input_type(type: Electricity.Type, dir: Direction) -> bool
 		
 func rotate(deg: int, with_anim: bool = false, step: int = 0) -> void:
 	if with_anim:
+		specific_vanish_electricity()
 		z_index = 100
 		$Control/Electricities.hide()
+		$Control/Core.hide()
 		var tween: Tween = get_tree().create_tween()
 		tween.tween_property(self, "scale", Vector2.ONE * 1.2, 0.1).set_ease(Tween.EASE_OUT)
 		tween.chain().tween_property(self, "rotation", deg_to_rad(deg), 0.1)
@@ -164,8 +183,9 @@ func rotate(deg: int, with_anim: bool = false, step: int = 0) -> void:
 func on_rotate_completed(deg: int) -> void:
 	z_index = 0
 	$Control/Electricities.show()
+	$Control/Core.show()
 	if deg != 0:
-		rotated.emit()
+		rotate_completed.emit()
 	
 	
 func roll_array(in_array: Array, step: int) -> void:

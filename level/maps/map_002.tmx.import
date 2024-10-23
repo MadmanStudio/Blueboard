@@ -2,13 +2,13 @@
 
 importer="YATI"
 type="PackedScene"
-uid="uid://1khuvfsaup87"
-path="res://.godot/imported/map_test.tmx-c7107a0449a397c8ceae5d59277b5647.tscn"
+uid="uid://bt3giwo8qps64"
+path="res://.godot/imported/map_002.tmx-0971b891962866a9eab45f4e07a89ae9.tscn"
 
 [deps]
 
-source_file="res://level/map_test/map_test.tmx"
-dest_files=["res://.godot/imported/map_test.tmx-c7107a0449a397c8ceae5d59277b5647.tscn"]
+source_file="res://level/maps/map_002.tmx"
+dest_files=["res://.godot/imported/map_002.tmx-0971b891962866a9eab45f4e07a89ae9.tscn"]
 
 [params]
 

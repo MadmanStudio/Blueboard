@@ -53,6 +53,3 @@ func enable_shader(color: Color, switch_flowing_color: bool) -> void:
 func vanish() -> void:
 	$AnimationPlayer.play("RESET")
 	
-	
-func retract() -> void:
-	$AnimationPlayer.play_backwards("Output")

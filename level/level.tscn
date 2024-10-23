@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cj11wvt8yl5gq"]
 
 [ext_resource type="Script" path="res://level/level.gd" id="1_kf6bj"]
-[ext_resource type="PackedScene" uid="uid://bpwbue0gf3hjp" path="res://level/map_tutorial_001/map_tutorial_001.tmx" id="2_l070w"]
+[ext_resource type="PackedScene" uid="uid://bt3giwo8qps64" path="res://level/maps/map_002.tmx" id="2_f3sn2"]
 [ext_resource type="PackedScene" uid="uid://bnlbp0jrpdef1" path="res://ui/operation_panel/operation_panel.tscn" id="4_c47ef"]
 
 [node name="Level" type="Node2D"]
@@ -9,7 +9,7 @@ script = ExtResource("1_kf6bj")
 
 [node name="Map" type="Node" parent="."]
 
-[node name="map_tutorial_001" parent="Map" instance=ExtResource("2_l070w")]
+[node name="map_002" parent="Map" instance=ExtResource("2_f3sn2")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
