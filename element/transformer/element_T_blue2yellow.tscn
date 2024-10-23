@@ -7,7 +7,7 @@
 
 [node name="ElementComponent" parent="." instance=ExtResource("1_3fbna")]
 surface_texture = ExtResource("2_jgvrc")
-line_disabled_array = Array[bool]([true, false, true, false])
 line_inputable_array = Array[bool]([false, false, false, true])
 line_outputable_array = Array[bool]([false, true, false, false])
 line_allow_input_type_array = Array[int]([7, 7, 7, 1])
+line_output_type_array = Array[int]([0, 2, 0, 0])

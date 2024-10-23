@@ -16,7 +16,7 @@
 92,93,93,93,93,93,93,94
 </data>
  </layer>
- <layer id="3" name="Element" width="8" height="8">
+ <layer id="3" name="Element" width="8" height="8" locked="1">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,
 0,3,0,0,0,0,0,0,

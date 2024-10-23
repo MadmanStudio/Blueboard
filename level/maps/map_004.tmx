@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="left-down" width="12" height="11" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="3">
+ <editorsettings>
+  <export target="map_tutorial_001..tmj" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" source="../element.tsx"/>
+ <layer id="1" name="Blueboard" width="12" height="11" locked="1">
+  <data encoding="csv">
+0,0,0,43,29,29,29,29,47,0,0,0,
+0,0,0,59,45,62,45,45,63,0,0,0,
+0,0,0,59,60,61,61,45,63,0,0,0,
+43,29,29,44,77,62,60,61,46,29,29,30,
+59,61,61,60,60,77,62,77,45,77,62,63,
+59,60,77,45,61,77,60,77,45,61,60,63,
+59,45,60,77,60,61,61,45,77,61,45,63,
+75,93,93,76,45,62,60,60,78,93,93,94,
+0,0,0,59,45,62,60,45,63,0,0,0,
+0,0,0,59,62,60,60,61,63,0,0,0,
+0,0,0,92,93,93,93,93,94,0,0,0
+</data>
+ </layer>
+ <layer id="3" name="Element" width="12" height="11" locked="1">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,3221225539,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,1610612739,0,0,0,0,0,0,0,0,2684354579,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,65,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="2" name="Object" locked="1">
+  <object id="1" x="192" y="176">
+   <point/>
+  </object>
+ </objectgroup>
+</map>

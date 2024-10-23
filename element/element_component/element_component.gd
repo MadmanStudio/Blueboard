@@ -104,21 +104,6 @@ func input_electricity(type: Electricity.Type, dir: Direction, switch_flowing_co
 	fill_core(type)
 	
 	
-func fill_core_and_output(type: Electricity.Type) -> void:
-	core_filled.emit(type)
-	line_output_type_array = [type, type, type, type]
-	for dir: Direction in Direction.values():
-		if line_outputable_array[dir]:
-			if id == "jumper_out":
-				output_electricity(dir)
-				line_outputting_array[dir] = true
-				continue
-			if line_outputting_array[dir] == false:
-				output_electricity(dir)
-				line_outputting_array[dir] = true
-	fill_core(type)
-	
-	
 func vanish_electricity() -> void:
 	clear_core()
 	core_cleared.emit()

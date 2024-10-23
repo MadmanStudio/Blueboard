@@ -213,8 +213,8 @@ func on_element_installed(element_button: ElementButton) -> void:
 	
 func on_element_install_completed(element: Node2D) -> void:
 	Globals.installing = false
-	element.get_child(0).installed.emit()
 	propagate_electricity(element)
+	element.get_child(0).installed.emit()
 	
 	
 func create_element(id: String, pos: Vector2, deg: int, scale: float = 1.0) -> Node2D:

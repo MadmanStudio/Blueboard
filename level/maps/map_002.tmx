@@ -4,7 +4,7 @@
   <export target="map_tutorial_001..tmj" format="json"/>
  </editorsettings>
  <tileset firstgid="1" source="../element.tsx"/>
- <layer id="1" name="Blueboard" width="7" height="11">
+ <layer id="1" name="Blueboard" width="7" height="11" locked="1">
   <data encoding="csv">
 43,29,29,29,29,29,30,
 59,60,60,77,60,61,63,
@@ -19,7 +19,7 @@
 92,93,93,93,93,93,94
 </data>
  </layer>
- <layer id="3" name="Element" width="7" height="11">
+ <layer id="3" name="Element" width="7" height="11" locked="1">
   <data encoding="csv">
 0,0,0,0,0,0,0,
 0,19,0,0,0,0,0,
@@ -34,7 +34,7 @@
 0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="2" name="Object" locked="1">
+ <objectgroup id="2" name="Object" visible="0" locked="1">
   <object id="1" x="112" y="176">
    <point/>
   </object>
