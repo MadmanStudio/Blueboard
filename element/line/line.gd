@@ -3,9 +3,13 @@ extends Node2D
 
 @onready var element_comp: ElementComponent = $ElementComponent
 
+var level: Level
+
 
 func _ready() -> void:
+	level = get_meta("level")
 	element_comp.core_filled.connect(on_core_filled)
+	element_comp.any_surrounding_element_updated.connect(check)
 	# 莫名其妙的BUG
 	# 从 @export 变量中配置的值不生效
 	# 只好这样做了
@@ -22,3 +26,7 @@ func _ready() -> void:
 
 func on_core_filled(type: Electricity.Type) -> void:
 	element_comp.line_output_type_array = [type, type, type, type]
+
+
+func check() -> void:
+	level.propagate_electricity(self)

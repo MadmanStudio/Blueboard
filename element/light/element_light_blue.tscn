@@ -1,19 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://chlko1e4jsc88"]
+[gd_scene load_steps=5 format=3 uid="uid://chlko1e4jsc88"]
 
 [ext_resource type="Script" path="res://element/light/light.gd" id="1_5k1fc"]
 [ext_resource type="PackedScene" uid="uid://bbtvaphcjmt2x" path="res://element/element_component/element_component.tscn" id="1_owwqe"]
-[ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="2_c3l23"]
+[ext_resource type="Texture2D" uid="uid://c856qcdl5bxkj" path="res://element/light/res/element_light_blue.atlastex" id="3_havge"]
 [ext_resource type="PackedScene" uid="uid://depodaqqchc14" path="res://element/light/point_light.tscn" id="3_kp103"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_n6dya"]
-atlas = ExtResource("2_c3l23")
-region = Rect2(48, 64, 16, 16)
 
 [node name="Element_Light_Blue" type="Node2D"]
 script = ExtResource("1_5k1fc")
 
 [node name="ElementComponent" parent="." instance=ExtResource("1_owwqe")]
-surface_texture = SubResource("AtlasTexture_n6dya")
+surface_texture = ExtResource("3_havge")
 line_inputable_array = Array[bool]([true, false, false, false])
 line_outputable_array = Array[bool]([false, false, false, false])
 line_allow_input_type_array = Array[int]([1, 7, 7, 7])

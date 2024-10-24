@@ -5,15 +5,18 @@ extends Control
 @onready var main_menu_button: Label = $MainMenu
 
 var tween: Tween
+var main: Main
 
 
 func _ready() -> void:
+	main = get_tree().get_first_node_in_group("main")
 	back_button.set_meta("size_x", back_button.size.x)
 	manual_button.set_meta("size_x", manual_button.size.x)
 	main_menu_button.set_meta("size_x", main_menu_button.size.x)
 
 
 func _on_back_button_mouse_entered() -> void:
+	main.play_sound(Main.SoundType.UI_HOVER)
 	expand_button(back_button)
 	
 	
@@ -22,6 +25,7 @@ func _on_back_button_mouse_exited() -> void:
 	
 	
 func _on_manual_button_mouse_entered() -> void:
+	main.play_sound(Main.SoundType.UI_HOVER)
 	expand_button(manual_button)
 
 
@@ -30,6 +34,7 @@ func _on_manual_button_mouse_exited() -> void:
 	
 	
 func _on_main_menu_button_mouse_entered() -> void:
+	main.play_sound(Main.SoundType.UI_HOVER)
 	expand_button(main_menu_button)
 
 
@@ -58,5 +63,20 @@ func _exit_tree() -> void:
 
 
 func _on_back_button_button_down() -> void:
+	main.play_sound(Main.SoundType.UI_CLICK)
 	%MenuBG.hide()
 	Globals.allow_operate = true
+
+
+func _on_main_menu_button_button_down() -> void:
+	main.play_sound(Main.SoundType.UI_CLICK)
+	var main: Main = get_tree().get_first_node_in_group("main")
+	main.load_scene(Paths.main_menu)
+
+
+func _on_manual_button_toggled(toggled_on: bool) -> void:
+	main.play_sound(Main.SoundType.UI_CLICK)
+	if toggled_on:
+		%MenuBG/ManualPage.show()
+	else:
+		%MenuBG/ManualPage.hide()

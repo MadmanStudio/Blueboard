@@ -8,12 +8,14 @@ signal core_filled(type: Electricity.Type)
 signal core_cleared
 signal installed
 signal rotate_completed
+signal any_surrounding_element_updated
 
 
 var id: String
 var detachable: bool = false
 var current_deg: int = 0
 var installed_coord: Vector2i
+var main: Main
 
 enum Direction
 {
@@ -57,6 +59,10 @@ var line_outputting_array: Array[bool] = [false, false, false, false]
 var line_inputting_array: Array[bool] = [false, false, false, false]
 	
 	
+func _ready() -> void:
+	main = get_tree().get_first_node_in_group("main")
+	
+	
 func fill_core(electricity_type: Electricity.Type) -> void:
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property($Control/Core, "color", Tables.ElectricityColorTable.get(electricity_type), 0.1).set_ease(Tween.EASE_IN)
@@ -74,7 +80,9 @@ func output_electricity(dir: Direction, switch_flowing_color: bool = false) -> v
 		line_outputting_array[dir] = true
 		electricity_array[dir].output(line_output_type_array[dir], switch_flowing_color)
 		return
-	if line_outputting_array[dir] == false:
+	if is_outputting(dir) and get_output_type(dir) == line_output_type_array[dir]:
+		pass
+	else:
 		line_outputting_array[dir] = true
 		electricity_array[dir].output(line_output_type_array[dir], switch_flowing_color)
 	
@@ -82,8 +90,12 @@ func output_electricity(dir: Direction, switch_flowing_color: bool = false) -> v
 func output_electricity_with_type(type: Electricity.Type, dir: Direction, switch_flowing_color: bool = false) -> void:
 	if line_outputable_array[dir] == false:
 		return
-	line_outputting_array[dir] = true
-	electricity_array[dir].output(type, switch_flowing_color)
+	if is_outputting(dir) and get_output_type(dir) == type:
+		pass
+	else:
+		line_output_type_array[dir] = type
+		line_outputting_array[dir] = true
+		electricity_array[dir].output(type, switch_flowing_color)
 	
 	
 func input_electricity(type: Electricity.Type, dir: Direction, switch_flowing_color: bool = false) -> void:
@@ -95,10 +107,15 @@ func input_electricity(type: Electricity.Type, dir: Direction, switch_flowing_co
 	electricity_array[dir].input(type, switch_flowing_color)
 	core_filled.emit(type)
 	for d: Direction in Direction.values():
+		if id.find("I_") != -1:
+			break
 		if d == dir:
 			continue
 		if line_outputable_array[d]:
-			output_electricity(d)
+			if id.find("line_") != -1:
+				output_electricity_with_type(type, d)
+			else:
+				output_electricity(d)
 			line_outputting_array[d] = true
 	fill_core(type)
 	
@@ -114,8 +131,7 @@ func vanish_electricity() -> void:
 	
 func specific_vanish_electricity() -> void:
 	if id == "jumper_out":
-		if owner.active == true:
-			return
+		return
 	vanish_electricity()
 	
 	
@@ -194,6 +210,7 @@ func uninstall() -> void:
 
 
 func hint_disdetachabled() -> void:
+	main.play_sound(Main.SoundType.DISDETACH)
 	$Control/Disdetachabled/AnimationPlayer.play("Disdetachabled")
 
 

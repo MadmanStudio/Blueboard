@@ -16,9 +16,11 @@ extends CanvasLayer
 
 var any_key_down: bool = false
 var is_ready: bool = false
+var main: Main
 
 
 func _ready() -> void:
+	main = get_tree().get_first_node_in_group("main")
 	bind_shake_event(L_image)
 	bind_shake_event(I_image)
 	bind_shake_event(G_image)
@@ -39,6 +41,7 @@ func _input(event: InputEvent) -> void:
 			any_key_down = true
 			$AnyKeyDown.hide()
 			$AnimationPlayer.pause()
+			main.play_sound(Main.SoundType.UI_CLICK)
 			show_menu_buttons()
 		if event is InputEventKey:
 			if event.keycode == KEY_ESCAPE && any_key_down == true:

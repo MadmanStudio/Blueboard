@@ -1,33 +1,30 @@
-[gd_scene load_steps=14 format=3 uid="uid://c3u0yhsxkp83c"]
+[gd_scene load_steps=13 format=3 uid="uid://c3u0yhsxkp83c"]
 
 [ext_resource type="Script" path="res://entry/main.gd" id="1_73xx2"]
+[ext_resource type="AudioStream" uid="uid://dg37tfei5riwf" path="res://assets/music/Phat & Lazy (RT 4)/Lo-Fi Phat & Lazy Intensity 1.mp3" id="2_666fs"]
 [ext_resource type="PackedScene" uid="uid://ckjpigq7m00pl" path="res://ui/main_menu/main_menu.tscn" id="2_f0blk"]
 [ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="2_f4h0g"]
 [ext_resource type="PackedScene" uid="uid://crj283gtq266f" path="res://ui/main_menu/loading.tscn" id="3_ogg2a"]
-[ext_resource type="Script" path="res://Ovani Plugin 1.4/OvaniPlayer.gd" id="4_0wxfs"]
-[ext_resource type="Script" path="res://Ovani Plugin 1.4/OvaniSong.gd" id="5_p0h3a"]
-[ext_resource type="AudioStream" uid="uid://mac5lms6iful" path="res://assets/music/Phat & Lazy (RT 4)/Lo-Fi Phat & Lazy Intensity 1.wav" id="6_djqep"]
-[ext_resource type="AudioStream" uid="uid://da76rxwl0h2ay" path="res://assets/music/Phat & Lazy (RT 4)/Lo-Fi Phat & Lazy Intensity 2.wav" id="7_fdqml"]
-[ext_resource type="AudioStream" uid="uid://dwyo3o4r6nw7c" path="res://assets/music/Phat & Lazy (RT 4)/Lo-Fi Phat & Lazy Main.wav" id="8_8adt8"]
-[ext_resource type="AudioStream" uid="uid://bq848gp1fcuer" path="res://assets/music/Phat & Lazy (RT 4)/Lo-Fi Phat & Lazy Cut 30.wav" id="9_grr5y"]
-[ext_resource type="AudioStream" uid="uid://cfvcrulcrw1yj" path="res://assets/music/Phat & Lazy (RT 4)/Lo-Fi Phat & Lazy Cut 60.wav" id="10_nu3im"]
+[ext_resource type="AudioStream" uid="uid://qq2h0eccgwhr" path="res://assets/sound/disdetach.ogg" id="3_shrt0"]
+[ext_resource type="AudioStream" uid="uid://btaiirjmxlhlt" path="res://assets/sound/ui_hover.ogg" id="5_vqey2"]
+[ext_resource type="AudioStream" uid="uid://cq8vgmabwvdfi" path="res://assets/sound/installed.ogg" id="6_n3gkh"]
+[ext_resource type="AudioStream" uid="uid://twe0ym6vb74q" path="res://assets/sound/ui_click.ogg" id="7_yvo7m"]
+[ext_resource type="AudioStream" uid="uid://inovvn5vkf3c" path="res://assets/sound/released.ogg" id="8_e3a20"]
+[ext_resource type="AudioStream" uid="uid://cvyrg7sfnoxca" path="res://assets/sound/uninstalled.ogg" id="9_eewjo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ynok5"]
 atlas = ExtResource("2_f4h0g")
 region = Rect2(240, 0, 16, 16)
 
-[sub_resource type="Resource" id="Resource_tol36"]
-script = ExtResource("5_p0h3a")
-Intensity1 = ExtResource("6_djqep")
-Intensity2 = ExtResource("7_fdqml")
-Intensity3 = ExtResource("8_8adt8")
-Loop30 = ExtResource("9_grr5y")
-Loop60 = ExtResource("10_nu3im")
-ReverbTail = 4.0
-SongMode = 0
-
 [node name="Main" type="Node" groups=["main"]]
 script = ExtResource("1_73xx2")
+a_music = ExtResource("2_666fs")
+a_disdetach = ExtResource("3_shrt0")
+a_installed = ExtResource("6_n3gkh")
+a_ui_click = ExtResource("7_yvo7m")
+a_ui_hover = ExtResource("5_vqey2")
+a_uninstalled = ExtResource("9_eewjo")
+a_released = ExtResource("8_e3a20")
 
 [node name="BG" type="CanvasLayer" parent="."]
 layer = -1
@@ -55,7 +52,3 @@ texture = SubResource("AtlasTexture_ynok5")
 visible = false
 
 [node name="Loading" parent="Loading" instance=ExtResource("3_ogg2a")]
-
-[node name="OvaniPlayer" type="Node" parent="."]
-script = ExtResource("4_0wxfs")
-QueuedSongs = Array[ExtResource("5_p0h3a")]([SubResource("Resource_tol36")])

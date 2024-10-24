@@ -14,5 +14,15 @@ script = ExtResource("1_kf6bj")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="OperationPanel" parent="." node_paths=PackedStringArray("level") instance=ExtResource("4_c47ef")]
-element_list = Array[String](["L_orange", "I_green", "G_blue", "T_b2y", "line_one", "line_two", "line_three", "line_four", "jumper_in", "jumper_out", "G_yellow", "G_red", "line_one", "line_one", "line_two", "line_two", "line_four", "line_four", "line_four", "line_one", "line_one", "line_one", "line_one", "line_one", "line_one"])
+element_dict = {
+"G_blue": 2,
+"G_red": 2,
+"G_yellow": 2,
+"I_green": 1,
+"I_orange": 1,
+"I_purple": 1,
+"jumper_in": 1,
+"jumper_out": 10,
+"line_four": 100
+}
 level = NodePath("..")

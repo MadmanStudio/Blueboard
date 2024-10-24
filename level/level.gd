@@ -30,10 +30,12 @@ var map_center: Vector2
 var start_G_elements: Array = []
 var ElementTable: Dictionary = {}
 var element_button_tscn: PackedScene = load(Paths.element_button)
+var main: Main
 
 
 func _ready() -> void:
-	for key in Tables.ElementPathTable.keys():
+	main = get_tree().get_first_node_in_group("main")
+	for key: String in Tables.ElementPathTable.keys():
 		ElementTable[key] = load(Tables.ElementPathTable.get(key))
 	$OperationPanel.element_installed.connect(on_element_installed)
 	tmx_map = map.get_child(0)
@@ -92,7 +94,7 @@ func _input(event: InputEvent) -> void:
 			switch_blueboard_tile()
 		
 	if event is InputEventMouseMotion:
-		if mouse_button_right_down:
+		if mouse_button_right_down and Globals.allow_pan:
 			$Camera2D.position -= event.relative / current_zoom
 		
 	if Input.is_action_just_pressed("ZoomIn") and not Globals.dragging and Globals.allow_zoom:
@@ -187,6 +189,8 @@ func on_element_install_completed(element: Node2D) -> void:
 	propagate_electricity(element)
 	propagate_electricity(element)
 	element.get_child(0).installed.emit()
+	emit_any_surrounding_element_updated_signal(element)
+	main.play_sound(Main.SoundType.INSTALLED)
 	
 	
 func create_element(id: String, pos: Vector2, deg: int, scale: float = 1.0) -> Node2D:
@@ -212,6 +216,8 @@ func on_element_uninstalled(element: Node2D) -> void:
 	element.queue_free()
 	element_button.element_id = element_id
 	$OperationPanel.add_element_button(element_button)
+	emit_any_surrounding_element_updated_signal(element)
+	main.play_sound(Main.SoundType.UNINSTALLED)
 	
 	
 func BFS(start_element: Node2D, action: Callable) -> void:
@@ -223,17 +229,9 @@ func BFS(start_element: Node2D, action: Callable) -> void:
 	queue.append(start_element)
 	visited[element_comp.installed_coord] = true
 	while queue.size() > 0:
-		var current_comp: ElementComponent = queue.pop_front().get_child(0)
-		var up_coord: Vector2i = current_comp.installed_coord + Dirs[0]
-		var right_coord: Vector2i = current_comp.installed_coord + Dirs[1]
-		var down_coord: Vector2i = current_comp.installed_coord + Dirs[2]
-		var left_coord: Vector2i = current_comp.installed_coord + Dirs[3]
-		action.call(current_comp, [
-			element_matrix[up_coord.x][up_coord.y],
-			element_matrix[right_coord.x][right_coord.y],
-			element_matrix[down_coord.x][down_coord.y],
-			element_matrix[left_coord.x][left_coord.y]
-		])
+		var current_element: Node2D = queue.pop_front()
+		var current_comp: ElementComponent = current_element.get_child(0)
+		action.call(current_comp, get_surrounding_elements(current_element))
 		for dir: Vector2i in Dirs:
 			var next_coord: Vector2i = current_comp.installed_coord + dir
 			if next_coord.x >= 0 and next_coord.x < matrix_size.x and next_coord.y >= 0 and next_coord.y < matrix_size.y:
@@ -280,22 +278,46 @@ func handle_line_propagate(center_comp: ElementComponent, target_comp: ElementCo
 	else:
 		var cot: Electricity.Type = center_comp.get_output_type(center_line_dir)
 		var tot: Electricity.Type = target_comp.get_output_type(target_line_dir)
-		if center_comp.is_outputting(center_line_dir):
-			if target_comp.is_inputable(target_line_dir):
-				if target_comp.get_allow_input_type(target_line_dir) == cot:
-					target_comp.input_electricity(cot, target_line_dir)
-		if target_comp.is_outputting(target_line_dir):
-			if center_comp.is_inputable(center_line_dir):
-				var center_allow_input_type: ElementComponent.AllowInputType = center_comp.get_allow_input_type(center_line_dir)
-				if center_allow_input_type == tot || center_allow_input_type == ElementComponent.AllowInputType.ALL:
-					center_comp.input_electricity(tot, center_line_dir, true)
 		if center_comp.is_inputting(center_line_dir):
 			if not target_comp.is_outputable(target_line_dir):
 				center_comp.specific_vanish_electricity()
 		if target_comp.is_inputting(target_line_dir):
 			if not center_comp.is_outputting(center_line_dir):
 				target_comp.specific_vanish_electricity()
+		if center_comp.is_outputting(center_line_dir):
+			if target_comp.is_inputable(target_line_dir):
+				var target_allow_input_type: ElementComponent.AllowInputType = target_comp.get_allow_input_type(target_line_dir)
+				if target_allow_input_type == cot || target_allow_input_type == ElementComponent.AllowInputType.ALL:
+					target_comp.input_electricity(cot, target_line_dir, true)
+		if target_comp.is_outputting(target_line_dir):
+			if center_comp.is_inputable(center_line_dir):
+				var center_allow_input_type: ElementComponent.AllowInputType = center_comp.get_allow_input_type(center_line_dir)
+				if center_allow_input_type == tot || center_allow_input_type == ElementComponent.AllowInputType.ALL:
+					center_comp.input_electricity(tot, center_line_dir, true)
 				
 				
+func get_surrounding_elements(element: Node2D) -> Array:
+	var current_comp: ElementComponent = element.get_child(0)
+	var up_coord: Vector2i = current_comp.installed_coord + Dirs[0]
+	var right_coord: Vector2i = current_comp.installed_coord + Dirs[1]
+	var down_coord: Vector2i = current_comp.installed_coord + Dirs[2]
+	var left_coord: Vector2i = current_comp.installed_coord + Dirs[3]
+	return [
+		element_matrix[up_coord.x][up_coord.y],
+		element_matrix[right_coord.x][right_coord.y],
+		element_matrix[down_coord.x][down_coord.y],
+		element_matrix[left_coord.x][left_coord.y]
+	]
+	
+	
 func on_element_rotate_completed(element: Node2D) -> void:
 	propagate_electricity(element)
+	emit_any_surrounding_element_updated_signal(element)
+	main.play_sound(Main.SoundType.INSTALLED)
+	
+
+func emit_any_surrounding_element_updated_signal(element: Node2D) -> void:
+	var surrounding_elements: Array = get_surrounding_elements(element)
+	for e: Node2D in surrounding_elements:
+		if e != null:
+			e.get_child(0).any_surrounding_element_updated.emit()

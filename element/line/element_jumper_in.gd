@@ -1,10 +1,6 @@
 extends Node2D
 
 
-signal on_activated(type: Electricity.Type)
-signal on_disabled
-
-
 @onready var element_component: ElementComponent = $ElementComponent
 var active: bool = false
 var core_type: Electricity.Type
@@ -21,43 +17,40 @@ func _ready() -> void:
 	
 	
 func on_installed() -> void:
-	for i in level.matrix_size.x:
-		for j in level.matrix_size.y:
-			var element: Node2D = level.element_matrix[i][j]
-			if element == null:
-				continue
-			var ec: ElementComponent = element.get_child(0)
-			if ec.id != "jumper_out":
-				continue
-			element.bind_in_signal(self)
-	var input_dir: ElementComponent.Direction
-	for dir: ElementComponent.Direction in ElementComponent.Direction.values():
-		if element_component.is_inputable(dir):
-			input_dir = dir
-			break
-	if element_component.is_inputting(input_dir):
-		activate(element_component.get_allow_input_type(input_dir) as Electricity.Type)
+	pass
 	
 	
 func activate(type: Electricity.Type) -> void:
-	core_type = type
 	active = true
-	on_activated.emit(type)
+	core_type = type
+	var jumper_out_list: Array = find_jumper_out_list()
+	for jumper_out: Node2D in jumper_out_list:
+		jumper_out.activate(type)
 	
 	
 func disable() -> void:
 	active = false
-	on_disabled.emit()
+	var jumper_out_list: Array = find_jumper_out_list()
+	for jumper_out: Node2D in jumper_out_list:
+		jumper_out.disable()
 	
 	
-func on_uninstalled() -> void:
+	
+func on_uninstalled(_element: Node2D) -> void:
 	active = false
+	var jumper_out_list: Array = find_jumper_out_list()
+	for jumper_out: Node2D in jumper_out_list:
+		jumper_out.disable()
+			
+			
+func find_jumper_out_list() -> Array:
+	var jumper_out_list: Array = []
 	for i in level.matrix_size.x:
 		for j in level.matrix_size.y:
 			var element: Node2D = level.element_matrix[i][j]
 			if element == null:
 				continue
 			var ec: ElementComponent = element.get_child(0)
-			if ec.id != "jumper_out":
-				continue
-			element.unbind_in_signal(self)
+			if ec.id == "jumper_out":
+				jumper_out_list.append(element)
+	return jumper_out_list

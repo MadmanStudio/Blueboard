@@ -6,34 +6,30 @@ signal element_installed(element_button: ElementButton)
 
 @onready var grid: GridContainer = $Panel/Panel/MarginContainer/GridContainer
 
-@export var element_list: Array[String] = []
+@export var element_dict: Dictionary = {}
 @export var level: Level
 
+var main: Main
 var toolbox_icon: AtlasTexture = load(Paths.toolbox_button)
 var close_icon: AtlasTexture = load(Paths.close_button)
 var element_button_tscn: PackedScene = load(Paths.element_button)
 var element_button_container_tscn: PackedScene = load(Paths.element_button_container)
 var dragging_element_button: ElementButton
 var ebtnc_dict: Dictionary = {}
+var previous_target_position: Vector2
 
 
 func _ready() -> void:
-	var element_count_dict: Dictionary = {}
-	for id: String in element_list:
-		if element_count_dict.has(id):
-			element_count_dict[id] = element_count_dict[id] + 1
-		else:
-			element_count_dict[id] = 1
-	for id: String in element_list:
+	main = get_tree().get_first_node_in_group("main")
+	for id: String in element_dict.keys():
 		if ebtnc_dict.has(id):
 			continue
-		else:
-			var ebtnc: ElementButtonContainer = element_button_container_tscn.instantiate()
-			ebtnc.ebtn_removed.connect(on_ebtn_removed)
-			ebtnc_dict[id] = ebtnc
+		var ebtnc: ElementButtonContainer = element_button_container_tscn.instantiate()
+		ebtnc.ebtn_removed.connect(on_ebtn_removed)
+		ebtnc_dict[id] = ebtnc
 	for key: String in ebtnc_dict.keys():
 		var ebtnc: ElementButtonContainer = ebtnc_dict.get(key)
-		for i in range(element_count_dict.get(key)):
+		for i in range(element_dict.get(key)):
 			var ebtn: ElementButton = element_button_tscn.instantiate()
 			ebtn.size = Vector2(64.0, 64.0)
 			ebtn.element_id = key
@@ -71,6 +67,9 @@ func show_and_update_curve(start: Vector2) -> void:
 	$Hover.show()
 	$Curve.curve.set_point_position(0, start)
 	var target: Vector2 = find_target_positon(start)
+	if previous_target_position != target:
+		main.play_sound(Main.SoundType.UI_HOVER)
+	previous_target_position = target
 	$Curve.curve.set_point_position(1, target)
 	$Hover.global_position = target - $Hover.size * 0.5
 	var out_x: float = (target.x - start.x) * 0.5
@@ -128,6 +127,7 @@ func element_button_clicked(element_button: ElementButton) -> void:
 
 
 func _on_toolbox_button_toggled(toggled_on: bool) -> void:
+	main.play_sound(Main.SoundType.UI_CLICK)
 	if toggled_on:
 		$AnimationPlayer.play("ToolboxEnter")
 		$ToolboxButton.icon = close_icon
@@ -146,12 +146,8 @@ func show_menu() -> void:
 	
 
 func _on_menu_button_button_down() -> void:
+	main.play_sound(Main.SoundType.UI_CLICK)
 	show_menu()
-
-
-func _on_button_button_down() -> void:
-	var main: Main = get_tree().get_first_node_in_group("main")
-	main.load_scene(Paths.main_menu)
 	
 	
 func add_element_button(element_button: ElementButton) -> void:
@@ -174,7 +170,9 @@ func add_element_button(element_button: ElementButton) -> void:
 		
 func _on_panel_mouse_entered() -> void:
 	Globals.allow_zoom = false
+	Globals.allow_pan = false
 
 
 func _on_panel_mouse_exited() -> void:
 	Globals.allow_zoom = true
+	Globals.allow_pan = true

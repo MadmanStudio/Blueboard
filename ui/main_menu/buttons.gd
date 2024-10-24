@@ -5,9 +5,15 @@ extends Control
 @onready var exit_button: Label = $Exit
 
 var tween: Tween
+var main: Main
+
+
+func _ready() -> void:
+	main = get_tree().get_first_node_in_group("main")
 
 
 func _on_start_button_mouse_entered() -> void:
+	main.play_sound(Main.SoundType.UI_HOVER)
 	expand_button(start_button)
 	
 	
@@ -16,6 +22,7 @@ func _on_start_button_mouse_exited() -> void:
 	
 	
 func _on_load_button_mouse_entered() -> void:
+	main.play_sound(Main.SoundType.UI_HOVER)
 	expand_button(load_button)
 
 
@@ -24,6 +31,7 @@ func _on_load_button_mouse_exited() -> void:
 	
 	
 func _on_exit_button_mouse_entered() -> void:
+	main.play_sound(Main.SoundType.UI_HOVER)
 	expand_button(exit_button)
 
 
@@ -46,19 +54,23 @@ func start() -> void:
 	
 	
 func load_level() -> void:
-	var main: Main = get_tree().get_first_node_in_group("main")
 	main.load_scene(Paths.map_L_home)
 
 
 func _on_button_button_up() -> void:
+	main.play_sound(Main.SoundType.UI_CLICK)
 	get_tree().quit()
 
 
 func _on_start_button_down() -> void:
-	var main: Main = get_tree().get_first_node_in_group("main")
+	main.play_sound(Main.SoundType.UI_CLICK)
 	main.load_scene(Paths.level)
 	
 	
 func _exit_tree() -> void:
 	if tween != null:
 		tween.kill()
+
+
+func _on_button_button_down() -> void:
+	main.play_sound(Main.SoundType.UI_CLICK)

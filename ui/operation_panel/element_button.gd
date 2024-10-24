@@ -15,6 +15,7 @@ var dragging: bool = false
 var ready_to_install: bool = false
 var installed_coord: Vector2
 var ebtnc: ElementButtonContainer
+var main: Main
 
 
 @export var element_id: String:
@@ -24,16 +25,23 @@ var ebtnc: ElementButtonContainer
 			$Icon.texture = load(Tables.ElementIconTable.get(new_value))
 
 
+func _ready() -> void:
+	main = get_tree().get_first_node_in_group("main")
+
+
 func _on_mouse_entered() -> void:
 	Globals.allow_zoom = false
+	Globals.allow_pan = false
 	if Input.is_action_pressed("Pan"):
 		return
 	if not Globals.dragging and not ready_to_install:
 		scale = Vector2.ONE * 1.06
+		main.play_sound(Main.SoundType.UI_HOVER)
 
 
 func _on_mouse_exited() -> void:
 	Globals.allow_zoom = true
+	Globals.allow_pan = true
 	if not Globals.dragging and not ready_to_install:
 		scale = Vector2.ONE * 1.0
 
@@ -51,6 +59,7 @@ func _on_button_up() -> void:
 	z_index = 1
 	if Globals.dragging:
 		if inside_toolbox == true or ready_to_install == false:
+			main.play_sound(Main.SoundType.RELEASED)
 			position = Vector2.ZERO
 			ebtnc.set_count(ebtnc.count)
 		else:

@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://bnlbp0jrpdef1"]
+[gd_scene load_steps=18 format=3 uid="uid://bnlbp0jrpdef1"]
 
 [ext_resource type="Script" path="res://ui/operation_panel/operation_panel.gd" id="1_k4jd0"]
 [ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="1_mlr13"]
 [ext_resource type="Script" path="res://ui/operation_panel/buttons.gd" id="2_713g5"]
 [ext_resource type="Script" path="res://ui/operation_panel/curve.gd" id="2_j17kj"]
 [ext_resource type="Texture2D" uid="uid://d0a8u1w34kuv5" path="res://ui/operation_panel/res/toolbox_button.atlastex" id="4_mk6oy"]
+[ext_resource type="PackedScene" uid="uid://djhkotjvmsh1o" path="res://ui/manual/manual_page.tscn" id="6_ag4jg"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lebeu"]
 
@@ -322,6 +323,7 @@ anchor_bottom = 1.0
 offset_right = 208.0
 grow_horizontal = 2
 grow_vertical = 2
+toggle_mode = true
 
 [node name="MainMenu" type="Label" parent="MenuBG/Buttons"]
 custom_minimum_size = Vector2(120, 0)
@@ -353,6 +355,13 @@ offset_right = 248.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="ManualPage" parent="MenuBG" instance=ExtResource("6_ag4jg")]
+visible = false
+offset_left = 200.0
+offset_top = 16.0
+offset_right = 620.0
+offset_bottom = 610.0
+
 [connection signal="mouse_entered" from="Panel/Panel" to="." method="_on_panel_mouse_entered"]
 [connection signal="mouse_exited" from="Panel/Panel" to="." method="_on_panel_mouse_exited"]
 [connection signal="toggled" from="ToolboxButton" to="." method="_on_toolbox_button_toggled"]
@@ -362,6 +371,7 @@ grow_vertical = 2
 [connection signal="mouse_exited" from="MenuBG/Buttons/Back/Button" to="MenuBG/Buttons" method="_on_back_button_mouse_exited"]
 [connection signal="mouse_entered" from="MenuBG/Buttons/Manual/Button" to="MenuBG/Buttons" method="_on_manual_button_mouse_entered"]
 [connection signal="mouse_exited" from="MenuBG/Buttons/Manual/Button" to="MenuBG/Buttons" method="_on_manual_button_mouse_exited"]
-[connection signal="button_down" from="MenuBG/Buttons/MainMenu/Button" to="." method="_on_button_button_down"]
+[connection signal="toggled" from="MenuBG/Buttons/Manual/Button" to="MenuBG/Buttons" method="_on_manual_button_toggled"]
+[connection signal="button_down" from="MenuBG/Buttons/MainMenu/Button" to="MenuBG/Buttons" method="_on_main_menu_button_button_down"]
 [connection signal="mouse_entered" from="MenuBG/Buttons/MainMenu/Button" to="MenuBG/Buttons" method="_on_main_menu_button_mouse_entered"]
 [connection signal="mouse_exited" from="MenuBG/Buttons/MainMenu/Button" to="MenuBG/Buttons" method="_on_main_menu_button_mouse_exited"]

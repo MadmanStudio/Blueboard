@@ -2,6 +2,41 @@ extends Node
 class_name Main
 
 
+@export var a_music: AudioStream
+@export var a_disdetach: AudioStream
+@export var a_installed: AudioStream
+@export var a_ui_click: AudioStream
+@export var a_ui_hover: AudioStream
+@export var a_uninstalled: AudioStream
+@export var a_released: AudioStream
+
+
+enum SoundType
+{
+	DISDETACH,
+	INSTALLED,
+	UI_CLICK,
+	UI_HOVER,
+	UNINSTALLED,
+	RELEASED
+}
+
+
+func play_sound(type: SoundType) -> void:
+	if type == SoundType.DISDETACH:
+		SoundManager.play_sound(a_disdetach)
+	elif type == SoundType.INSTALLED:
+		SoundManager.play_sound(a_installed)
+	elif type == SoundType.UI_CLICK:
+		SoundManager.play_sound(a_ui_click)
+	elif type == SoundType.UI_HOVER:
+		SoundManager.play_sound(a_ui_hover)
+	elif type == SoundType.UNINSTALLED:
+		SoundManager.play_sound(a_uninstalled)
+	elif type == SoundType.RELEASED:
+		SoundManager.play_sound(a_released)
+
+
 var loading: bool = false:
 	set(new_state):
 		loading = new_state
@@ -18,6 +53,7 @@ var loaded_level_data: Dictionary
 
 func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color("#27292d"))
+	SoundManager.play_music(a_music)
 	
 	
 func _process(_delta: float) -> void:

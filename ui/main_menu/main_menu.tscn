@@ -249,6 +249,7 @@ autostart = true
 [connection signal="button_down" from="Buttons/Start/Button" to="Buttons" method="_on_start_button_down"]
 [connection signal="mouse_entered" from="Buttons/Start/Button" to="Buttons" method="_on_start_button_mouse_entered"]
 [connection signal="mouse_exited" from="Buttons/Start/Button" to="Buttons" method="_on_start_button_mouse_exited"]
+[connection signal="button_down" from="Buttons/Load/Button" to="Buttons" method="_on_button_button_down"]
 [connection signal="mouse_entered" from="Buttons/Load/Button" to="Buttons" method="_on_load_button_mouse_entered"]
 [connection signal="mouse_exited" from="Buttons/Load/Button" to="Buttons" method="_on_load_button_mouse_exited"]
 [connection signal="button_up" from="Buttons/Exit/Button" to="Buttons" method="_on_button_button_up"]
