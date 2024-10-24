@@ -4,26 +4,52 @@ class_name OperationPanel
 
 signal element_installed(element_button: ElementButton)
 
+@onready var grid: GridContainer = $Panel/Panel/MarginContainer/GridContainer
 
 @export var element_list: Array[String] = []
 @export var level: Level
 
-var toolbox_icon: AtlasTexture = load("res://ui/operation_panel/res/toolbox_button.atlastex")
-var close_icon: AtlasTexture = load("res://ui/operation_panel/res/close_button.atlastex")
-var element_button_tscn: PackedScene = load("res://ui/operation_panel/element_button.tscn")
+var toolbox_icon: AtlasTexture = load(Paths.toolbox_button)
+var close_icon: AtlasTexture = load(Paths.close_button)
+var element_button_tscn: PackedScene = load(Paths.element_button)
+var element_button_container_tscn: PackedScene = load(Paths.element_button_container)
 var dragging_element_button: ElementButton
+var ebtnc_dict: Dictionary = {}
 
 
 func _ready() -> void:
-	for id in element_list:
-		var ebtn: ElementButton = element_button_tscn.instantiate()
-		ebtn.size = Vector2(64.0, 64.0)
-		ebtn.element_id = id
-		ebtn.clicked.connect(element_button_clicked)
-		ebtn.released.connect(on_element_button_released)
-		ebtn.element_installed.connect(on_element_installed)
-		ebtn.tree_exited.connect(on_queue_free)
-		$Panel/Panel/MarginContainer/GridContainer.add_child(ebtn)
+	var element_count_dict: Dictionary = {}
+	for id: String in element_list:
+		if element_count_dict.has(id):
+			element_count_dict[id] = element_count_dict[id] + 1
+		else:
+			element_count_dict[id] = 1
+	for id: String in element_list:
+		if ebtnc_dict.has(id):
+			continue
+		else:
+			var ebtnc: ElementButtonContainer = element_button_container_tscn.instantiate()
+			ebtnc.ebtn_removed.connect(on_ebtn_removed)
+			ebtnc_dict[id] = ebtnc
+	for key: String in ebtnc_dict.keys():
+		var ebtnc: ElementButtonContainer = ebtnc_dict.get(key)
+		for i in range(element_count_dict.get(key)):
+			var ebtn: ElementButton = element_button_tscn.instantiate()
+			ebtn.size = Vector2(64.0, 64.0)
+			ebtn.element_id = key
+			ebtn.clicked.connect(element_button_clicked)
+			ebtn.released.connect(on_element_button_released)
+			ebtn.element_installed.connect(on_element_installed)
+			ebtn.tree_exited.connect(on_queue_free)
+			ebtn.ebtnc = ebtnc
+			ebtnc.add_element_button(ebtn)
+		grid.add_child(ebtnc)
+
+
+func on_ebtn_removed(element_id: String, latest_count: int) -> void:
+	if latest_count == 0:
+		ebtnc_dict.get(element_id).queue_free()
+		ebtnc_dict.erase(element_id)
 
 
 func _input(event: InputEvent) -> void:
@@ -58,20 +84,20 @@ func find_target_positon(start: Vector2) -> Vector2:
 	var target_position: Vector2
 	var min_distance: float = INF
 	for coord in level.blueboard_layer.get_used_cells():
-		if level.element_matrix[coord.x][coord.y] != null:
+		if level.element_matrix[coord.y][coord.x] != null:
 			continue
 		var tile_data: TileData = level.blueboard_layer.get_cell_tile_data(coord)
 		if tile_data.get_custom_data("is_border"):
 			continue
-		var tile_position: Vector2 = level.blueboard_tile_data_matrix[coord.x][coord.y].position
-		var tile_size: Vector2 = level.blueboard_tile_data_matrix[coord.x][coord.y].size
+		var tile_position: Vector2 = level.blueboard_tile_data_matrix[coord.y][coord.x].position
+		var tile_size: Vector2 = level.blueboard_tile_data_matrix[coord.y][coord.x].size
 		$Hover.size = tile_size
 		var center: Vector2 = tile_position + tile_size * 0.5
 		var distance: float = start.distance_to(center)
 		if distance < min_distance:
 			min_distance = distance
 			target_position = center
-			dragging_element_button.installed_coord = coord
+			dragging_element_button.installed_coord = Vector2i(coord.y, coord.x)
 	return target_position
 		
 	
@@ -93,9 +119,11 @@ func on_element_button_released(_element_button: ElementButton) -> void:
 	
 func on_element_installed(element_button: ElementButton) -> void:
 	element_installed.emit(element_button)
+	element_button.ebtnc.remove_element_button(element_button)
 	
 	
 func element_button_clicked(element_button: ElementButton) -> void:
+	element_button.ebtnc.set_count(element_button.ebtnc.count - 1)
 	dragging_element_button = element_button
 
 
@@ -131,4 +159,22 @@ func add_element_button(element_button: ElementButton) -> void:
 	element_button.released.connect(on_element_button_released)
 	element_button.element_installed.connect(on_element_installed)
 	element_button.tree_exited.connect(on_queue_free)
-	$Panel/Panel/MarginContainer/GridContainer.add_child(element_button)
+	if ebtnc_dict.has(element_button.element_id):
+		var ebtnc: ElementButtonContainer = ebtnc_dict.get(element_button.element_id)
+		element_button.ebtnc = ebtnc
+		ebtnc.add_element_button(element_button)
+	else:
+		var ebtnc: ElementButtonContainer = element_button_container_tscn.instantiate()
+		ebtnc.ebtn_removed.connect(on_ebtn_removed)
+		ebtnc.add_element_button(element_button)
+		element_button.ebtnc = ebtnc
+		ebtnc_dict[element_button.element_id] = ebtnc
+		grid.add_child(ebtnc)
+		
+		
+func _on_panel_mouse_entered() -> void:
+	Globals.allow_zoom = false
+
+
+func _on_panel_mouse_exited() -> void:
+	Globals.allow_zoom = true

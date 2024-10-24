@@ -31,7 +31,7 @@ func on_installed() -> void:
 				continue
 			element.bind_in_signal(self)
 	var input_dir: ElementComponent.Direction
-	for dir in ElementComponent.Direction.values():
+	for dir: ElementComponent.Direction in ElementComponent.Direction.values():
 		if element_component.is_inputable(dir):
 			input_dir = dir
 			break

@@ -309,7 +309,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
 theme_override_font_sizes/font_size = 40
-text = "元件手册"
+text = "操作手册"
 horizontal_alignment = 2
 
 [node name="Button" type="Button" parent="MenuBG/Buttons/Manual"]
@@ -353,6 +353,8 @@ offset_right = 248.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[connection signal="mouse_entered" from="Panel/Panel" to="." method="_on_panel_mouse_entered"]
+[connection signal="mouse_exited" from="Panel/Panel" to="." method="_on_panel_mouse_exited"]
 [connection signal="toggled" from="ToolboxButton" to="." method="_on_toolbox_button_toggled"]
 [connection signal="button_down" from="MenuButton" to="." method="_on_menu_button_button_down"]
 [connection signal="button_down" from="MenuBG/Buttons/Back/Button" to="MenuBG/Buttons" method="_on_back_button_button_down"]

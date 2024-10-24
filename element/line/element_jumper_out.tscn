@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://ca6mfjcrhq5it"]
 
-[ext_resource type="Script" path="res://element/line/element_jumer_out.gd" id="1_01bdd"]
+[ext_resource type="Script" path="res://element/line/element_jumper_out.gd" id="1_01bdd"]
 [ext_resource type="PackedScene" uid="uid://bbtvaphcjmt2x" path="res://element/element_component/element_component.tscn" id="1_m7fi7"]
 [ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="2_6m1f3"]
 

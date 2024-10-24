@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.5" tiledversion="1.7.2" name="element" tilewidth="32" tileheight="32" tilecount="256" columns="16">
+<tileset version="1.10" tiledversion="1.11.0" name="element" tilewidth="32" tileheight="32" tilecount="256" columns="16">
  <image source="../assets/texture/element.png" width="512" height="512"/>
  <tile id="0">
   <properties>
@@ -23,7 +23,7 @@
  </tile>
  <tile id="4">
   <properties>
-   <property name="id" value="T_b2r"/>
+   <property name="id" value="T_r&amp;b"/>
   </properties>
  </tile>
  <tile id="5">
@@ -79,7 +79,7 @@
  </tile>
  <tile id="20">
   <properties>
-   <property name="id" value="T_y2r"/>
+   <property name="id" value="T_r&amp;y"/>
   </properties>
  </tile>
  <tile id="22">
@@ -117,7 +117,7 @@
  </tile>
  <tile id="32">
   <properties>
-   <property name="id" value="L_yellow"/>
+   <property name="id" value="L_orange"/>
   </properties>
  </tile>
  <tile id="33">
@@ -132,7 +132,7 @@
  </tile>
  <tile id="36">
   <properties>
-   <property name="id" value="T_r2b"/>
+   <property name="id" value="T_b&amp;y"/>
   </properties>
  </tile>
  <tile id="37">
@@ -188,11 +188,6 @@
  <tile id="46">
   <properties>
    <property name="id" value="blueboard_08"/>
-  </properties>
- </tile>
- <tile id="52">
-  <properties>
-   <property name="id" value="T_y2b"/>
   </properties>
  </tile>
  <tile id="53">
@@ -265,11 +260,6 @@
    <property name="id" value="light_blue"/>
   </properties>
  </tile>
- <tile id="68">
-  <properties>
-   <property name="id" value="T_r2y"/>
-  </properties>
- </tile>
  <tile id="69">
   <properties>
    <property name="id" value="blueboard_point_14"/>
@@ -338,11 +328,6 @@
  <tile id="82">
   <properties>
    <property name="id" value="light_yellow"/>
-  </properties>
- </tile>
- <tile id="84">
-  <properties>
-   <property name="id" value="T_b2y"/>
   </properties>
  </tile>
  <tile id="86">

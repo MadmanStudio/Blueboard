@@ -10,11 +10,11 @@ signal element_installed(element_button: ElementButton)
 
 var is_inside_dropable: bool = false
 var offset: Vector2
-var initial_pos: Vector2
 var inside_toolbox: bool = true
 var dragging: bool = false
 var ready_to_install: bool = false
 var installed_coord: Vector2
+var ebtnc: ElementButtonContainer
 
 
 @export var element_id: String:
@@ -25,6 +25,7 @@ var installed_coord: Vector2
 
 
 func _on_mouse_entered() -> void:
+	Globals.allow_zoom = false
 	if Input.is_action_pressed("Pan"):
 		return
 	if not Globals.dragging and not ready_to_install:
@@ -32,6 +33,7 @@ func _on_mouse_entered() -> void:
 
 
 func _on_mouse_exited() -> void:
+	Globals.allow_zoom = true
 	if not Globals.dragging and not ready_to_install:
 		scale = Vector2.ONE * 1.0
 
@@ -41,8 +43,6 @@ func _on_button_down() -> void:
 	if not Globals.dragging:
 		Globals.dragging = true
 		dragging = true
-		if inside_toolbox:
-			initial_pos = global_position
 		offset = get_global_mouse_position() - global_position
 		clicked.emit(self)
 
@@ -51,7 +51,8 @@ func _on_button_up() -> void:
 	z_index = 1
 	if Globals.dragging:
 		if inside_toolbox == true or ready_to_install == false:
-			global_position = initial_pos
+			position = Vector2.ZERO
+			ebtnc.set_count(ebtnc.count)
 		else:
 			Globals.installing = true
 			element_installed.emit(self)

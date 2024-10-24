@@ -3,11 +3,10 @@ extends Control
 class_name ElementComponent
 
 
-signal detached(element: Node2D)
+signal uninstalled(element: Node2D)
 signal core_filled(type: Electricity.Type)
 signal core_cleared
 signal installed
-signal uninstalled
 signal rotate_completed
 
 
@@ -120,8 +119,11 @@ func specific_vanish_electricity() -> void:
 	vanish_electricity()
 	
 	
-func disable() -> void:
-	vanish_electricity()
+func disable_before_free() -> void:
+	$Control/Electricities.hide()
+	$Control/Core.hide()
+	line_inputting_array = [false, false, false, false]
+	line_outputting_array = [false, false, false, false]
 	line_inputable_array = [false, false, false, false]
 	line_outputable_array = [false, false, false, false]
 	
@@ -187,8 +189,8 @@ func roll_array_once(in_array: Array) -> void:
 	in_array[0] = last
 
 
-func detach() -> void:
-	detached.emit(owner)
+func uninstall() -> void:
+	uninstalled.emit(owner)
 
 
 func hint_disdetachabled() -> void:
@@ -217,7 +219,7 @@ func _on_button_gui_input(event: InputEvent) -> void:
 				hint_disdetachabled()
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
 			if detachable:
-				detach()
+				uninstall()
 			else:
 				hint_disdetachabled()
 				

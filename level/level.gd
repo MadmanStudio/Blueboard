@@ -9,7 +9,7 @@ const MinMapZoom = Vector2.ONE
 const MaxMapZoom = Vector2.ONE * 2.0
 const MapZoomSpeed = 0.2
 const MapZoomTime = 0.05
-const Dirs: Array = [Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)]
+const Dirs: Array = [Vector2i(-1, 0), Vector2i(0, 1), Vector2i(1, 0), Vector2i(0, -1)]
 
 var zoom_focus_point: Vector2
 var current_zoom: Vector2 = Vector2.ONE
@@ -27,50 +27,21 @@ var element_matrix: Array
 var blueboard_tile_data_matrix: Array
 var matrix_size: Vector2i
 var map_center: Vector2
-
 var start_G_elements: Array = []
-
-var ElementTable: Dictionary = {
-	"G_red": load("res://element/generator/element_G_red.tscn"),
-	"G_blue": load("res://element/generator/element_G_blue.tscn"),
-	"G_yellow": load("res://element/generator/element_G_yellow.tscn"),
-	"L_purple": load("res://element/leacher/element_L_purple.tscn"),
-	"L_green": load("res://element/leacher/element_L_green.tscn"),
-	"L_orange": load("res://element/leacher/element_L_orange.tscn"),
-	"I_purple": load("res://element/intermixer/element_I_purple.tscn"),
-	"I_green": load("res://element/intermixer/element_I_green.tscn"),
-	"I_orange": load("res://element/intermixer/element_I_orange.tscn"),
-	"T_y2b": load("res://element/transformer/element_T_yellow2blue.tscn"),
-	"T_y2r": load("res://element/transformer/element_T_yellow2red.tscn"),
-	"T_b2r": load("res://element/transformer/element_T_blue2red.tscn"),
-	"T_b2y": load("res://element/transformer/element_T_blue2yellow.tscn"),
-	"T_r2b": load("res://element/transformer/element_T_red2blue.tscn"),
-	"T_r2y": load("res://element/transformer/element_T_red2yellow.tscn"),
-	"hinderer": load("res://element/hinderer/element_H.tscn"),
-	"jumper_in": load("res://element/line/element_jumer_in.tscn"),
-	"jumper_out": load("res://element/line/element_jumer_out.tscn"),
-	"line_one": load("res://element/line/element_line_one.tscn"),
-	"line_two": load("res://element/line/element_line_two.tscn"),
-	"line_three": load("res://element/line/element_line_three.tscn"),
-	"line_four": load("res://element/line/element_line_four.tscn"),
-	"light_purple": load("res://element/light/element_light_purple.tscn"),
-	"light_blue": load("res://element/light/element_light_blue.tscn"),
-	"light_red": load("res://element/light/element_light_red.tscn"),
-	"light_green": load("res://element/light/element_light_green.tscn"),
-	"light_orange": load("res://element/light/element_light_orange.tscn"),
-	"light_yellow": load("res://element/light/element_light_yellow.tscn")
-}
-
-var element_button_tscn: PackedScene = load("res://ui/operation_panel/element_button.tscn")
+var ElementTable: Dictionary = {}
+var element_button_tscn: PackedScene = load(Paths.element_button)
 
 
 func _ready() -> void:
+	for key in Tables.ElementPathTable.keys():
+		ElementTable[key] = load(Tables.ElementPathTable.get(key))
 	$OperationPanel.element_installed.connect(on_element_installed)
 	tmx_map = map.get_child(0)
 	if tmx_map != null:
 		blueboard_layer = tmx_map.find_child("Blueboard")
 		element_layer = tmx_map.find_child("Element")
-		matrix_size = blueboard_layer.get_used_rect().size
+		var layer_size: Vector2i = blueboard_layer.get_used_rect().size
+		matrix_size = Vector2i(layer_size.y, layer_size.x)
 		for r in matrix_size.x:
 			var array_a: Array = []
 			var array_b: Array = []
@@ -88,9 +59,9 @@ func _ready() -> void:
 			var element_inst: Node2D = create_element(id, element_coord * TileSize, calculate_tile_deg(tile_data))
 			element_inst.get_child(0).id = id
 			element_inst.get_child(0).rotatable = false
-			element_inst.get_child(0).installed_coord = element_coord
-			var relative_coords: Vector2i = get_element_relative_coords(element_coord)
-			element_matrix[relative_coords.x][relative_coords.y] = element_inst
+			element_inst.get_child(0).installed_coord = Vector2i(element_coord.y, element_coord.x)
+			var relative_coord: Vector2i = get_element_relative_coord(element_coord)
+			element_matrix[relative_coord.y][relative_coord.x] = element_inst
 			element_layer.erase_cell(element_coord)
 			if id.find("G_") != -1:
 				start_G_elements.append(element_inst)
@@ -98,7 +69,7 @@ func _ready() -> void:
 			propagate_electricity(G_element)
 			
 		
-func get_element_relative_coords(element_coords: Vector2i) -> Vector2i:
+func get_element_relative_coord(element_coords: Vector2i) -> Vector2i:
 	var blueboard_layer_rect: Rect2i = blueboard_layer.get_used_rect()
 	return (Vector2i(element_layer.position) - Vector2i(blueboard_layer_rect.position)) + element_coords
 
@@ -124,9 +95,9 @@ func _input(event: InputEvent) -> void:
 		if mouse_button_right_down:
 			$Camera2D.position -= event.relative / current_zoom
 		
-	if Input.is_action_just_pressed("ZoomIn") and not Globals.dragging:
+	if Input.is_action_just_pressed("ZoomIn") and not Globals.dragging and Globals.allow_zoom:
 		zoom_at_point(1 + MapZoomSpeed)
-	elif Input.is_action_just_pressed("ZoomOut") and not Globals.dragging:
+	elif Input.is_action_just_pressed("ZoomOut") and not Globals.dragging and Globals.allow_zoom:
 		zoom_at_point(1 - MapZoomSpeed)
 		
 		
@@ -148,17 +119,17 @@ func switch_blueboard_tile() -> void:
 	if blueboard_layer == null:
 		return
 	install_point_shown = !install_point_shown
-	for tile_coords in blueboard_layer.get_used_cells():
-		var tile_data : TileData = blueboard_layer.get_cell_tile_data(tile_coords)
+	for tile_coord in blueboard_layer.get_used_cells():
+		var tile_data : TileData = blueboard_layer.get_cell_tile_data(tile_coord)
 		if tile_data != null:
 			var id: String = tile_data.get_custom_data("id")
-			var new_atlas_coords: Vector2i = Tables.BlueboardTileAtlasCoordsTable.get(id)
-			blueboard_layer.set_cell(tile_coords, 0, new_atlas_coords)
-			var tile_global_pos: Vector2 = blueboard_layer.map_to_local(tile_coords) - TileSize * Vector2.ONE * 0.5
+			var new_atlas_coord: Vector2i = Tables.BlueboardTileAtlasCoordsTable.get(id)
+			blueboard_layer.set_cell(tile_coord, 0, new_atlas_coord)
+			var tile_global_pos: Vector2 = blueboard_layer.map_to_local(tile_coord) - TileSize * Vector2.ONE * 0.5
 			var tile_position: Vector2 = (tile_global_pos - $Camera2D.global_position) * current_zoom + get_viewport().size * 0.5
 			var tile_size: Vector2 = TileSize * current_zoom
 			var tile_rect: Rect2 = Rect2(tile_position, tile_size)
-			blueboard_tile_data_matrix[tile_coords.x][tile_coords.y] = tile_rect
+			blueboard_tile_data_matrix[tile_coord.y][tile_coord.x] = tile_rect
 			
 			
 func calculate_tile_deg(tile_data: TileData) -> int:
@@ -191,8 +162,8 @@ func is_dropable(idxs: Vector2i) -> bool:
 func on_element_installed(element_button: ElementButton) -> void:
 	element_button.hide()
 	var element_id: String = element_button.element_id
-	var element_coords: Vector2i = element_button.installed_coord
-	var installed_pos: Vector2 = element_coords * TileSize
+	var element_coord: Vector2i = element_button.installed_coord
+	var installed_pos: Vector2 = Vector2(element_coord.y, element_coord.x) * TileSize
 	var button_viewport_pos: Vector2 = element_button.get_global_transform_with_canvas().origin
 	element_button.queue_free()
 	var viewport_size: Vector2 = get_viewport().size
@@ -202,8 +173,8 @@ func on_element_installed(element_button: ElementButton) -> void:
 	var element_inst: Node2D = create_element(element_id, created_pos, 0, 2.0 / current_zoom.x)
 	element_inst.get_child(0).detachable = true
 	element_inst.get_child(0).installed_coord = element_button.installed_coord
-	element_inst.get_child(0).detached.connect(on_element_uninstalled)
-	element_matrix[element_coords.x][element_coords.y] = element_inst
+	element_inst.get_child(0).uninstalled.connect(on_element_uninstalled)
+	element_matrix[element_coord.x][element_coord.y] = element_inst
 	var tween: Tween = get_tree().create_tween()
 	tween.set_parallel()
 	tween.tween_property(element_inst, "position", installed_pos, 0.1).set_ease(Tween.EASE_IN)
@@ -213,6 +184,7 @@ func on_element_installed(element_button: ElementButton) -> void:
 	
 func on_element_install_completed(element: Node2D) -> void:
 	Globals.installing = false
+	propagate_electricity(element)
 	propagate_electricity(element)
 	element.get_child(0).installed.emit()
 	
@@ -234,13 +206,11 @@ func on_element_uninstalled(element: Node2D) -> void:
 	var element_comp: ElementComponent = element.get_child(0)
 	var element_id: String = element_comp.id
 	var element_button: ElementButton = element_button_tscn.instantiate()
-	element_comp.disable()
-	propagate_electricity(element)
+	element_comp.disable_before_free()
 	element_matrix[element_comp.installed_coord.x][element_comp.installed_coord.y] = null
-	element.get_child(0).uninstalled.emit()
+	propagate_electricity(element)
 	element.queue_free()
 	element_button.element_id = element_id
-	element_button.global_position = element.global_position
 	$OperationPanel.add_element_button(element_button)
 	
 	
@@ -254,13 +224,15 @@ func BFS(start_element: Node2D, action: Callable) -> void:
 	visited[element_comp.installed_coord] = true
 	while queue.size() > 0:
 		var current_comp: ElementComponent = queue.pop_front().get_child(0)
-		var x: int = current_comp.installed_coord.x
-		var y: int = current_comp.installed_coord.y
+		var up_coord: Vector2i = current_comp.installed_coord + Dirs[0]
+		var right_coord: Vector2i = current_comp.installed_coord + Dirs[1]
+		var down_coord: Vector2i = current_comp.installed_coord + Dirs[2]
+		var left_coord: Vector2i = current_comp.installed_coord + Dirs[3]
 		action.call(current_comp, [
-			element_matrix[x + Dirs[0].x][y + Dirs[0].y],
-			element_matrix[x + Dirs[1].x][y + Dirs[1].y],
-			element_matrix[x + Dirs[2].x][y + Dirs[2].y],
-			element_matrix[x + Dirs[3].x][y + Dirs[3].y]
+			element_matrix[up_coord.x][up_coord.y],
+			element_matrix[right_coord.x][right_coord.y],
+			element_matrix[down_coord.x][down_coord.y],
+			element_matrix[left_coord.x][left_coord.y]
 		])
 		for dir: Vector2i in Dirs:
 			var next_coord: Vector2i = current_comp.installed_coord + dir
@@ -306,35 +278,23 @@ func handle_line_propagate(center_comp: ElementComponent, target_comp: ElementCo
 	if center_comp.is_outputting(center_line_dir) and target_comp.is_outputting(target_line_dir):
 		pass
 	else:
-		var flag1: bool = false
-		var flag2: bool = false
-		var flag3: bool = false
-		var flag4: bool = false
-		var cuot: Electricity.Type = center_comp.get_output_type(center_line_dir)
-		var tdot: Electricity.Type = target_comp.get_output_type(target_line_dir)
+		var cot: Electricity.Type = center_comp.get_output_type(center_line_dir)
+		var tot: Electricity.Type = target_comp.get_output_type(target_line_dir)
 		if center_comp.is_outputting(center_line_dir):
 			if target_comp.is_inputable(target_line_dir):
-				if target_comp.get_allow_input_type(target_line_dir) == cuot:
-					flag1 = true
+				if target_comp.get_allow_input_type(target_line_dir) == cot:
+					target_comp.input_electricity(cot, target_line_dir)
 		if target_comp.is_outputting(target_line_dir):
 			if center_comp.is_inputable(center_line_dir):
 				var center_allow_input_type: ElementComponent.AllowInputType = center_comp.get_allow_input_type(center_line_dir)
-				if center_allow_input_type == tdot || center_allow_input_type == ElementComponent.AllowInputType.ALL:
-					flag2 = true
+				if center_allow_input_type == tot || center_allow_input_type == ElementComponent.AllowInputType.ALL:
+					center_comp.input_electricity(tot, center_line_dir, true)
 		if center_comp.is_inputting(center_line_dir):
 			if not target_comp.is_outputable(target_line_dir):
-				flag3 = true
+				center_comp.specific_vanish_electricity()
 		if target_comp.is_inputting(target_line_dir):
 			if not center_comp.is_outputting(center_line_dir):
-				flag4 = true
-		if flag1 and not flag4:
-			target_comp.input_electricity(cuot, target_line_dir)
-		if flag2 and not flag3:
-			center_comp.input_electricity(tdot, center_line_dir, true)
-		if flag3:
-			center_comp.specific_vanish_electricity()
-		if flag4:
-			target_comp.specific_vanish_electricity()
+				target_comp.specific_vanish_electricity()
 				
 				
 func on_element_rotate_completed(element: Node2D) -> void:

@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://slwodjpktwj7"]
+
+[ext_resource type="PackedScene" uid="uid://bbtvaphcjmt2x" path="res://element/element_component/element_component.tscn" id="1_3fbna"]
+[ext_resource type="Script" path="res://element/transformer/transformer.gd" id="1_djw42"]
+[ext_resource type="Texture2D" uid="uid://c4h2m5omrk5fx" path="res://element/transformer/res/element_T_red&yellow.atlastex" id="3_tdumi"]
+
+[node name="Element_T_Red&Yellow" type="Node2D"]
+script = ExtResource("1_djw42")
+
+[node name="ElementComponent" parent="." instance=ExtResource("1_3fbna")]
+surface_texture = ExtResource("3_tdumi")
+line_inputable_array = Array[bool]([false, true, false, true])
+line_outputable_array = Array[bool]([false, true, false, true])
+line_allow_input_type_array = Array[int]([7, 7, 7, 0])
+line_output_type_array = Array[int]([0, 2, 0, 0])

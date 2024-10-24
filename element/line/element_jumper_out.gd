@@ -60,7 +60,7 @@ func on_in_activated(type: Electricity.Type) -> void:
 	
 	
 func get_faced_element() -> Node2D:
-	for dir in ElementComponent.Direction.values():
+	for dir: ElementComponent.Direction in ElementComponent.Direction.values():
 		if element_component.is_outputable(dir):
 			output_dir = dir
 			break
