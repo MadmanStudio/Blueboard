@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://entry/main.gd" id="1_73xx2"]
 [ext_resource type="PackedScene" uid="uid://ckjpigq7m00pl" path="res://ui/main_menu/main_menu.tscn" id="2_f0blk"]
 [ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="2_f4h0g"]
+[ext_resource type="AudioStream" uid="uid://dg37tfei5riwf" path="res://assets/music/Phat & Lazy (RT 4)/Lo-Fi Phat & Lazy Intensity 1.mp3" id="2_pi15k"]
 [ext_resource type="PackedScene" uid="uid://crj283gtq266f" path="res://ui/main_menu/loading.tscn" id="3_ogg2a"]
 [ext_resource type="AudioStream" uid="uid://qq2h0eccgwhr" path="res://assets/sound/disdetach.ogg" id="3_shrt0"]
 [ext_resource type="AudioStream" uid="uid://btaiirjmxlhlt" path="res://assets/sound/ui_hover.ogg" id="5_vqey2"]
@@ -11,16 +12,13 @@
 [ext_resource type="AudioStream" uid="uid://inovvn5vkf3c" path="res://assets/sound/released.ogg" id="8_e3a20"]
 [ext_resource type="AudioStream" uid="uid://cvyrg7sfnoxca" path="res://assets/sound/uninstalled.ogg" id="9_eewjo"]
 
-[sub_resource type="Resource" id="Resource_uugnp"]
-metadata/__load_path__ = "res://assets/music/Phat & Lazy (RT 4)/Lo-Fi Phat & Lazy Intensity 1.mp3"
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_ynok5"]
 atlas = ExtResource("2_f4h0g")
 region = Rect2(240, 0, 16, 16)
 
 [node name="Main" type="Node" groups=["main"]]
 script = ExtResource("1_73xx2")
-a_music = SubResource("Resource_uugnp")
+a_music = ExtResource("2_pi15k")
 a_disdetach = ExtResource("3_shrt0")
 a_installed = ExtResource("6_n3gkh")
 a_ui_click = ExtResource("7_yvo7m")

@@ -16,7 +16,7 @@ var game_data = {
 			"map_path": "res://level/maps/map_002.tmx",
 			"next_level": "3",
 			"element_dict": {
-				"G_blue": 1,
+				"line_one": 1,
 				"line_two": 2
 			}
 		},
@@ -30,10 +30,10 @@ var game_data = {
 		},
 		"4": {
 			"map_path": "res://level/maps/map_004.tmx",
-			"next_level": "1",
+			"next_level": "5",
 			"element_dict": {
 				"G_blue": 1,
-				"jumper_out": 3,
+				"jumper_out": 2,
 				"jumper_in": 1,
 			}
 		},
@@ -41,22 +41,16 @@ var game_data = {
 			"map_path": "res://level/maps/map_005.tmx",
 			"next_level": "6",
 			"element_dict": {
-				"line_one": 2,
-				"G_yellow": 1,
-				"G_red": 1,
-				"G_blue": 1,
-				"jumper_out": 1,
-				"jumper_in": 1,
+				"line_one": 5,
+				"line_two": 2
 			}
 		},
 		"6": {
 			"map_path": "res://level/maps/map_006.tmx",
 			"next_level": "7",
 			"element_dict": {
-				"line_one": 2,
-				"G_yellow": 1,
-				"G_red": 1,
-				"G_blue": 1,
+				"line_one": 3,
+				"line_two": 6,
 				"jumper_out": 1,
 				"jumper_in": 1,
 			}
@@ -65,46 +59,37 @@ var game_data = {
 			"map_path": "res://level/maps/map_007.tmx",
 			"next_level": "8",
 			"element_dict": {
-				"line_one": 2,
-				"G_yellow": 1,
-				"G_red": 1,
-				"G_blue": 1,
-				"jumper_out": 1,
-				"jumper_in": 1,
+				"line_one": 8,
+				"line_two": 2
 			}
 		},
 		"8": {
 			"map_path": "res://level/maps/map_008.tmx",
 			"next_level": "9",
 			"element_dict": {
-				"line_one": 2,
-				"G_yellow": 1,
-				"G_red": 1,
-				"G_blue": 1,
-				"jumper_out": 1,
-				"jumper_in": 1,
+				"line_one": 5,
+				"line_two": 3,
+				"line_three": 1
 			}
 		},
 		"9": {
 			"map_path": "res://level/maps/map_009.tmx",
 			"next_level": "10",
 			"element_dict": {
-				"line_one": 2,
-				"G_yellow": 1,
 				"G_red": 1,
-				"G_blue": 1,
+				"line_one": 9,
+				"line_two": 9,
+				"line_three": 1,
 				"jumper_out": 1,
-				"jumper_in": 1,
 			}
 		},
 		"10": {
 			"map_path": "res://level/maps/map_010.tmx",
 			"next_level": "11",
 			"element_dict": {
-				"line_one": 2,
-				"G_yellow": 1,
-				"G_red": 1,
-				"G_blue": 1,
+				"line_one": 21,
+				"line_three": 1,
+				"line_four": 5,
 				"jumper_out": 1,
 				"jumper_in": 1,
 			}
@@ -113,10 +98,12 @@ var game_data = {
 			"map_path": "res://level/maps/map_011.tmx",
 			"next_level": "12",
 			"element_dict": {
-				"line_one": 2,
-				"G_yellow": 1,
 				"G_red": 1,
-				"G_blue": 1,
+				"T_r&y": 1,
+				"T_b&y": 1,
+				"line_one": 8,
+				"line_two": 8,
+				"line_three": 2,
 				"jumper_out": 1,
 				"jumper_in": 1,
 			}
@@ -125,47 +112,57 @@ var game_data = {
 			"map_path": "res://level/maps/map_012.tmx",
 			"next_level": "13",
 			"element_dict": {
-				"line_one": 2,
-				"G_yellow": 1,
-				"G_red": 1,
-				"G_blue": 1,
-				"jumper_out": 1,
-				"jumper_in": 1,
+				"T_r&b": 1,
+				"L_green": 1,
+				"I_green": 1,
+				"line_one": 10,
+				"line_two": 6,
+				"jumper_out": 3
 			}
 		},
 		"13": {
 			"map_path": "res://level/maps/map_013.tmx",
 			"next_level": "14",
 			"element_dict": {
-				"line_one": 2,
-				"G_yellow": 1,
-				"G_red": 1,
-				"G_blue": 1,
-				"jumper_out": 1,
+				"T_r&b": 1,
+				"T_r&y": 1,
+				"T_b&y": 1,
+				"line_one": 8,
+				"line_two": 2,
+				"jumper_out": 3,
 				"jumper_in": 1,
 			}
 		},
 		"14": {
-			"map_path": "res://level/maps/map_0014.tmx",
+			"map_path": "res://level/maps/map_014.tmx",
 			"next_level": "15",
 			"element_dict": {
-				"line_one": 2,
-				"G_yellow": 1,
-				"G_red": 1,
-				"G_blue": 1,
-				"jumper_out": 1,
-				"jumper_in": 1,
+				"T_r&b": 1,
+				"T_r&y": 2,
+				"I_green": 1,
+				"I_purple": 1,
+				"L_purple": 1,
+				"line_one": 21,
+				"line_two": 8,
+				"line_three": 3,
+				"jumper_out": 3,
+				"jumper_in": 1
 			}
 		},
 		"15": {
 			"map_path": "res://level/maps/map_015.tmx",
 			"next_level": "16",
 			"element_dict": {
-				"line_one": 2,
-				"G_yellow": 1,
-				"G_red": 1,
-				"G_blue": 1,
-				"jumper_out": 1,
+				"T_b&y": 2,
+				"T_r&y": 2,
+				"T_r&b": 1,
+				"I_orange": 1,
+				"I_green": 1,
+				"L_green": 1,
+				"line_one": 17,
+				"line_two": 19,
+				"line_three": 7,
+				"jumper_out": 2,
 				"jumper_in": 1,
 			}
 		},
@@ -173,11 +170,14 @@ var game_data = {
 			"map_path": "res://level/maps/map_016.tmx",
 			"next_level": "1",
 			"element_dict": {
-				"line_one": 2,
-				"G_yellow": 1,
-				"G_red": 1,
-				"G_blue": 1,
-				"jumper_out": 1,
+				"T_b&y": 2,
+				"T_r&y": 3,
+				"T_r&b": 2,
+				"I_orange": 1,
+				"line_one": 7,
+				"line_two": 14,
+				"line_three": 3,
+				"jumper_out": 3,
 				"jumper_in": 1,
 			}
 		},
@@ -190,7 +190,7 @@ func _ready():
 
 
 func verify_save_path():
-	#if not FileAccess.file_exists(SAVE_PATH):
+	if not FileAccess.file_exists(SAVE_PATH):
 		var new_file: FileAccess = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 		if new_file:
 			new_file.store_var(game_data)

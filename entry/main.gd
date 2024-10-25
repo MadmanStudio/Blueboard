@@ -56,7 +56,7 @@ var loaded_level_data: Dictionary
 
 func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color("#27292d"))
-	#SoundManager.play_music(a_music)
+	SoundManager.play_music(a_music)
 	
 	
 func _process(_delta: float) -> void:

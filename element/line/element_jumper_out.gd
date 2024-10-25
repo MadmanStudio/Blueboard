@@ -18,7 +18,7 @@ func on_installed() -> void:
 	if jumper_in != null and jumper_in.active == true:
 		element_component.fill_core(jumper_in.core_type)
 		element_component.output_electricity_with_type(jumper_in.core_type, ElementComponent.Direction.UP)
-	
+		level.propagate_electricity(self)
 	
 func disable() -> void:
 	active = false
