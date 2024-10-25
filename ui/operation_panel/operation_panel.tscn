@@ -188,7 +188,7 @@ icon = SubResource("AtlasTexture_tigup")
 flat = true
 expand_icon = true
 
-[node name="LevelNumber" type="Label" parent="."]
+[node name="LevelName" type="Label" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5

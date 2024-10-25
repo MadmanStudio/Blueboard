@@ -15,6 +15,11 @@ var map_path: String
 var element_dict: Dictionary
 
 var selected: bool = false
+var main: Main
+
+
+func _ready() -> void:
+	main = get_tree().get_first_node_in_group("main")
 
 
 func select() -> void:
@@ -28,7 +33,9 @@ func unselect() -> void:
 
 
 func hover() -> void:
-	$Selected.show()
+	if not selected:
+		$Selected.show()
+		main.play_sound(Main.SoundType.UI_HOVER)
 	
 	
 func unhover() -> void:
@@ -37,6 +44,7 @@ func unhover() -> void:
 
 
 func _on_button_down() -> void:
+	main.play_sound(Main.SoundType.UI_CLICK)
 	clicked.emit(self)
 
 
@@ -46,3 +54,7 @@ func _on_mouse_entered() -> void:
 
 func _on_mouse_exited() -> void:
 	unhover()
+	
+	
+func lock() -> void:
+	$Locked.show()

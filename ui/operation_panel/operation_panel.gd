@@ -21,6 +21,9 @@ var previous_target_position: Vector2
 
 func _ready() -> void:
 	main = get_tree().get_first_node_in_group("main")
+
+
+func update_toolbox() -> void:
 	for id: String in element_dict.keys():
 		if ebtnc_dict.has(id):
 			continue

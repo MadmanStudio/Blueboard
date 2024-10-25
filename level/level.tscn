@@ -1,28 +1,102 @@
-[gd_scene load_steps=4 format=3 uid="uid://cj11wvt8yl5gq"]
+[gd_scene load_steps=6 format=3 uid="uid://cj11wvt8yl5gq"]
 
 [ext_resource type="Script" path="res://level/level.gd" id="1_kf6bj"]
-[ext_resource type="PackedScene" uid="uid://1khuvfsaup87" path="res://level/maps/map_test.tmx" id="2_r7pdl"]
 [ext_resource type="PackedScene" uid="uid://bnlbp0jrpdef1" path="res://ui/operation_panel/operation_panel.tscn" id="4_c47ef"]
+
+[sub_resource type="Animation" id="Animation_deh27"]
+resource_name = "NextLevelButtonHovered"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1000, 299.5), Vector2(968, 299.5)]
+}
+
+[sub_resource type="Animation" id="Animation_jrxq8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1000, 299.5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v0enr"]
+_data = {
+"NextLevelButtonHovered": SubResource("Animation_deh27"),
+"RESET": SubResource("Animation_jrxq8")
+}
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_kf6bj")
 
 [node name="Map" type="Node" parent="."]
 
-[node name="map_test" parent="Map" instance=ExtResource("2_r7pdl")]
-
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="OperationPanel" parent="." node_paths=PackedStringArray("level") instance=ExtResource("4_c47ef")]
-element_dict = {
-"G_blue": 2,
-"G_red": 2,
-"G_yellow": 2,
-"I_green": 1,
-"I_orange": 1,
-"I_purple": 1,
-"jumper_in": 1,
-"jumper_out": 10,
-"line_four": 100
-}
 level = NodePath("..")
+
+[node name="NextLevel" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="NextLevel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="NextLevel" type="Label" parent="NextLevel"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -152.0
+offset_top = -20.5
+offset_right = -32.0
+offset_bottom = 20.5
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
+theme_override_font_sizes/font_size = 40
+text = "下一关"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="NextLevel/NextLevel"]
+modulate = Color(0, 0, 0, 0)
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_right = 248.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../NextLevel/NextLevel")
+libraries = {
+"": SubResource("AnimationLibrary_v0enr")
+}
+
+[connection signal="button_down" from="NextLevel/NextLevel/Button" to="." method="_on_next_level_button_button_down"]
+[connection signal="mouse_entered" from="NextLevel/NextLevel/Button" to="." method="_on_next_level_button_mouse_entered"]
+[connection signal="mouse_exited" from="NextLevel/NextLevel/Button" to="." method="_on_next_level_button_mouse_exited"]

@@ -9,6 +9,7 @@ var main: Main
 var level_node_tscn: PackedScene = load(Paths.level_node)
 var left: bool = true
 var level_nodes: Array = []
+var start_lock: bool = false
 
 var selected_level_name: String
 var selected_map_path: String
@@ -21,14 +22,20 @@ func _ready() -> void:
 	SaveManager.load_game()
 	main = get_tree().get_first_node_in_group("main")
 	var height: int = 0
+	var selected_level_node: LevelNode = null
 	for key: String in main.level_data.keys():
 		var level_node: LevelNode = level_node_tscn.instantiate()
+		if start_lock:
+			level_node.lock()
 		level_node.z_index = 1
 		level_node.level_name = key
 		level_node.map_path = main.level_data.get(key)["map_path"]
 		level_node.next_level = main.level_data.get(key)["next_level"]
 		level_node.element_dict = main.level_data.get(key)["element_dict"]
 		level_node.clicked.connect(select_level_node)
+		if level_node.level_name == main.max_level:
+			selected_level_node = level_node
+			start_lock = true
 		if left:
 			left = false
 			level_node.position += Vector2(-h_offset, height * v_offset)
@@ -49,8 +56,8 @@ func _ready() -> void:
 			add_child(line)
 		level_nodes.append(level_node)
 		
-	if level_nodes.size() > 0:
-		select_level_node(level_nodes[0])
+	if selected_level_node != null:
+		select_level_node(selected_level_node)
 		
 		
 func select_level_node(level_node: LevelNode) -> void:

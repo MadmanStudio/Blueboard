@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bmy20nolkeys8"]
+[gd_scene load_steps=6 format=3 uid="uid://bmy20nolkeys8"]
 
 [ext_resource type="PackedScene" uid="uid://bcw0x5g8gqmtp" path="res://ui/load/level_node.tmx" id="1_s6j5x"]
 [ext_resource type="Script" path="res://ui/load/level_node.gd" id="1_v4hjj"]
+[ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="3_qmgdw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3odic"]
 bg_color = Color(1, 0.945098, 0.909804, 1)
@@ -15,6 +16,10 @@ corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6jgy4"]
+atlas = ExtResource("3_qmgdw")
+region = Rect2(48, 80, 16, 16)
 
 [node name="LevelNode" type="Button"]
 custom_minimum_size = Vector2(128, 128)
@@ -54,6 +59,33 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3odic")
+
+[node name="Locked" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+metadata/_edit_group_ = true
+
+[node name="Ban" type="TextureRect" parent="Locked"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_6jgy4")
 
 [connection signal="button_down" from="." to="." method="_on_button_down"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

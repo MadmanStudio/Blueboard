@@ -28,6 +28,7 @@ var blueboard_tile_data_matrix: Array
 var matrix_size: Vector2i
 var map_center: Vector2
 var start_G_elements: Array = []
+var start_light_elements: Array = []
 var ElementTable: Dictionary = {}
 var element_button_tscn: PackedScene = load(Paths.element_button)
 var main: Main
@@ -35,10 +36,18 @@ var main: Main
 var level_name: String
 var next_level: String
 var map_path: String
+var element_dict: Dictionary
 
 
 func _ready() -> void:
 	main = get_tree().get_first_node_in_group("main")
+	main.max_level = level_name
+	SaveManager.save_game()
+	$Map.add_child(load(map_path).instantiate())
+	$OperationPanel/LevelName.text = level_name
+	$OperationPanel.element_dict = element_dict
+	$OperationPanel.update_toolbox()
+	
 	for key: String in Tables.ElementPathTable.keys():
 		ElementTable[key] = load(Tables.ElementPathTable.get(key))
 	$OperationPanel.element_installed.connect(on_element_installed)
@@ -71,6 +80,8 @@ func _ready() -> void:
 			element_layer.erase_cell(element_coord)
 			if id.find("G_") != -1:
 				start_G_elements.append(element_inst)
+			if id.find("light_") != -1:
+				start_light_elements.append(element_inst)
 		for G_element: Node2D in start_G_elements:
 			propagate_electricity(G_element)
 			
@@ -195,6 +206,7 @@ func on_element_install_completed(element: Node2D) -> void:
 	element.get_child(0).installed.emit()
 	emit_any_surrounding_element_updated_signal(element)
 	main.play_sound(Main.SoundType.INSTALLED)
+	check_all_light()
 	
 	
 func create_element(id: String, pos: Vector2, deg: int, scale: float = 1.0) -> Node2D:
@@ -318,6 +330,7 @@ func on_element_rotate_completed(element: Node2D) -> void:
 	propagate_electricity(element)
 	emit_any_surrounding_element_updated_signal(element)
 	main.play_sound(Main.SoundType.INSTALLED)
+	check_all_light()
 	
 
 func emit_any_surrounding_element_updated_signal(element: Node2D) -> void:
@@ -325,3 +338,34 @@ func emit_any_surrounding_element_updated_signal(element: Node2D) -> void:
 	for e: Node2D in surrounding_elements:
 		if e != null:
 			e.get_child(0).any_surrounding_element_updated.emit()
+
+
+func _on_next_level_button_mouse_entered() -> void:
+	main.play_sound(Main.SoundType.UI_HOVER)
+	$AnimationPlayer.play("NextLevelButtonHovered")
+
+
+func _on_next_level_button_mouse_exited() -> void:
+	$AnimationPlayer.play_backwards("NextLevelButtonHovered")
+
+
+func _on_next_level_button_button_down() -> void:
+	main.play_sound(Main.SoundType.UI_CLICK)
+	var next_level_data: Dictionary = main.level_data[next_level]
+	Globals.allow_operate = true
+	main.load_scene(Paths.level, {
+		"map_path": next_level_data["map_path"],
+		"next_level": next_level_data["next_level"],
+		"level_name": next_level,
+		"element_dict": next_level_data["element_dict"]
+	})
+	
+	
+func check_all_light() -> void:
+	var all_light_lit: bool = true
+	for light: Node2D in start_light_elements:
+		if not light.lit:
+			all_light_lit = false
+	if all_light_lit:
+		Globals.allow_operate = false
+		$NextLevel.show()

@@ -9,28 +9,48 @@ var game_data = {
 			"map_path": "res://level/maps/map_001.tmx",
 			"next_level": "2",
 			"element_dict": {
-				"line_one": 2
+				"line_one": 2,
+				"G_yellow": 1,
+				"G_red": 1,
+				"G_blue": 1,
+				"jumper_out": 1,
+				"jumper_in": 1,
 			}
 		},
 		"2": {
 			"map_path": "res://level/maps/map_002.tmx",
 			"next_level": "3",
 			"element_dict": {
-				"line_one": 2
+				"line_one": 2,
+				"G_yellow": 1,
+				"G_red": 1,
+				"G_blue": 1,
+				"jumper_out": 1,
+				"jumper_in": 1,
 			}
 		},
 		"3": {
 			"map_path": "res://level/maps/map_003.tmx",
 			"next_level": "4",
 			"element_dict": {
-				"line_one": 2
+				"line_one": 2,
+				"G_yellow": 1,
+				"G_red": 1,
+				"G_blue": 1,
+				"jumper_out": 1,
+				"jumper_in": 1,
 			}
 		},
 		"4": {
 			"map_path": "res://level/maps/map_004.tmx",
 			"next_level": "1",
 			"element_dict": {
-				"line_one": 2
+				"line_one": 2,
+				"G_yellow": 1,
+				"G_red": 1,
+				"G_blue": 1,
+				"jumper_out": 1,
+				"jumper_in": 1,
 			}
 		},
 	}

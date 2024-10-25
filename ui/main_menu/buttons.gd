@@ -64,7 +64,13 @@ func _on_button_button_up() -> void:
 
 func _on_start_button_down() -> void:
 	main.play_sound(Main.SoundType.UI_CLICK)
-	main.load_scene(Paths.level)
+	var first_level_data: Dictionary = main.level_data["1"]
+	main.load_scene(Paths.level, {
+		"map_path": first_level_data["map_path"],
+		"next_level": first_level_data["next_level"],
+		"level_name": "1",
+		"element_dict": first_level_data["element_dict"]
+	})
 	
 	
 func _exit_tree() -> void:

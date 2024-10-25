@@ -32,6 +32,12 @@ func _on_back_button_mouse_exited() -> void:
 
 func _on_start_button_button_down() -> void:
 	play_button_click()
+	main.load_scene(Paths.level, {
+		"map_path": $LevelTree.selected_map_path,
+		"next_level": $LevelTree.selected_next_level,
+		"level_name": $LevelTree.selected_level_name,
+		"element_dict": $LevelTree.selected_element_dict
+	})
 
 
 func _on_start_button_mouse_entered() -> void:
