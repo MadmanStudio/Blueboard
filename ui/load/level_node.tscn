@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmy20nolkeys8"]
+
+[ext_resource type="PackedScene" uid="uid://bcw0x5g8gqmtp" path="res://ui/load/level_node.tmx" id="1_s6j5x"]
+[ext_resource type="Script" path="res://ui/load/level_node.gd" id="1_v4hjj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3odic"]
+bg_color = Color(1, 0.945098, 0.909804, 1)
+draw_center = false
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.945098, 0.909804, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="LevelNode" type="Button"]
+custom_minimum_size = Vector2(128, 128)
+offset_right = 128.0
+offset_bottom = 128.0
+focus_mode = 0
+flat = true
+script = ExtResource("1_v4hjj")
+
+[node name="level_node" parent="." instance=ExtResource("1_s6j5x")]
+
+[node name="LevelName" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -15.0
+offset_right = 30.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Selected" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3odic")
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

@@ -72,5 +72,6 @@ func _exit_tree() -> void:
 		tween.kill()
 
 
-func _on_button_button_down() -> void:
+func _on_load_button_button_down() -> void:
 	main.play_sound(Main.SoundType.UI_CLICK)
+	%Load.show()

@@ -1,8 +1,8 @@
 extends Control
 
-@onready var back_button: Label = $Back
-@onready var manual_button: Label = $Manual
-@onready var main_menu_button: Label = $MainMenu
+@onready var back_button: Label = $Buttons/Back
+@onready var manual_button: Label = $Buttons/Manual
+@onready var main_menu_button: Label = $Buttons/MainMenu
 
 var tween: Tween
 var main: Main
@@ -53,7 +53,6 @@ func minish_button(button: Label) -> void:
 	
 	
 func goto_main_menu() -> void:
-	var main: Main = get_tree().get_first_node_in_group("main")
 	main.load_scene(Paths.level)
 	
 	
@@ -64,19 +63,18 @@ func _exit_tree() -> void:
 
 func _on_back_button_button_down() -> void:
 	main.play_sound(Main.SoundType.UI_CLICK)
-	%MenuBG.hide()
+	hide()
 	Globals.allow_operate = true
 
 
 func _on_main_menu_button_button_down() -> void:
 	main.play_sound(Main.SoundType.UI_CLICK)
-	var main: Main = get_tree().get_first_node_in_group("main")
 	main.load_scene(Paths.main_menu)
 
 
 func _on_manual_button_toggled(toggled_on: bool) -> void:
 	main.play_sound(Main.SoundType.UI_CLICK)
 	if toggled_on:
-		%MenuBG/ManualPage.show()
+		$ManualPage.show()
 	else:
-		%MenuBG/ManualPage.hide()
+		$ManualPage.hide()

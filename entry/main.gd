@@ -10,6 +10,9 @@ class_name Main
 @export var a_uninstalled: AudioStream
 @export var a_released: AudioStream
 
+var max_level: String = "1"
+var level_data: Dictionary
+
 
 enum SoundType
 {
@@ -53,7 +56,7 @@ var loaded_level_data: Dictionary
 
 func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color("#27292d"))
-	SoundManager.play_music(a_music)
+	#SoundManager.play_music(a_music)
 	
 	
 func _process(_delta: float) -> void:

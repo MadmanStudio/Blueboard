@@ -32,6 +32,10 @@ var ElementTable: Dictionary = {}
 var element_button_tscn: PackedScene = load(Paths.element_button)
 var main: Main
 
+var level_name: String
+var next_level: String
+var map_path: String
+
 
 func _ready() -> void:
 	main = get_tree().get_first_node_in_group("main")

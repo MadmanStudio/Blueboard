@@ -1,0 +1,159 @@
+[gd_scene load_steps=5 format=3 uid="uid://dhck3tukvvvve"]
+
+[ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="1_4yajm"]
+[ext_resource type="Script" path="res://ui/operation_panel/menu.gd" id="2_x3lsu"]
+[ext_resource type="PackedScene" uid="uid://djhkotjvmsh1o" path="res://ui/manual/manual_page.tscn" id="3_3s2th"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t0its"]
+atlas = ExtResource("1_4yajm")
+region = Rect2(240, 0, 16, 16)
+
+[node name="Menu" type="ColorRect"]
+visible = false
+z_index = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_force_pass_scroll_events = false
+color = Color(0.152941, 0.160784, 0.176471, 1)
+script = ExtResource("2_x3lsu")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.0235294)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 250.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_t0its")
+
+[node name="Buttons" type="Control" parent="."]
+visible = false
+custom_minimum_size = Vector2(200, 163)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -195.0
+offset_bottom = -32.0
+grow_horizontal = 0
+grow_vertical = 0
+metadata/_edit_group_ = true
+
+[node name="Back" type="Label" parent="Buttons"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -264.0
+offset_right = -32.0
+offset_bottom = 41.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
+theme_override_font_sizes/font_size = 40
+text = "返回操作台"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="Buttons/Back"]
+modulate = Color(0, 0, 0, 0)
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 168.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Manual" type="Label" parent="Buttons"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -224.0
+offset_top = -20.5
+offset_right = -32.0
+offset_bottom = 20.5
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
+theme_override_font_sizes/font_size = 40
+text = "操作手册"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="Buttons/Manual"]
+modulate = Color(0, 0, 0, 0)
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 208.0
+grow_horizontal = 2
+grow_vertical = 2
+toggle_mode = true
+
+[node name="MainMenu" type="Label" parent="Buttons"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -184.0
+offset_top = -41.0
+offset_right = -32.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.945098, 0.909804, 1)
+theme_override_font_sizes/font_size = 40
+text = "主菜单"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="Buttons/MainMenu"]
+modulate = Color(0, 0, 0, 0)
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 248.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ManualPage" parent="." instance=ExtResource("3_3s2th")]
+visible = false
+offset_left = 200.0
+offset_top = 16.0
+offset_right = 620.0
+offset_bottom = 610.0
+
+[connection signal="button_down" from="Buttons/Back/Button" to="." method="_on_back_button_button_down"]
+[connection signal="mouse_entered" from="Buttons/Back/Button" to="." method="_on_back_button_mouse_entered"]
+[connection signal="mouse_exited" from="Buttons/Back/Button" to="." method="_on_back_button_mouse_exited"]
+[connection signal="mouse_entered" from="Buttons/Manual/Button" to="." method="_on_manual_button_mouse_entered"]
+[connection signal="mouse_exited" from="Buttons/Manual/Button" to="." method="_on_manual_button_mouse_exited"]
+[connection signal="toggled" from="Buttons/Manual/Button" to="." method="_on_manual_button_toggled"]
+[connection signal="button_down" from="Buttons/MainMenu/Button" to="." method="_on_main_menu_button_button_down"]
+[connection signal="mouse_entered" from="Buttons/MainMenu/Button" to="." method="_on_main_menu_button_mouse_entered"]
+[connection signal="mouse_exited" from="Buttons/MainMenu/Button" to="." method="_on_main_menu_button_mouse_exited"]

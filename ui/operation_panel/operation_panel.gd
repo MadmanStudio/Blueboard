@@ -138,11 +138,11 @@ func _on_toolbox_button_toggled(toggled_on: bool) -> void:
 		
 func show_menu() -> void:
 	Globals.allow_operate = false
-	$MenuBG.show()
+	$Menu.show()
 	var tween: Tween = get_tree().create_tween()
-	$MenuBG/Buttons.modulate.a = 0
-	$MenuBG/Buttons.visible = true
-	tween.tween_property($MenuBG/Buttons, "modulate", Color.WHITE, 1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
+	$Menu/Buttons.modulate.a = 0
+	$Menu/Buttons.visible = true
+	tween.tween_property($Menu/Buttons, "modulate", Color.WHITE, 1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
 	
 
 func _on_menu_button_button_down() -> void:

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cu60qrmkowara"]
+
+[ext_resource type="Script" path="res://ui/load/level_tree.gd" id="1_jd0iu"]
+
+[node name="LevelTree" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_jd0iu")

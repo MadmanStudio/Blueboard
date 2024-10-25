@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-down" width="12" height="11" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="3">
- <editorsettings>
-  <export target="map_tutorial_001..tmj" format="json"/>
- </editorsettings>
  <tileset firstgid="1" source="../element.tsx"/>
  <layer id="1" name="Blueboard" width="12" height="11" locked="1">
   <data encoding="csv">
