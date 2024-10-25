@@ -1,0 +1,79 @@
+[gd_scene load_steps=6 format=3 uid="uid://djhkotjvmsh1o"]
+
+[ext_resource type="Script" path="res://ui/manual/book.gd" id="1_722p0"]
+[ext_resource type="PackedScene" uid="uid://bwg118fmq1xyb" path="res://ui/manual/book_page_four.tscn" id="2_6ap6a"]
+[ext_resource type="PackedScene" uid="uid://bhgygo4qag2ws" path="res://ui/manual/book_page_one.tscn" id="2_37oij"]
+[ext_resource type="PackedScene" uid="uid://drrll44qdbsf5" path="res://ui/manual/book_page_three.tscn" id="2_j63bo"]
+[ext_resource type="PackedScene" uid="uid://mqactsd5n8qb" path="res://ui/manual/book_page_two.tscn" id="3_b4ntf"]
+
+[node name="Book" type="Control"]
+custom_minimum_size = Vector2(600, 400)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_722p0")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="BookPageOne" parent="ColorRect" instance=ExtResource("2_37oij")]
+layout_mode = 1
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="BookPageTwo" parent="ColorRect" instance=ExtResource("3_b4ntf")]
+visible = false
+layout_mode = 1
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="BookPageThree" parent="ColorRect" instance=ExtResource("2_j63bo")]
+visible = false
+layout_mode = 1
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="BookPageFour" parent="ColorRect" instance=ExtResource("2_6ap6a")]
+visible = false
+layout_mode = 1
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="PreviousPage" type="Button" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -24.5
+offset_right = 48.0
+offset_bottom = 24.5
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = "<"
+flat = true
+
+[node name="NextPage" type="Button" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -24.5
+offset_bottom = 24.5
+grow_horizontal = 0
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 40
+text = ">"
+flat = true
+
+[connection signal="button_down" from="ColorRect/PreviousPage" to="." method="_on_previous_page_button_down"]
+[connection signal="button_down" from="ColorRect/NextPage" to="." method="_on_next_page_button_down"]

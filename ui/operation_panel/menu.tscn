@@ -1,12 +1,73 @@
-[gd_scene load_steps=5 format=3 uid="uid://dhck3tukvvvve"]
+[gd_scene load_steps=8 format=3 uid="uid://dhck3tukvvvve"]
 
 [ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="1_4yajm"]
 [ext_resource type="Script" path="res://ui/operation_panel/menu.gd" id="2_x3lsu"]
-[ext_resource type="PackedScene" uid="uid://djhkotjvmsh1o" path="res://ui/manual/manual_page.tscn" id="3_3s2th"]
+[ext_resource type="PackedScene" uid="uid://djhkotjvmsh1o" path="res://ui/manual/book.tscn" id="3_3s2th"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t0its"]
 atlas = ExtResource("1_4yajm")
 region = Rect2(240, 0, 16, 16)
+
+[sub_resource type="Animation" id="Animation_jj5wj"]
+resource_name = "TakeOutBook"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Book:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-500, -100), Vector2(130, 120)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Book:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.785398, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_2wupx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Book:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-500, -100)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Book:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.785398]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ipg10"]
+_data = {
+"RESET": SubResource("Animation_2wupx"),
+"TakeOutBook": SubResource("Animation_jj5wj")
+}
 
 [node name="Menu" type="ColorRect"]
 visible = false
@@ -141,12 +202,22 @@ offset_right = 248.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ManualPage" parent="." instance=ExtResource("3_3s2th")]
-visible = false
-offset_left = 200.0
-offset_top = 16.0
-offset_right = 620.0
-offset_bottom = 610.0
+[node name="Book" parent="." instance=ExtResource("3_3s2th")]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -420.0
+offset_right = 100.0
+offset_bottom = -20.0
+grow_vertical = 2
+rotation = -0.785398
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ipg10")
+}
 
 [connection signal="button_down" from="Buttons/Back/Button" to="." method="_on_back_button_button_down"]
 [connection signal="mouse_entered" from="Buttons/Back/Button" to="." method="_on_back_button_mouse_entered"]

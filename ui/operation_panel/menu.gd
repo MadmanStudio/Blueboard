@@ -75,6 +75,6 @@ func _on_main_menu_button_button_down() -> void:
 func _on_manual_button_toggled(toggled_on: bool) -> void:
 	main.play_sound(Main.SoundType.UI_CLICK)
 	if toggled_on:
-		$ManualPage.show()
+		$AnimationPlayer.play("TakeOutBook")
 	else:
-		$ManualPage.hide()
+		$AnimationPlayer.play_backwards("TakeOutBook")
