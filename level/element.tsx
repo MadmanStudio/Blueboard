@@ -190,6 +190,11 @@
    <property name="id" value="blueboard_08"/>
   </properties>
  </tile>
+ <tile id="50">
+  <properties>
+   <property name="id" value="placeholder"/>
+  </properties>
+ </tile>
  <tile id="53">
   <properties>
    <property name="id" value="blueboard_point_09"/>
