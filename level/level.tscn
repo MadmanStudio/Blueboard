@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cj11wvt8yl5gq"]
+[gd_scene load_steps=7 format=3 uid="uid://cj11wvt8yl5gq"]
 
 [ext_resource type="Script" path="res://level/level.gd" id="1_kf6bj"]
+[ext_resource type="PackedScene" uid="uid://lmok1c2up4ch" path="res://ui/guide/guide.tscn" id="3_irfik"]
 [ext_resource type="PackedScene" uid="uid://bnlbp0jrpdef1" path="res://ui/operation_panel/operation_panel.tscn" id="4_c47ef"]
 
 [sub_resource type="Animation" id="Animation_deh27"]
@@ -96,6 +97,8 @@ root_node = NodePath("../NextLevel/NextLevel")
 libraries = {
 "": SubResource("AnimationLibrary_v0enr")
 }
+
+[node name="Guide" parent="." instance=ExtResource("3_irfik")]
 
 [connection signal="button_down" from="NextLevel/NextLevel/Button" to="." method="_on_next_level_button_button_down"]
 [connection signal="mouse_entered" from="NextLevel/NextLevel/Button" to="." method="_on_next_level_button_mouse_entered"]

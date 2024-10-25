@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://lmok1c2up4ch"]
+
+[ext_resource type="Script" path="res://ui/guide/guide.gd" id="1_poe6d"]
+[ext_resource type="Shader" path="res://ui/guide/circular_mask.gdshader" id="2_gsjt5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vohju"]
+shader = ExtResource("2_gsjt5")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/radius = 0.0
+shader_parameter/mask_alpha = 0.7
+
+[node name="Guide" type="CanvasLayer"]
+script = ExtResource("1_poe6d")
+
+[node name="Mask" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_vohju")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(600, 120)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[wave amp=50 freq=2]
+欢迎来到蓝板系统新手教程
+[/wave]"
+
+[connection signal="gui_input" from="Mask" to="." method="_on_color_rect_gui_input"]

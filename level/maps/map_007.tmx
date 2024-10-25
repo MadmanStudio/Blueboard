@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="left-down" width="11" height="11" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="3">
  <tileset firstgid="1" source="../element.tsx"/>
- <layer id="1" name="Blueboard" width="11" height="11" locked="1">
+ <layer id="1" name="Blueboard" width="11" height="11">
   <data encoding="csv">
 28,29,29,29,29,29,29,29,29,29,47,
 59,60,77,60,60,60,62,62,62,45,63,
 59,77,61,77,45,60,77,77,77,45,63,
 75,93,93,76,45,60,62,78,93,93,94,
 0,0,0,59,61,60,62,63,0,0,0,
-0,0,0,59,45,45,61,63,0,0,0,
-43,29,29,44,77,61,61,46,29,29,47,
-59,61,62,62,62,60,77,60,45,45,63,
-59,77,77,45,62,45,60,60,77,62,63,
+0,0,0,59,45,45,45,63,0,0,0,
+0,0,0,59,60,61,61,63,0,0,0,
+43,29,29,44,62,60,77,46,29,29,30,
+59,62,62,45,60,45,77,45,62,77,63,
 59,77,77,45,62,77,60,77,62,60,63,
 75,93,93,93,93,93,93,93,93,93,94
 </data>
  </layer>
- <layer id="3" name="Element" width="11" height="11">
+ <layer id="3" name="Element" width="11" height="11" locked="1">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,
 0,0,19,0,0,0,0,0,35,0,0,
