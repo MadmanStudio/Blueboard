@@ -53,6 +53,150 @@ var game_data = {
 				"jumper_in": 1,
 			}
 		},
+		"5": {
+			"map_path": "res://level/maps/map_005.tmx",
+			"next_level": "6",
+			"element_dict": {
+				"line_one": 2,
+				"G_yellow": 1,
+				"G_red": 1,
+				"G_blue": 1,
+				"jumper_out": 1,
+				"jumper_in": 1,
+			}
+		},
+		"6": {
+			"map_path": "res://level/maps/map_006.tmx",
+			"next_level": "7",
+			"element_dict": {
+				"line_one": 2,
+				"G_yellow": 1,
+				"G_red": 1,
+				"G_blue": 1,
+				"jumper_out": 1,
+				"jumper_in": 1,
+			}
+		},
+		"7": {
+			"map_path": "res://level/maps/map_007.tmx",
+			"next_level": "8",
+			"element_dict": {
+				"line_one": 2,
+				"G_yellow": 1,
+				"G_red": 1,
+				"G_blue": 1,
+				"jumper_out": 1,
+				"jumper_in": 1,
+			}
+		},
+		"8": {
+			"map_path": "res://level/maps/map_008.tmx",
+			"next_level": "9",
+			"element_dict": {
+				"line_one": 2,
+				"G_yellow": 1,
+				"G_red": 1,
+				"G_blue": 1,
+				"jumper_out": 1,
+				"jumper_in": 1,
+			}
+		},
+		"9": {
+			"map_path": "res://level/maps/map_009.tmx",
+			"next_level": "10",
+			"element_dict": {
+				"line_one": 2,
+				"G_yellow": 1,
+				"G_red": 1,
+				"G_blue": 1,
+				"jumper_out": 1,
+				"jumper_in": 1,
+			}
+		},
+		"10": {
+			"map_path": "res://level/maps/map_010.tmx",
+			"next_level": "11",
+			"element_dict": {
+				"line_one": 2,
+				"G_yellow": 1,
+				"G_red": 1,
+				"G_blue": 1,
+				"jumper_out": 1,
+				"jumper_in": 1,
+			}
+		},
+		"11": {
+			"map_path": "res://level/maps/map_011.tmx",
+			"next_level": "12",
+			"element_dict": {
+				"line_one": 2,
+				"G_yellow": 1,
+				"G_red": 1,
+				"G_blue": 1,
+				"jumper_out": 1,
+				"jumper_in": 1,
+			}
+		},
+		"12": {
+			"map_path": "res://level/maps/map_012.tmx",
+			"next_level": "13",
+			"element_dict": {
+				"line_one": 2,
+				"G_yellow": 1,
+				"G_red": 1,
+				"G_blue": 1,
+				"jumper_out": 1,
+				"jumper_in": 1,
+			}
+		},
+		"13": {
+			"map_path": "res://level/maps/map_013.tmx",
+			"next_level": "14",
+			"element_dict": {
+				"line_one": 2,
+				"G_yellow": 1,
+				"G_red": 1,
+				"G_blue": 1,
+				"jumper_out": 1,
+				"jumper_in": 1,
+			}
+		},
+		"14": {
+			"map_path": "res://level/maps/map_0014.tmx",
+			"next_level": "15",
+			"element_dict": {
+				"line_one": 2,
+				"G_yellow": 1,
+				"G_red": 1,
+				"G_blue": 1,
+				"jumper_out": 1,
+				"jumper_in": 1,
+			}
+		},
+		"15": {
+			"map_path": "res://level/maps/map_015.tmx",
+			"next_level": "16",
+			"element_dict": {
+				"line_one": 2,
+				"G_yellow": 1,
+				"G_red": 1,
+				"G_blue": 1,
+				"jumper_out": 1,
+				"jumper_in": 1,
+			}
+		},
+		"16": {
+			"map_path": "res://level/maps/map_016.tmx",
+			"next_level": "1",
+			"element_dict": {
+				"line_one": 2,
+				"G_yellow": 1,
+				"G_red": 1,
+				"G_blue": 1,
+				"jumper_out": 1,
+				"jumper_in": 1,
+			}
+		},
 	}
 }
 
@@ -62,7 +206,7 @@ func _ready():
 
 
 func verify_save_path():
-	if not FileAccess.file_exists(SAVE_PATH):
+	#if not FileAccess.file_exists(SAVE_PATH):
 		var new_file: FileAccess = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 		if new_file:
 			new_file.store_var(game_data)

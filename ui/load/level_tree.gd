@@ -3,7 +3,7 @@ extends Control
 
 const h_offset: float = 100.0
 const v_offset: float = 100.0
-const center: Vector2 = Vector2(464, 320)
+const center: Vector2 = Vector2(512, 256)
 
 var main: Main
 var level_node_tscn: PackedScene = load(Paths.level_node)
@@ -69,5 +69,5 @@ func select_level_node(level_node: LevelNode) -> void:
 	selected_next_level = level_node.next_level
 	selected_element_dict = level_node.element_dict
 	var tween: Tween = get_tree().create_tween()
-	tween.tween_property(self, "position", center - level_node.position, 0.6).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(self, "position", center - level_node.position, 0.3).set_ease(Tween.EASE_IN_OUT)
 	
