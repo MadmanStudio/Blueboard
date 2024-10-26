@@ -124,7 +124,7 @@ layout_mode = 2
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 16
-text = "混合器（Intermixer）"
+text = "合成器（Intermixer）"
 
 [node name="Panel" type="Panel" parent="MarginContainer/Main/Right"]
 custom_minimum_size = Vector2(278, 162)

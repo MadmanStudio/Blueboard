@@ -69,3 +69,7 @@ func _on_confirm_button_button_down() -> void:
 	elif confirm_click_count == 2:
 		Globals.allow_operate = true
 		queue_free()
+
+
+func _on_button_button_down() -> void:
+	main.play_sound(Main.SoundType.UI_CLICK)

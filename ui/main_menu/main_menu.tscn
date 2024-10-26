@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ckjpigq7m00pl"]
+[gd_scene load_steps=15 format=3 uid="uid://ckjpigq7m00pl"]
 
 [ext_resource type="Script" path="res://ui/main_menu/main_menu.gd" id="1_exuqm"]
 [ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="2_byy8o"]
@@ -24,6 +24,14 @@ region = Rect2(224, 0, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_uspqv"]
 atlas = ExtResource("2_byy8o")
 region = Rect2(240, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jjxs3"]
+atlas = ExtResource("2_byy8o")
+region = Rect2(64, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_op1nj"]
+atlas = ExtResource("2_byy8o")
+region = Rect2(48, 80, 16, 16)
 
 [sub_resource type="Animation" id="Animation_b82qc"]
 resource_name = "AnyKeyHint"
@@ -220,6 +228,37 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="MuteButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 64)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -80.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 80.0
+grow_horizontal = 0
+focus_mode = 0
+toggle_mode = true
+icon = SubResource("AtlasTexture_jjxs3")
+flat = true
+expand_icon = true
+
+[node name="Mark" type="TextureRect" parent="MuteButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = SubResource("AtlasTexture_op1nj")
+
 [node name="AnyKeyDown" type="Label" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
@@ -260,3 +299,4 @@ visible = false
 [connection signal="button_up" from="Buttons/Exit/Button" to="Buttons" method="_on_button_button_up"]
 [connection signal="mouse_entered" from="Buttons/Exit/Button" to="Buttons" method="_on_exit_button_mouse_entered"]
 [connection signal="mouse_exited" from="Buttons/Exit/Button" to="Buttons" method="_on_exit_button_mouse_exited"]
+[connection signal="toggled" from="MuteButton" to="Buttons" method="_on_mute_button_toggled"]

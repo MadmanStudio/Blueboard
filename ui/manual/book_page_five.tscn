@@ -138,20 +138,37 @@ text = "跳线器（Jumper）"
 custom_minimum_size = Vector2(278, 162)
 layout_mode = 2
 
+[node name="Label" type="Label" parent="MarginContainer/Main/Right/Panel"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 61.0
+offset_right = 79.0
+offset_bottom = 82.0
+theme_override_font_sizes/font_size = 20
+text = "入口："
+
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/Main/Right/Panel"]
 layout_mode = 0
-offset_left = 73.0
+offset_left = 79.0
 offset_top = 59.0
-offset_right = 113.0
+offset_right = 119.0
 offset_bottom = 99.0
 texture = ExtResource("6_cj32v")
 
+[node name="Label2" type="Label" parent="MarginContainer/Main/Right/Panel"]
+offset_left = 145.0
+offset_top = 61.0
+offset_right = 205.0
+offset_bottom = 82.0
+theme_override_font_sizes/font_size = 20
+text = "出口："
+
 [node name="TextureRect2" type="TextureRect" parent="MarginContainer/Main/Right/Panel"]
 layout_mode = 0
-offset_left = 156.0
-offset_top = 60.0
-offset_right = 196.0
-offset_bottom = 100.0
+offset_left = 205.0
+offset_top = 61.0
+offset_right = 245.0
+offset_bottom = 101.0
 texture = ExtResource("7_n8ule")
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/Main/Right"]
@@ -165,9 +182,11 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 16
 text = "功能：
 
-将跳线器入口的电流直接从跳线器出口输出
+将从入口输入的电流直接从出口输出
 
-跳线器出口可以同时存在多个"
+跳线器的样式设计参考自箭头，箭头的方向即为电流的方向
+
+出口可以同时存在多个"
 autowrap_mode = 3
 
 [node name="HSeparator2" type="HSeparator" parent="MarginContainer/Main/Right"]

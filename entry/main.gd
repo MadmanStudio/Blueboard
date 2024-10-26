@@ -12,6 +12,7 @@ class_name Main
 
 var max_level: String = "1"
 var level_data: Dictionary
+var music_playing: bool = true
 
 
 enum SoundType

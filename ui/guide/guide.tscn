@@ -129,6 +129,7 @@ libraries = {
 }
 
 [connection signal="gui_input" from="Mask" to="." method="_on_color_rect_gui_input"]
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
 [connection signal="button_down" from="Confirm/Button" to="." method="_on_confirm_button_button_down"]
 [connection signal="mouse_entered" from="Confirm/Button" to="." method="_on_confirm_button_mouse_entered"]

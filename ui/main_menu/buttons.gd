@@ -10,6 +10,9 @@ var main: Main
 
 func _ready() -> void:
 	main = get_tree().get_first_node_in_group("main")
+	if not main.music_playing:
+		%MuteButton.button_pressed = true
+		%MuteButton.toggled.emit(true)
 
 
 func _on_start_button_mouse_entered() -> void:
@@ -81,3 +84,14 @@ func _exit_tree() -> void:
 func _on_load_button_button_down() -> void:
 	main.play_sound(Main.SoundType.UI_CLICK)
 	%Load.show()
+
+
+func _on_mute_button_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		SoundManager.stop_music()
+		%MuteButton/Mark.show()
+		main.music_playing = false
+	else:
+		SoundManager.play_music(main.a_music)
+		%MuteButton/Mark.hide()
+		main.music_playing = true
