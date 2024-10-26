@@ -142,6 +142,8 @@ func _on_toolbox_button_toggled(toggled_on: bool) -> void:
 func show_menu() -> void:
 	Globals.allow_operate = false
 	$Menu.show()
+	if $Menu.book_shown:
+		$Menu/Book.play_all_video($Menu/Book.current_page_idx)
 	var tween: Tween = get_tree().create_tween()
 	$Menu/Buttons.modulate.a = 0
 	$Menu/Buttons.visible = true

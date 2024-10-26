@@ -6,6 +6,7 @@ extends Control
 
 var tween: Tween
 var main: Main
+var book_shown: bool = false
 
 
 func _ready() -> void:
@@ -65,6 +66,7 @@ func _on_back_button_button_down() -> void:
 	main.play_sound(Main.SoundType.UI_CLICK)
 	hide()
 	Globals.allow_operate = true
+	$Book.stop_all_video($Book.current_page_idx)
 
 
 func _on_main_menu_button_button_down() -> void:
@@ -75,6 +77,10 @@ func _on_main_menu_button_button_down() -> void:
 func _on_manual_button_toggled(toggled_on: bool) -> void:
 	main.play_sound(Main.SoundType.UI_CLICK)
 	if toggled_on:
+		book_shown = true
 		$AnimationPlayer.play("TakeOutBook")
+		$Book.play_all_video($Book.current_page_idx)
 	else:
+		book_shown = false
 		$AnimationPlayer.play_backwards("TakeOutBook")
+		$Book.stop_all_video($Book.current_page_idx)

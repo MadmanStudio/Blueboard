@@ -1,4 +1,14 @@
-[gd_scene format=3 uid="uid://drrll44qdbsf5"]
+[gd_scene load_steps=9 format=3 uid="uid://drrll44qdbsf5"]
+
+[ext_resource type="Script" path="res://ui/manual/book_page.gd" id="1_btj5a"]
+[ext_resource type="Texture2D" uid="uid://c4h2m5omrk5fx" path="res://element/transformer/res/element_T_red&yellow.atlastex" id="2_h4n12"]
+[ext_resource type="Texture2D" uid="uid://bgai5q7kk48tp" path="res://element/transformer/res/element_T_red&blue.atlastex" id="3_bvyud"]
+[ext_resource type="Texture2D" uid="uid://is8jrmk0oo5q" path="res://element/transformer/res/element_T_blue&yellow.atlastex" id="4_1aypy"]
+[ext_resource type="Texture2D" uid="uid://biv18sy8kwbgi" path="res://element/intermixer/res/element_I_green.atlastex" id="5_ba7j7"]
+[ext_resource type="Texture2D" uid="uid://bl0mowc351oup" path="res://element/intermixer/res/element_I_orange.atlastex" id="6_2a03c"]
+[ext_resource type="Texture2D" uid="uid://cvkbd7x2tqmev" path="res://element/intermixer/res/element_I_purple.atlastex" id="7_lgq12"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jquhy"]
 
 [node name="BookPageThree" type="Control"]
 custom_minimum_size = Vector2(600, 400)
@@ -10,21 +20,156 @@ offset_right = -552.0
 offset_bottom = -240.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_btj5a")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 40.0
+offset_bottom = 29.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 32
+theme_override_constants/margin_right = 64
 theme_override_constants/margin_bottom = 32
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer"]
+[node name="Main" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-bbcode_enabled = true
-text = "
-[wave amp=50 freq=2]  第三页[/wave]"
+theme_override_constants/separation = 20
+
+[node name="Left" type="VBoxContainer" parent="MarginContainer/Main"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="Label" type="Label" parent="MarginContainer/Main/Left"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "元件简介（二）"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="MarginContainer/Main/Left"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "转换器（Transformer）"
+
+[node name="Panel" type="Panel" parent="MarginContainer/Main/Left"]
+custom_minimum_size = Vector2(278, 162)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Main/Left/Panel"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 61.0
+offset_right = 67.0
+offset_bottom = 101.0
+texture = ExtResource("2_h4n12")
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/Main/Left/Panel"]
+layout_mode = 0
+offset_left = 114.0
+offset_top = 61.0
+offset_right = 154.0
+offset_bottom = 101.0
+texture = ExtResource("3_bvyud")
+
+[node name="TextureRect3" type="TextureRect" parent="MarginContainer/Main/Left/Panel"]
+layout_mode = 0
+offset_left = 197.0
+offset_top = 61.0
+offset_right = 237.0
+offset_bottom = 101.0
+texture = ExtResource("4_1aypy")
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/Main/Left"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_jquhy")
+
+[node name="Label3" type="Label" parent="MarginContainer/Main/Left"]
+custom_minimum_size = Vector2(278, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "功能：
+
+在两种原电流之间进行切换，从一侧输入，从另一侧输出
+
+此元件总共包含三种类型"
+autowrap_mode = 3
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/Main/Left"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_jquhy")
+
+[node name="Right" type="VBoxContainer" parent="MarginContainer/Main"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="Label" type="Label" parent="MarginContainer/Main/Right"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "元件简介（三）"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="MarginContainer/Main/Right"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "混合器（Intermixer）"
+
+[node name="Panel" type="Panel" parent="MarginContainer/Main/Right"]
+custom_minimum_size = Vector2(278, 162)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Main/Right/Panel"]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 61.0
+offset_right = 79.0
+offset_bottom = 101.0
+texture = ExtResource("5_ba7j7")
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/Main/Right/Panel"]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 61.0
+offset_right = 160.0
+offset_bottom = 101.0
+texture = ExtResource("6_2a03c")
+
+[node name="TextureRect3" type="TextureRect" parent="MarginContainer/Main/Right/Panel"]
+layout_mode = 0
+offset_left = 198.0
+offset_top = 63.0
+offset_right = 238.0
+offset_bottom = 103.0
+texture = ExtResource("7_lgq12")
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/Main/Right"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_jquhy")
+
+[node name="Label3" type="Label" parent="MarginContainer/Main/Right"]
+custom_minimum_size = Vector2(278, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "功能：
+
+从左右两侧输入原电流，从下侧输出合成电流
+
+此元件总共包含三种类型，对应三种不同颜色的合成电流"
+autowrap_mode = 3
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/Main/Right"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_jquhy")

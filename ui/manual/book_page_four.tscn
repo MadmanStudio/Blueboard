@@ -1,4 +1,12 @@
-[gd_scene format=3 uid="uid://bwg118fmq1xyb"]
+[gd_scene load_steps=7 format=3 uid="uid://bwg118fmq1xyb"]
+
+[ext_resource type="Script" path="res://ui/manual/book_page.gd" id="1_ls0ah"]
+[ext_resource type="Texture2D" uid="uid://dswbnvsvqeejq" path="res://element/leacher/res/element_L_green.atlastex" id="2_kdmcl"]
+[ext_resource type="Texture2D" uid="uid://dbkgn7u4u6jae" path="res://element/leacher/res/element_L_orange.atlastex" id="3_2t25q"]
+[ext_resource type="Texture2D" uid="uid://cyu27dxekedlq" path="res://element/leacher/res/element_L_purple.atlastex" id="4_iq421"]
+[ext_resource type="Texture2D" uid="uid://c824i08c8jgod" path="res://element/hinderer/res/element_H.atlastex" id="5_jf55j"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2u772"]
 
 [node name="BookPageFour" type="Control"]
 custom_minimum_size = Vector2(600, 400)
@@ -10,21 +18,138 @@ offset_right = -552.0
 offset_bottom = -240.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_ls0ah")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 40.0
+offset_bottom = 9.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 32
+theme_override_constants/margin_right = 64
 theme_override_constants/margin_bottom = 32
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer"]
+[node name="Main" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-bbcode_enabled = true
-text = "
-[wave amp=50 freq=2]  第四页[/wave]"
+theme_override_constants/separation = 20
+
+[node name="Left" type="VBoxContainer" parent="MarginContainer/Main"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="Label" type="Label" parent="MarginContainer/Main/Left"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "元件简介（四）"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="MarginContainer/Main/Left"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "过滤器（Leacher）"
+
+[node name="Panel" type="Panel" parent="MarginContainer/Main/Left"]
+custom_minimum_size = Vector2(278, 162)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Main/Left/Panel"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 57.0
+offset_right = 74.0
+offset_bottom = 97.0
+texture = ExtResource("2_kdmcl")
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/Main/Left/Panel"]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 58.0
+offset_right = 160.0
+offset_bottom = 98.0
+texture = ExtResource("3_2t25q")
+
+[node name="TextureRect3" type="TextureRect" parent="MarginContainer/Main/Left/Panel"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 57.0
+offset_right = 240.0
+offset_bottom = 97.0
+texture = ExtResource("4_iq421")
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/Main/Left"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_2u772")
+
+[node name="Label3" type="Label" parent="MarginContainer/Main/Left"]
+custom_minimum_size = Vector2(278, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "功能：
+
+从上方输入合成电流，从两侧输出被分离的原电流
+
+此元件总共包含三种类型"
+autowrap_mode = 3
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/Main/Left"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_2u772")
+
+[node name="Right" type="VBoxContainer" parent="MarginContainer/Main"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="Label" type="Label" parent="MarginContainer/Main/Right"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "元件简介（五）"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="MarginContainer/Main/Right"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "阻碍器（Hinderer）"
+
+[node name="Panel" type="Panel" parent="MarginContainer/Main/Right"]
+custom_minimum_size = Vector2(278, 162)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Main/Right/Panel"]
+layout_mode = 0
+offset_left = 118.0
+offset_top = 58.0
+offset_right = 158.0
+offset_bottom = 98.0
+texture = ExtResource("5_jf55j")
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/Main/Right"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_2u772")
+
+[node name="Label3" type="Label" parent="MarginContainer/Main/Right"]
+custom_minimum_size = Vector2(278, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "功能：
+
+目前没什么用"
+autowrap_mode = 3
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/Main/Right"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_2u772")

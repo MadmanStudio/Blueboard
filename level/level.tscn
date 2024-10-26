@@ -99,6 +99,7 @@ libraries = {
 }
 
 [node name="Guide" parent="." instance=ExtResource("3_irfik")]
+visible = false
 
 [connection signal="button_down" from="NextLevel/NextLevel/Button" to="." method="_on_next_level_button_button_down"]
 [connection signal="mouse_entered" from="NextLevel/NextLevel/Button" to="." method="_on_next_level_button_mouse_entered"]

@@ -40,6 +40,10 @@ var element_dict: Dictionary
 
 
 func _ready() -> void:
+	if level_name != "1":
+		$Guide.queue_free()
+	else:
+		$Guide.show()
 	main = get_tree().get_first_node_in_group("main")
 	main.max_level = level_name
 	SaveManager.save_game()
@@ -350,15 +354,18 @@ func _on_next_level_button_mouse_exited() -> void:
 
 
 func _on_next_level_button_button_down() -> void:
-	main.play_sound(Main.SoundType.UI_CLICK)
-	var next_level_data: Dictionary = main.level_data[next_level]
-	Globals.allow_operate = true
-	main.load_scene(Paths.level, {
-		"map_path": next_level_data["map_path"],
-		"next_level": next_level_data["next_level"],
-		"level_name": next_level,
-		"element_dict": next_level_data["element_dict"]
-	})
+	if level_name == "16":
+		main.load_scene(Paths.thanks)
+	else:
+		main.play_sound(Main.SoundType.UI_CLICK)
+		var next_level_data: Dictionary = main.level_data[next_level]
+		Globals.allow_operate = true
+		main.load_scene(Paths.level, {
+			"map_path": next_level_data["map_path"],
+			"next_level": next_level_data["next_level"],
+			"level_name": next_level,
+			"element_dict": next_level_data["element_dict"]
+		})
 	
 	
 func check_all_light() -> void:

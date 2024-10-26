@@ -208,9 +208,9 @@ anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = -640.0
-offset_top = -420.0
-offset_right = -40.0
-offset_bottom = -20.0
+offset_top = -480.0
+offset_right = 160.0
+offset_bottom = 40.0
 grow_vertical = 2
 rotation = -0.785398
 

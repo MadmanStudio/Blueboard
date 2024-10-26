@@ -1,22 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://mqactsd5n8qb"]
+[gd_scene load_steps=9 format=3 uid="uid://3nljwrvpp0gt"]
 
-[ext_resource type="Script" path="res://ui/manual/book_page.gd" id="1_0jp4u"]
-[ext_resource type="VideoStream" path="res://ui/manual/videos/rotate.ogv" id="1_l4b6a"]
-[ext_resource type="VideoStream" path="res://ui/manual/videos/uninstall.ogv" id="2_vdopf"]
-[ext_resource type="Texture2D" uid="uid://cej8gbk4ek7t8" path="res://element/generator/res/element_G_blue.atlastex" id="4_ab441"]
-[ext_resource type="Texture2D" uid="uid://bkeqj3xa3r4mc" path="res://element/generator/res/element_G_red.atlastex" id="5_lplxk"]
-[ext_resource type="Texture2D" uid="uid://dil42dgdrkwym" path="res://element/generator/res/element_G_yellow.atlastex" id="6_dyb0s"]
+[ext_resource type="Script" path="res://ui/manual/book_page.gd" id="1_bc1si"]
+[ext_resource type="Texture2D" uid="uid://dscimu0gp3jus" path="res://element/line/res/element_line_one.atlastex" id="2_k8wst"]
+[ext_resource type="Texture2D" uid="uid://bvwpts8knurj1" path="res://element/line/res/element_line_two.atlastex" id="3_sy8ev"]
+[ext_resource type="Texture2D" uid="uid://clqcfmlnkbd3t" path="res://element/line/res/element_line_three.atlastex" id="4_knn22"]
+[ext_resource type="Texture2D" uid="uid://dpd6jh2epqwn7" path="res://element/line/res/element_line_four.atlastex" id="5_mwftt"]
+[ext_resource type="Texture2D" uid="uid://cwmmehachgjbc" path="res://element/line/res/element_jumper_in.atlastex" id="6_cj32v"]
+[ext_resource type="Texture2D" uid="uid://dfepwy27a560l" path="res://element/line/res/element_jumper_out.atlastex" id="7_n8ule"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_84dx2"]
-bg_color = Color(1, 0.945098, 0.909804, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2u772"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eupmm"]
-
-[node name="BookPageTwo" type="Control"]
+[node name="BookPageFive" type="Control"]
 custom_minimum_size = Vector2(600, 400)
 layout_mode = 3
 anchors_preset = 15
@@ -26,7 +20,7 @@ offset_right = -552.0
 offset_bottom = -240.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_0jp4u")
+script = ExtResource("1_bc1si")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -34,7 +28,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = 40.0
-offset_bottom = 67.0
+offset_bottom = 9.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 32
@@ -55,7 +49,7 @@ layout_mode = 2
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 20
-text = "基本操作（三）"
+text = "元件简介（六）"
 horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="MarginContainer/Main/Left"]
@@ -63,50 +57,63 @@ layout_mode = 2
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 16
-text = "1.单击鼠标左键旋转已安装的元件"
+text = "接线器（Linker）"
 
 [node name="Panel" type="Panel" parent="MarginContainer/Main/Left"]
 custom_minimum_size = Vector2(278, 162)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_84dx2")
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="MarginContainer/Main/Left/Panel"]
-custom_minimum_size = Vector2(266, 150)
-layout_mode = 2
-offset_left = 6.0
-offset_top = 6.0
-offset_right = 272.0
-offset_bottom = 156.0
-stream = ExtResource("1_l4b6a")
-expand = true
-loop = true
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Main/Left/Panel"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 59.0
+offset_right = 68.0
+offset_bottom = 99.0
+texture = ExtResource("2_k8wst")
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/Main/Left/Panel"]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 59.0
+offset_right = 130.0
+offset_bottom = 99.0
+texture = ExtResource("3_sy8ev")
+
+[node name="TextureRect3" type="TextureRect" parent="MarginContainer/Main/Left/Panel"]
+layout_mode = 0
+offset_left = 153.0
+offset_top = 60.0
+offset_right = 193.0
+offset_bottom = 100.0
+texture = ExtResource("4_knn22")
+
+[node name="TextureRect4" type="TextureRect" parent="MarginContainer/Main/Left/Panel"]
+layout_mode = 0
+offset_left = 213.0
+offset_top = 61.0
+offset_right = 253.0
+offset_bottom = 101.0
+texture = ExtResource("5_mwftt")
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/Main/Left"]
 layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxEmpty_eupmm")
+theme_override_styles/separator = SubResource("StyleBoxEmpty_2u772")
 
 [node name="Label3" type="Label" parent="MarginContainer/Main/Left"]
+custom_minimum_size = Vector2(278, 0)
 layout_mode = 2
-size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 16
-text = "2.单击鼠标右键卸载已安装的元件"
+text = "功能：
 
-[node name="Panel2" type="Panel" parent="MarginContainer/Main/Left"]
-custom_minimum_size = Vector2(278, 162)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_84dx2")
+传播电流
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="MarginContainer/Main/Left/Panel2"]
-custom_minimum_size = Vector2(266, 150)
+此元件总共包含四种类型，分别对应四种通路"
+autowrap_mode = 3
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/Main/Left"]
 layout_mode = 2
-offset_left = 6.0
-offset_top = 6.0
-offset_right = 272.0
-offset_bottom = 156.0
-stream = ExtResource("2_vdopf")
-expand = true
-loop = true
+theme_override_styles/separator = SubResource("StyleBoxEmpty_2u772")
 
 [node name="Right" type="VBoxContainer" parent="MarginContainer/Main"]
 layout_mode = 2
@@ -117,7 +124,7 @@ layout_mode = 2
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 20
-text = "元件简介（一）"
+text = "元件简介（七）"
 horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="MarginContainer/Main/Right"]
@@ -125,7 +132,7 @@ layout_mode = 2
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 16
-text = "发生器（Generator）"
+text = "跳线器（Jumper）"
 
 [node name="Panel" type="Panel" parent="MarginContainer/Main/Right"]
 custom_minimum_size = Vector2(278, 162)
@@ -133,31 +140,23 @@ layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/Main/Right/Panel"]
 layout_mode = 0
-offset_left = 36.0
-offset_top = 55.0
-offset_right = 76.0
-offset_bottom = 95.0
-texture = ExtResource("4_ab441")
+offset_left = 73.0
+offset_top = 59.0
+offset_right = 113.0
+offset_bottom = 99.0
+texture = ExtResource("6_cj32v")
 
 [node name="TextureRect2" type="TextureRect" parent="MarginContainer/Main/Right/Panel"]
 layout_mode = 0
-offset_left = 112.0
-offset_top = 55.0
-offset_right = 152.0
-offset_bottom = 95.0
-texture = ExtResource("5_lplxk")
-
-[node name="TextureRect3" type="TextureRect" parent="MarginContainer/Main/Right/Panel"]
-layout_mode = 0
-offset_left = 191.0
-offset_top = 57.0
-offset_right = 231.0
-offset_bottom = 97.0
-texture = ExtResource("6_dyb0s")
+offset_left = 156.0
+offset_top = 60.0
+offset_right = 196.0
+offset_bottom = 100.0
+texture = ExtResource("7_n8ule")
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/Main/Right"]
 layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxEmpty_eupmm")
+theme_override_styles/separator = SubResource("StyleBoxEmpty_2u772")
 
 [node name="Label3" type="Label" parent="MarginContainer/Main/Right"]
 custom_minimum_size = Vector2(278, 0)
@@ -166,11 +165,11 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 16
 text = "功能：
 
-从下侧输出指定颜色的原电流
+将跳线器入口的电流直接从跳线器出口输出
 
-此元件总共包含三种类型，对应三种不同颜色的原电流"
+跳线器出口可以同时存在多个"
 autowrap_mode = 3
 
 [node name="HSeparator2" type="HSeparator" parent="MarginContainer/Main/Right"]
 layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxEmpty_eupmm")
+theme_override_styles/separator = SubResource("StyleBoxEmpty_2u772")

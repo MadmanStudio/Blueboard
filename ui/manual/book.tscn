@@ -1,74 +1,79 @@
-[gd_scene load_steps=6 format=3 uid="uid://djhkotjvmsh1o"]
+[gd_scene load_steps=9 format=3 uid="uid://djhkotjvmsh1o"]
 
 [ext_resource type="Script" path="res://ui/manual/book.gd" id="1_722p0"]
 [ext_resource type="PackedScene" uid="uid://bwg118fmq1xyb" path="res://ui/manual/book_page_four.tscn" id="2_6ap6a"]
 [ext_resource type="PackedScene" uid="uid://bhgygo4qag2ws" path="res://ui/manual/book_page_one.tscn" id="2_37oij"]
 [ext_resource type="PackedScene" uid="uid://drrll44qdbsf5" path="res://ui/manual/book_page_three.tscn" id="2_j63bo"]
+[ext_resource type="AudioStream" uid="uid://d2h478hpciex5" path="res://ui/manual/page_flip.wav" id="2_l7cqu"]
+[ext_resource type="Texture2D" uid="uid://r8w77jbkg47u" path="res://ui/manual/book.aseprite" id="3_8r01k"]
 [ext_resource type="PackedScene" uid="uid://mqactsd5n8qb" path="res://ui/manual/book_page_two.tscn" id="3_b4ntf"]
+[ext_resource type="PackedScene" uid="uid://3nljwrvpp0gt" path="res://ui/manual/book_page_five.tscn" id="8_pn8uk"]
 
 [node name="Book" type="Control"]
-custom_minimum_size = Vector2(600, 400)
+custom_minimum_size = Vector2(800, 520)
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_722p0")
+page_flip = ExtResource("2_l7cqu")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="BG" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 200.0
-offset_bottom = 120.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("3_8r01k")
 
-[node name="BookPageOne" parent="ColorRect" instance=ExtResource("2_37oij")]
+[node name="BookPageOne" parent="BG" instance=ExtResource("2_37oij")]
 layout_mode = 1
 offset_right = 0.0
 offset_bottom = 0.0
 
-[node name="BookPageTwo" parent="ColorRect" instance=ExtResource("3_b4ntf")]
+[node name="BookPageTwo" parent="BG" instance=ExtResource("3_b4ntf")]
 visible = false
 layout_mode = 1
 offset_right = 0.0
 offset_bottom = 0.0
 
-[node name="BookPageThree" parent="ColorRect" instance=ExtResource("2_j63bo")]
+[node name="BookPageThree" parent="BG" instance=ExtResource("2_j63bo")]
 visible = false
 layout_mode = 1
 offset_right = 0.0
 offset_bottom = 0.0
 
-[node name="BookPageFour" parent="ColorRect" instance=ExtResource("2_6ap6a")]
+[node name="BookPageFour" parent="BG" instance=ExtResource("2_6ap6a")]
 visible = false
 layout_mode = 1
 offset_right = 0.0
 offset_bottom = 0.0
 
-[node name="PreviousPage" type="Button" parent="ColorRect"]
+[node name="BookPageFive" parent="BG" instance=ExtResource("8_pn8uk")]
+visible = false
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -24.5
-offset_right = 48.0
-offset_bottom = 24.5
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="PreviousPage" type="Button" parent="BG"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 28.0
 grow_vertical = 2
 focus_mode = 0
 theme_override_font_sizes/font_size = 40
 text = "<"
 flat = true
 
-[node name="NextPage" type="Button" parent="ColorRect"]
+[node name="NextPage" type="Button" parent="BG"]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 1
-anchors_preset = 6
+anchors_preset = 11
 anchor_left = 1.0
-anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -48.0
-offset_top = -24.5
-offset_bottom = 24.5
+anchor_bottom = 1.0
+offset_left = -28.0
 grow_horizontal = 0
 grow_vertical = 2
 focus_mode = 0
@@ -76,5 +81,23 @@ theme_override_font_sizes/font_size = 40
 text = ">"
 flat = true
 
-[connection signal="button_down" from="ColorRect/PreviousPage" to="." method="_on_previous_page_button_down"]
-[connection signal="button_down" from="ColorRect/NextPage" to="." method="_on_next_page_button_down"]
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(242, 30)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -50.0
+offset_right = 120.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "点亮所有[wave][color=#ff004d]灯[/color][color=#ffec27]泡[/color][color=#29adff]元[/color][color=#00e436]件[/color][/wave]即可过关"
+
+[connection signal="button_up" from="BG/PreviousPage" to="." method="_on_previous_page_button_up"]
+[connection signal="button_up" from="BG/NextPage" to="." method="_on_next_page_button_up"]

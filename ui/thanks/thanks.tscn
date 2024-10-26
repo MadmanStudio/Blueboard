@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://bir2v2wmsgb2w"]
+
+[ext_resource type="Script" path="res://ui/thanks/thanks.gd" id="1_0n684"]
+[ext_resource type="Texture2D" uid="uid://ob1kv08o0ocy" path="res://assets/texture/element.aseprite" id="2_qrlxr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ac7cg"]
+atlas = ExtResource("2_qrlxr")
+region = Rect2(240, 0, 16, 16)
+
+[node name="Thanks" type="CanvasLayer"]
+script = ExtResource("1_0n684")
+
+[node name="Logo" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.0235294)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 250.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_ac7cg")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -8.5
+offset_right = 40.0
+offset_bottom = 8.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 80
+text = "感谢游玩！"
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
