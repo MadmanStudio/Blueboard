@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dg37tfei5riwf"
+path="res://.godot/imported/Lo-Fi Phat & Lazy Intensity 1.mp3-67814d2b6c48f7286227c46815989474.mp3str"
+
+[deps]
+
+source_file="res://assets/music/Phat & Lazy (RT 4)/Lo-Fi Phat & Lazy Intensity 1.mp3"
+dest_files=["res://.godot/imported/Lo-Fi Phat & Lazy Intensity 1.mp3-67814d2b6c48f7286227c46815989474.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4
