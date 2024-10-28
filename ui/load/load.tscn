@@ -24,6 +24,22 @@ tracks/0/keys = {
 "values": [Vector2(1040, 32), Vector2(1008, 32)]
 }
 
+[sub_resource type="Animation" id="Animation_v52hj"]
+resource_name = "ExpandStartButton"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Start:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1040, 575), Vector2(1008, 575)]
+}
+
 [sub_resource type="Animation" id="Animation_ftirj"]
 length = 0.001
 tracks/0/type = "value"
@@ -48,23 +64,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1040, 567)]
-}
-
-[sub_resource type="Animation" id="Animation_v52hj"]
-resource_name = "ExpandStartButton"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Start:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(1040, 567), Vector2(1008, 567)]
+"values": [Vector2(1040, 575)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bkota"]
@@ -135,9 +135,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -112.0
-offset_top = -73.0
+offset_top = -81.0
 offset_right = -32.0
-offset_bottom = -32.0
+offset_bottom = -40.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 3

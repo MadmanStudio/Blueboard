@@ -13,6 +13,7 @@ config_version=5
 config/name="蓝板系统"
 run/main_scene="res://entry/main.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
+boot_splash/image="res://assets/texture/boot_splash.png"
 config/icon="res://assets/texture/icon.png"
 
 [autoload]
@@ -29,7 +30,6 @@ gdscript/warnings/untyped_declaration=1
 
 [display]
 
-window/size/viewport_height=640
 window/size/resizable=false
 mouse_cursor/custom_image="res://assets/texture/cursor.png"
 
